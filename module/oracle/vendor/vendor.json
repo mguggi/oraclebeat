@@ -1,115 +1,7 @@
 {
 	"comment": "",
-	"ignore": "test",
+	"ignore": "test github.com/elastic/beats",
 	"package": [
-		{
-			"checksumSHA1": "ljJB9acP4RJgI9QlcysyhmUKqpA=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/libbeat/common",
-			"path": "github.com/elastic/beats/libbeat/common",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "SS/yBENBeoNVCAu+TQcDylo4CPg=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/libbeat/common/atomic",
-			"path": "github.com/elastic/beats/libbeat/common/atomic",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "3GxLcVX/OFwXDi0VJNnJrafkq8A=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/libbeat/common/file",
-			"path": "github.com/elastic/beats/libbeat/common/file",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "qbGC8yJRoAsISdKohD2j/mLj+PY=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/libbeat/logp",
-			"path": "github.com/elastic/beats/libbeat/logp",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "kZBPfX0Pv2dLMP5Iho9Mx/hXz9o=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/libbeat/monitoring",
-			"path": "github.com/elastic/beats/libbeat/monitoring",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "d5b9Ra0zcwznwemxEJmyW28FZJ0=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/libbeat/paths",
-			"path": "github.com/elastic/beats/libbeat/paths",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "eqckyOSHXHcArW+DF26oEmTtbHA=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/metricbeat/mb",
-			"path": "github.com/elastic/beats/metricbeat/mb",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "6UaJp3hUpEJvcu7COoRNhHPlqfg=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/vendor/github.com/elastic/go-ucfg",
-			"path": "github.com/elastic/go-ucfg",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "8cr5YhslUMgpvF2JebYvKC+Ezr4=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/vendor/github.com/elastic/go-ucfg/cfgutil",
-			"path": "github.com/elastic/go-ucfg/cfgutil",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "Q2qrc/nI9d1tNzWTmfrkWvBNqsc=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/vendor/github.com/elastic/go-ucfg/flag",
-			"path": "github.com/elastic/go-ucfg/flag",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "uOrhvj7stlb0foxGZ5vbC1XJeto=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/vendor/github.com/elastic/go-ucfg/internal/parse",
-			"path": "github.com/elastic/go-ucfg/internal/parse",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "sMBM95+VYBPhwtNVHqqN1yrvk1o=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/vendor/github.com/elastic/go-ucfg/json",
-			"path": "github.com/elastic/go-ucfg/json",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "qvzj0KzxrWvYhHIbo+FwBxUNDFw=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/vendor/github.com/elastic/go-ucfg/yaml",
-			"path": "github.com/elastic/go-ucfg/yaml",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "l9wW52CYGbmO/NGwYZ/Op2QTmaA=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/vendor/github.com/joeshaw/multierror",
-			"path": "github.com/joeshaw/multierror",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "PdQm3s8DoVJ17Vk8n7o5iPa7PK0=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/vendor/github.com/pkg/errors",
-			"path": "github.com/pkg/errors",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "zmC8/3V4ls53DJlNTKDZwPSC/dA=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/vendor/github.com/satori/go.uuid",
-			"path": "github.com/satori/go.uuid",
-			"revision": ""
-		},
-		{
-			"checksumSHA1": "GtamqiJoL7PGHsN454AoffBFMa8=",
-			"path": "golang.org/x/net/context",
-			"revision": "a337091b0525af65de94df2eb7e98bd9962dcbe2",
-			"revisionTime": "2016-10-09T20:39:03Z"
-		},
-		{
-			"checksumSHA1": "S0DP7Pn7sZUmXc55IzZnNvERu6s=",
-			"path": "golang.org/x/sync/errgroup",
-			"revision": "fd80eb99c8f653c847d294a001bdf2a3a6f768f5",
-			"revisionTime": "2017-11-01T19:49:15Z"
-		},
 		{
 			"checksumSHA1": "YON9G1RVQ6Tdn3VCnjF1yt/S5ww=",
 			"path": "gopkg.in/rana/ora.v4",
@@ -117,28 +9,6 @@
 			"revisionTime": "2017-11-07T17:23:47Z",
 			"version": "v4.1.14",
 			"versionExact": "v4.1.14"
-		},
-		{
-			"checksumSHA1": "eb7n//W2ifbgTNGmrL7NnvZi/DU=",
-			"path": "gopkg.in/rana/ora.v4/date",
-			"revision": "711f361c6a264539c5e41aa3037a1aa92eb31ccd",
-			"revisionTime": "2017-11-07T17:23:47Z",
-			"version": "v4.1.14",
-			"versionExact": "v4.1.14"
-		},
-		{
-			"checksumSHA1": "1yIMtU64nASjTJpCihJwk1xmLWA=",
-			"path": "gopkg.in/rana/ora.v4/num",
-			"revision": "711f361c6a264539c5e41aa3037a1aa92eb31ccd",
-			"revisionTime": "2017-11-07T17:23:47Z",
-			"version": "v4.1.14",
-			"versionExact": "v4.1.14"
-		},
-		{
-			"checksumSHA1": "fALlQNY1fM99NesfLJ50KguWsio=",
-			"origin": "github.com/mguggi/oraclebeat/vendor/github.com/elastic/beats/vendor/gopkg.in/yaml.v2",
-			"path": "gopkg.in/yaml.v2",
-			"revision": ""
 		}
 	],
 	"rootPath": "github.com/mguggi/oraclebeat/module/oracle"
