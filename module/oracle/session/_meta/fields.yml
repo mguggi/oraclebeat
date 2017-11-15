@@ -1,0 +1,9 @@
+- name: session
+  type: group
+  description: >
+    session
+  fields:
+    - name: example
+      type: keyword
+      description: >
+        Example field
