@@ -77,12 +77,15 @@ func (m *MetricSet) Fetch() ([]common.MapStr, error) {
 	// Make connection timeout aware
 	timeout := m.BaseMetricSet.Module().Config().Timeout
 	logp.Debug(selector, "Set timout to: %s", timeout)
-	ctx, _ := context.WithTimeout(context.Background(), timeout)
+	ctx, cancel := context.WithTimeout(context.Background(), timeout)
+	defer cancel()
 
 	rows, err := m.stmt.QueryContext(ctx)
 	if err != nil {
 		return nil, errors.Wrapf(err, "%s failed query data", selector)
 	}
+	rows.Close()
+
 	events := []common.MapStr{}
 	results, _ := oracle.Scan(rows)
 	for _, result := range results {
