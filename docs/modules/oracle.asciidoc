@@ -12,18 +12,24 @@ This is the oracle Module.
 [float]
 === Example configuration
 
-The oracle module supports the standard configuration options that are described
+The Oracle Module module supports the standard configuration options that are described
 in <<configuration-metricbeat>>. Here is an example configuration:
 
 [source,yaml]
 ----
 oraclebeat.modules:
 - module: oracle
-  metricsets: ["session"]
+  metricsets: ["sqlstats"]
   enabled: true
   period: 10s
-  hosts: ["localhost"]
 
+  # List of Oracle connection strings
+  hosts: ["oracle://system:oraclebeat@10.1.87.87/ora12"]
+
+  # Timeout after which time a metric-set should return an error
+  # Timeout is by default defined as period, as a fetch of a metric-set
+  # should never take longer then period, as otherwise calls can pile up.
+  #timeout: 1s
 ----
 
 [float]
@@ -31,7 +37,23 @@ oraclebeat.modules:
 
 The following metricsets are available:
 
+* <<metricbeat-metricset-oracle-filespace,filespace>>
+
 * <<metricbeat-metricset-oracle-session,session>>
 
+* <<metricbeat-metricset-oracle-sesstats,sesstats>>
+
+* <<metricbeat-metricset-oracle-sqlstats,sqlstats>>
+
+* <<metricbeat-metricset-oracle-sysstats,sysstats>>
+
+include::oracle/filespace.asciidoc[]
+
 include::oracle/session.asciidoc[]
+
+include::oracle/sesstats.asciidoc[]
+
+include::oracle/sqlstats.asciidoc[]
+
+include::oracle/sysstats.asciidoc[]
 

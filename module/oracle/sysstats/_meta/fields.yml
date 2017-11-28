@@ -1,0 +1,32 @@
+- name: sysstats
+  type: group
+  description: >
+    Displays the system-wide accumulated times for various operations. The time reported is the total elapsed or
+    CPU time (in microseconds).
+  fields:
+    - name: database.container.id
+      type: long
+      description: >
+        The identifier of the container to which the data pertains. Possible values include:
+          0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+             rows in non-CDBs.
+          1: This value is used for rows containing data that pertain to only the root
+          n: Where n is the applicable container ID for the rows containing data
+    - name: database.container.instance.id
+      type: long
+      description: >
+        The instance identifier
+    - name: id
+      type: long
+      description: >
+        Statistic identifier for the time statistic
+    - name: name
+      type: keyword
+      description: >
+        Name of the statistic
+    - name: value
+      type: long
+      format: duration
+      input_format: milliseconds
+      description: >
+        Amount of time (in microseconds) that the session has spent in this operation

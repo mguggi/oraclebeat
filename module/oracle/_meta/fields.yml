@@ -1,11 +1,10 @@
 - key: oracle
-  title: "oracle"
+  title: Oracle Module
   description: >
-    []experimental
-
-    oracle Module
+    Experimental: Metrics collected from an Oracle database.
   fields:
     - name: oracle
       type: group
       description: >
+        Oracle database metrics.
       fields:

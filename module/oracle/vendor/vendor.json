@@ -3,8 +3,30 @@
 	"ignore": "test github.com/elastic/beats",
 	"package": [
 		{
+			"checksumSHA1": "hwNfbSjyZ0NTMn3edG9edJJt/5I=",
+			"path": "gopkg.in/goracle.v2",
+			"revision": "939a9dd61239663a02aa6fd6530bc19a34b9b6d4",
+			"revisionTime": "2017-11-25T11:18:45Z"
+		},
+		{
 			"checksumSHA1": "YON9G1RVQ6Tdn3VCnjF1yt/S5ww=",
 			"path": "gopkg.in/rana/ora.v4",
+			"revision": "711f361c6a264539c5e41aa3037a1aa92eb31ccd",
+			"revisionTime": "2017-11-07T17:23:47Z",
+			"version": "v4.1.14",
+			"versionExact": "v4.1.14"
+		},
+		{
+			"checksumSHA1": "eb7n//W2ifbgTNGmrL7NnvZi/DU=",
+			"path": "gopkg.in/rana/ora.v4/date",
+			"revision": "711f361c6a264539c5e41aa3037a1aa92eb31ccd",
+			"revisionTime": "2017-11-07T17:23:47Z",
+			"version": "v4.1.14",
+			"versionExact": "v4.1.14"
+		},
+		{
+			"checksumSHA1": "1yIMtU64nASjTJpCihJwk1xmLWA=",
+			"path": "gopkg.in/rana/ora.v4/num",
 			"revision": "711f361c6a264539c5e41aa3037a1aa92eb31ccd",
 			"revisionTime": "2017-11-07T17:23:47Z",
 			"version": "v4.1.14",

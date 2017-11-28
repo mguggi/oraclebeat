@@ -29,12 +29,18 @@ metricbeat.max_start_delay: 10s
 #==========================  Modules configuration ============================
 oraclebeat.modules:
 
-#------------------------------- oracle Module -------------------------------
+#---------------------------- Oracle Module Module ---------------------------
 - module: oracle
-  metricsets: ["session"]
+  metricsets: ["sqlstats"]
   enabled: true
   period: 10s
-  hosts: ["localhost"]
 
+  # List of Oracle connection strings
+  hosts: ["oracle://system:oraclebeat@10.1.87.87/ora12"]
+
+  # Timeout after which time a metric-set should return an error
+  # Timeout is by default defined as period, as a fetch of a metric-set
+  # should never take longer then period, as otherwise calls can pile up.
+  #timeout: 1s
 
 

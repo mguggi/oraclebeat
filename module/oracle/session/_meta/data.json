@@ -10,9 +10,149 @@
         "name":"session",
         "rtt":44269
     },
-    "oracle":{
-        "session":{
-            "example": "session"
+    "oracle": {
+        "session": {
+            "transaction": {
+                "lock": {
+                    "address": ""
+                },
+                "address": ""
+            },
+            "id": 1,
+            "trace": {
+                "plan_stats": "FIRST EXEC",
+                "sql": "DISABLED",
+                "waits": false,
+                "binds": false
+            },
+            "current_queue_duration": 0,
+            "sql": {
+                "hash": 0,
+                "id": "",
+                "child_number": 0,
+                "execution": {},
+                "precursor": {
+                    "hash": 0,
+                    "id": "",
+                    "child_number": 0,
+                    "execution": {},
+                    "address": "00"
+                },
+                "address": "00"
+            },
+            "fixed_table_sequence": 0,
+            "pdml_status": "DISABLED",
+            "last_call_et": 783084,
+            "pddl_status": "DISABLED",
+            "process": {
+                "machine": "oraclebeat.novalocal",
+                "id": "1562",
+                "program": "oracle@oraclebeat.novalocal (PSP0)",
+                "addresss": "000000007eaa2ad8",
+                "user": "grid",
+                "port": 0,
+                "type": "DEDICATED",
+                "terminal": "UNKNOWN"
+            },
+            "status": "ACTIVE",
+            "wait": {
+                "time_us": 904462,
+                "state": "WAITING",
+                "time_remaining_us": 95538,
+                "time_since_last_wait_us": 0,
+                "p1": {
+                    "raw": "0000000000000064",
+                    "number": 100,
+                    "text": "timeout"
+                },
+                "p2": {
+                    "raw": "00",
+                    "number": 0,
+                    "text": ""
+                },
+                "event": {
+                    "number": 7,
+                    "value": "rdbms ipc message"
+                },
+                "p3": {
+                    "number": 0,
+                    "text": "",
+                    "raw": "00"
+                },
+                "sequence": 55852,
+                "class": {
+                    "number": 6,
+                    "value": "Idle"
+                }
+            },
+            "blocker": {
+                "final": {
+                    "status": "NO HOLDER"
+                },
+                "status": "NO HOLDER"
+            },
+            "type": "BACKGROUND",
+            "shard_ddl_status": "DISABLED",
+            "service_name": "SYS$BACKGROUND",
+            "action": {
+                "hash": "0",
+                "name": ""
+            },
+            "sql_translation_profile_id": 0,
+            "failover": {
+                "type": "NONE",
+                "method": "NONE",
+                "failed_over": "NO"
+            },
+            "command": 0,
+            "edition_id": 0,
+            "external_name": "",
+            "pq_status": "DISABLED",
+            "pga_tunable_mem": 0,
+            "address": "000000007ed2ee88",
+            "module": {
+                "name": "",
+                "hash": "0"
+            },
+            "database": {
+                "container": {
+                    "id": 0,
+                    "instance": {
+                        "id": 1
+                    }
+                }
+            },
+            "audit_session_id": 0,
+            "row_lock": {
+                "block_id": 0,
+                "row_id": 0,
+                "object_id": -1,
+                "file_id": 0
+            },
+            "client": {
+                "id": "",
+                "info": ""
+            },
+            "creator": {
+                "address": "000000007eaa2ad8",
+                "serial_number": 1
+            },
+            "user": {
+                "id": 0,
+                "name": "",
+                "schema": {
+                    "id": 0,
+                    "name": "SYS"
+                }
+            },
+            "resource_consumer_group": "_ORACLE_BACKGROUND_GROUP_",
+            "plsql": {
+                "entry": {},
+                "debugger_connected": false
+            },
+            "execution_context_id": "",
+            "logon_time": "2017-11-14T09:23:51.000Z",
+            "serial_number": 54101
         }
     },
     "type":"metricsets"

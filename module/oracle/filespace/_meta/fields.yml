@@ -1,0 +1,57 @@
+- name: filespace
+  type: group
+  description: >
+    Summarizes space allocation information of each data file and temp file.
+  fields:
+    - name: database.container.id
+      type: integer
+      description: >
+        The identifier of the container to which the data pertains. Possible values include:
+          0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+             rows in non-CDBs.
+          1: This value is used for rows containing data that pertain to only the root
+          n: Where n is the applicable container ID for the rows containing data
+    - name: tablespace.id
+      type: integer
+      description: >
+        Identifier of the tablespace
+    - name: tablespace.name
+      type: keyword
+      description: >
+        Tablespace name
+    - name: tablespace.bigfile
+      type: boolean
+      description: >
+        Indicates whether the tablespace is a bigfile tablespace or a smallfile tablespace
+    - name: tablespace.flashback
+      type: boolean
+      description: >
+        Indicates whether the tablespace participates in FLASHBACK DATABASE operations
+    - name: rfno
+      type: long
+      description: >
+        Relative file number of the file
+    - name: allocated_space
+      type: long
+      description: >
+        Total allocated space in the file
+    - name: file_size
+      type: long
+      description: >
+        Current file size
+    - name: file_maxsize
+      type: long
+      description: >
+        Maximum file size
+    - name: changescn.base
+      type: long
+      description: >
+        SCN base of the last change to the file
+    - name: changescn.wrap
+      type: long
+      description: >
+        SCN wrap of the last change to the file
+    - name: flag
+      type: long
+      description: >
+        Flags for file attributes

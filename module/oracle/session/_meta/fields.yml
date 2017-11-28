@@ -1,9 +1,487 @@
 - name: session
   type: group
   description: >
-    session
+    Displays session information for each current session.
   fields:
-    - name: example
+    - name: database.container.id
+      type: integer
+      description: >
+        The identifier of the container to which the data pertains. Possible values include:
+          0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+             rows in non-CDBs.
+          1: This value is used for rows containing data that pertain to only the root
+          n: Where n is the applicable container ID for the rows containing data
+    - name: database.container.instance.id
+      type: integer
+      description: >
+        The instance identifier
+    - name: address
       type: keyword
       description: >
-        Example field
+        Session address
+    - name: id
+      type: long
+      description: >
+        Session identifier
+    - name: serial_number
+      type: long
+      description: >
+        Session serial number. Used to uniquely identify a session's objects. Guarantees that session-level commands
+        are applied to the correct session objects if the session ends and another session begins with the same
+        session identifier.
+    - name: audit_session_id
+      type: long
+      description: >
+        Auditing session identifier
+    - name: status
+      type: keyword
+      description: >
+        Status of the session:
+          ACTIVE   - Session currently executing SQL
+          INACTIVE - Session which is inactive and either has no configured limits or has not yet exceeded the
+                     configured limits
+          KILLED   - Session marked to be killed
+          CACHED   - Session temporarily cached for use by Oracle*XA
+          SNIPED   - An inactive session that has exceeded some configured limits (for example, resource limits
+                     specified for the resource manager consumer group or idle_time specified in the user's profile).
+                     Such sessions will not be allowed to become active again.
+    - name: type
+      type: keyword
+      description: >
+        Session type
+    - name: process.id
+      type: keyword
+      description: >
+        Operating system client process identifier
+    - name: process.address
+      type: keyword
+      description: >
+        Address of the process that owns the session
+    - name: process.user
+      type: keyword
+      description: >
+        Operating system client user name
+    - name: process.machine
+      type: keyword
+      description: >
+        Operating system machine name
+    - name: process.port
+      type: long
+      description: >
+        Client port number
+    - name: process.terminal
+      type: keyword
+      description: >
+        Operating system terminal name
+    - name: process.program
+      type: keyword
+      description: >
+        Operating system program name
+    - name: process.type
+      type: keyword
+      description: >
+        Server type:
+          DEDICATED
+          SHARED
+          PSEUDO
+          POOLED
+          NONE
+    - name: user.id
+      type: long
+      description: >
+        Oracle user identifier
+    - name: user.name
+      type: keyword
+      description: >
+        Oracle username
+    - name: user.schema.id
+      type: long
+      description: >
+        Schema user identifier
+    - name: user.schema.name
+      type: keyword
+      description: >
+        Schema user name
+    - name: command
+      type: integer
+      description: >
+        Command in progress (last statement parsed). A value of 0 in this COMMAND column means the command is
+        not recorded.
+    - name: owner
+      type: long
+      description: >
+        Identifier of the user who owns the migratable session; the column contents are invalid if the value
+        is 2147483644. For operations using Parallel Slaves, interpret this value as a 4-byte value. The low-order
+        2 bytes represent the session number and the high-order bytes represent the instance identifier of the
+        query coordinator.
+    - name: execution.address
+      type: keyword
+      description: >
+        Address of the transaction state object
+    - name: execution.lock.address
+      type: keyword
+      description: >
+        Address of the lock the session is waiting for; NULL if none
+    - name: sql.address
+      type: keyword
+      description: >
+        Used with SQL_HASH_VALUE to identify the SQL statement that is currently being executed
+    - name: sql.hash
+      type: long
+      description: >
+        Used with SQL_ADDRESS to identify the SQL statement that is currently being executed
+    - name: sql.id
+      type: keyword
+      description: >
+        SQL identifier of the SQL statement that is currently being executed
+    - name: sql.child_number
+      type: long
+      description: >
+        Child number of the SQL statement that is currently being executed
+    - name: sql.execution.start
+      type: date
+      description: >
+        Time when the execution of the SQL currently executed by this session started; NULL if SQL_ID is NULL
+    - name: sql_execution.id
+      type: long
+      description: >
+        SQL execution identifier; NULL if SQL_ID is NULL or if the execution of that SQL has not yet started
+    - name: sql.precursor.address
+      type: keyword
+      description: >
+        Used with PREV_HASH_VALUE to identify the last SQL statement executed
+    - name: sql.precursor.hash
+      type: long
+      description: >
+        Used with SQL_HASH_VALUE to identify the last SQL statement executed
+    - name: sql.precursor.id
+      type: keyword
+      description: >
+        SQL identifier of the last SQL statement executed
+    - name: sql.precursor.child_number
+      type: long
+      description: >
+        Child number of the last SQL statement executed
+    - name: sql.precursor.execution.start
+      type: date
+      description: >
+        SQL execution start of the last executed SQL statement
+    - name: sql.precursor.execution.id
+      type: long
+      description: >
+        SQL execution identifier of the last executed SQL statement
+    - name: plsql.entry.object_id
+      type: long
+      description: >
+        Object identifier of the top-most PL/SQL subprogram on the stack; NULL if there is no PL/SQL subprogram
+        on the stack
+    - name: plsql.entry.subprogram_id
+      type: long
+      description: >
+        Subprogram identifier of the top-most PL/SQL subprogram on the stack; NULL if there is no PL/SQL subprogram
+        on the stack
+    - name: plsql.object_id
+      type: long
+      description: >
+        Object identifier of the currently executing PL/SQL subprogram; NULL if executing SQL
+    - name: plsql.subprogram_id
+      type: long
+      description: >
+        Subprogram identifier of the currently executing PL/SQL object; NULL if executing SQL
+    - name: plsql.debugger_connected
+      type: keyword
+      description: >
+        Indicates whether the session is connected to a PL/SQL debugger. Possible values: TRUE or FALSE
+    - name: module.name
+      type: keyword
+      description: >
+        Name of the currently executing module as set by calling the DBMS_APPLICATION_INFO.SET_MODULE procedure
+    - name: module.hash
+      type: long
+      description: >
+        Hash value of the MODULE column
+    - name: action.name
+      type: keyword
+      description: >
+        Name of the currently executing action as set by calling the DBMS_APPLICATION_INFO.SET_ACTION procedure
+    - name: action.hash
+      type: long
+      description: >
+        Hash value of the ACTION column
+    - name: client.id
+      type: keyword
+      description: >
+        Client identifier of the session
+    - name: client.info
+      type: keyword
+      description: >
+        Information set by the DBMS_APPLICATION_INFO.SET_CLIENT_INFO procedure
+    - name: fixed_table_sequence
+      type: long
+      description: >
+        This contains a number that increases every time the session completes a call to the database and there
+        has been an intervening select from a dynamic performance table. This column can be used by performance
+        monitors to monitor statistics in the database. Each time the performance monitor looks at the database,
+        it only needs to look at sessions that are currently active or have a higher value in this column than the
+        highest value that the performance monitor saw the last time. All the other sessions have been idle since
+        the last time the performance monitor looked at the database.
+    - name: row_lock.object_id
+      type: long
+      description: >
+        Object identifier for the table containing the row specified in ROW_WAIT_ROW#
+    - name: row_lock.file_id
+      type: long
+      description: >
+        Identifier for the data file containing the row specified in ROW_WAIT_ROW#. This column is valid only if the
+        session is currently waiting for another transaction to commit and the value of ROW_WAIT_OBJ# is not -1.
+    - name: row_lock.block_id
+      type: long
+      description: >
+        Identifier for the block containing the row specified in ROW_WAIT_ROW#. This column is valid only if the
+        session is currently waiting for another transaction to commit and the value of ROW_WAIT_OBJ# is not -1.
+    - name: row_lock.row_id
+      type: long
+      description: >
+        Current row being locked. This column is valid only if the session is currently waiting for another transaction
+        to commit and the value of ROW_WAIT_OBJ# is not -1.
+    - name: top_level_call_number
+      type: long
+      description: >
+        Oracle top level call number
+    - name: logon_time
+      type: date
+      description: >
+        Time of logon
+    - name: last_call_et
+      type: long
+      description: >
+        If the session STATUS is currently ACTIVE, then the value represents the elapsed time (in seconds) since
+        the session has become active. If the session STATUS is currently INACTIVE, then the value represents the
+        elapsed time (in seconds) since the session has become inactive.
+    - name: failover.type
+      type: keyword
+      description: >
+        Indicates whether and to what extent transparent application failover (TAF) is enabled for the session:
+          NONE    - Failover is disabled for this session
+          SESSION - Client can fail over its session following a disconnect
+          SELECT  - Client can fail over queries in progress as well
+    - name: failover.method
+      type: keyword
+      description: >
+        Indicates the transparent application failover method for the session:
+          NONE       - Failover is disabled for this session
+          BASIC      - Client itself reconnects following a disconnect
+          PRECONNECT - Backup instance can support all connections from every instance for which it is backed up
+    - name: failover.failed_over
+      type: keyword
+      description: >
+        Indicates whether the session is running in failover mode and failover has occurred (YES) or not (NO)
+    - name: resource_consumer_group
+      type: keyword
+      description: >
+        Name of the session's current resource consumer group
+    - name: pdml_status
+      type: keyword
+      description: >
+        If ENABLED, the session is in a PARALLEL DML enabled mode. If DISABLED, PARALLEL DML enabled mode is not
+        supported for the session. If FORCED, the session has been altered to force PARALLEL DML.
+    - name: pddl_status
+      type: keyword
+      description: >
+        If ENABLED, the session is in a PARALLEL DDL enabled mode. If DISABLED, PARALLEL DDL enabled mode is not
+        supported for the session. If FORCED, the session has been altered to force PARALLEL DDL.
+    - name: pq_status
+      type: keyword
+      description: >
+        If ENABLED, the session is in a PARALLEL QUERY enabled mode. If DISABLED, PARALLEL QUERY enabled mode is not
+        supported for the session. If FORCED, the session has been altered to force PARALLEL QUERY.
+    - name: current_queue_duration
+      type: long
+      description: >
+        If queued (1), the current amount of time the session has been queued. If not currently queued, the value is 0.
+    - name: blocker.status
+      type: keyword
+      description: >
+        This column provides details on whether there is a blocking session:
+          VALID       - there is a blocking session, and it is identified in the BLOCKING_INSTANCE and BLOCKING_SESSION
+                        columns
+          NO HOLDER   - there is no session blocking this session
+          NOT IN WAIT - this session is not in a wait
+          UNKNOWN     - the blocking session is unknown
+    - name: blocker.instance_id
+      type: long
+      description: >
+        Instance identifier of the blocking session. This column is valid only if BLOCKING_SESSION_STATUS has
+        the value VALID.
+    - name: blocker.session_id
+      type: long
+      description: >
+        Session identifier of the blocking session. This column is valid only if BLOCKING_SESSION_STATUS has the
+        value VALID.
+    - name: blocker.final.status
+      type: keyword
+      description: >
+        The final blocking session is the final element in the wait chain constructed by following the sessions that
+        are blocked by one another starting with this session. In the case of a cyclical wait chain, one of the
+        sessions in the wait chain will be chosen as the final blocker. This column provides details on whether there
+        is a final blocking session:
+          VALID       - there is a final blocking session and it is identified in the FINAL_BLOCKING_INSTANCE and
+                        FINAL_BLOCKING_SESSION columns
+          NO HOLDER   - there is no session blocking this session
+          NOT IN WAIT - this session is not in a wait
+          UNKNOWN     - the final blocking session is unknown
+    - name: blocker.final.instance_id
+      type: integer
+      description: >
+        Instance identifier of the final blocking session. This column is valid only if FINAL_BLOCKING_SESSION_STATUS
+        has the value VALID.
+    - name: fblocker.final.session_id
+      type: long
+      description: >
+        Session identifier of the blocking session. This column is valid only if FINAL_BLOCKING_SESSION_STATUS has
+        the value VALID.
+    - name: wait.sequence
+      type: long
+      description: >
+        A number that uniquely identifies the current or last wait (incremented for each wait)
+    - name: wait.event.number
+      type: long
+      description: >
+        Event number
+    - name: wait.event.value
+      type: keyword
+      description: >
+        Resource or event for which the session is waiting
+    - name: wait.p1.number
+      type: long
+      description: >
+        First wait event parameter (in decimal)
+    - name: wait.p1.text
+      type: keyword
+      description: >
+        Description of the first wait event parameter
+    - name: wait.p1.raw
+      type: keyword
+      description: >
+        First wait event parameter (in hexadecimal)
+    - name: wait.p2.number
+      type: long
+      description: >
+        Second wait event parameter (in decimal)
+    - name: wait.p2.text
+      type: keyword
+      description: >
+        Description of the second wait event parameter
+    - name: wait.p2.raw
+      type: keyword
+      description: >
+        Second wait event parameter (in decimal)
+    - name: wait.p3.number
+      type: long
+      description: >
+        Third wait event parameter (in decimal)
+    - name: wait.p3.text
+      type: keyword
+      description: >
+        Description of the third wait event parameter
+    - name: wait.p3.raw
+      type: keyword
+      description: >
+        Third wait event parameter (in hexadecimal)
+    - name: wait.class.id
+      type: long
+      description: >
+        Identifier of the class of the wait event
+    - name: wait.class.number
+      type: long
+      description: >
+        Number of the class of the wait event
+    - name: wait.class.value
+      type: keyword
+      description: >
+        Name of the class of the wait event
+    - name: wait.state
+      type: keyword
+      description: >
+        Wait state:
+          WAITING             - Session is currently waiting
+          WAITED UNKNOWN TIME - Duration of the last wait is unknown; this is the value when the parameter
+                                TIMED_STATISTICS is set to false
+          WAITED SHORT TIME   - Last wait was less than a hundredth of a second
+          WAITED KNOWN TIME   - Duration of the last wait is specified in the WAIT_TIME column
+    - name: wait.time_us
+      type: long
+      description: >
+        Amount of time waited (in microseconds). If the session is currently waiting, then the value is the time spent
+        in the current wait. If the session is currently not in a wait, then the value is the amount of time waited in
+        the last wait.
+    - name: wait.time_remaining_us
+      type: long
+      description: >
+        Value is interpreted as follows:
+          > 0  - Amount of time remaining for the current wait (in microseconds)
+            0  - Current wait has timed out
+           -1  - Session can indefinitely wait in the current wait
+          NULL - Session is not currently waiting
+    - name: wait.time_since_last_wait_us
+      type: long
+      description: >
+        Time elapsed since the end of the last wait (in microseconds). If the session is currently in a wait, then
+        the value is 0.
+    - name: service_name
+      type: keyword
+      description: >
+        Service name of the session
+    - name: trace.sql
+      type: keyword
+      description: >
+        Indicates whether SQL tracing is enabled (ENABLED) or disabled (DISABLED)
+    - name: trace.waits
+      type: keyword
+      description: >
+        Indicates whether wait tracing is enabled (TRUE) or not (FALSE)
+    - name: trace.binds
+      type: keyword
+      description: >
+        Indicates whether bind tracing is enabled (TRUE) or not (FALSE)
+    - name: trace.plan_stats
+      type: keyword
+      description: >
+        Frequency at which row source statistics are dumped in the trace files for each cursor:
+          NEVER
+          FIRST_EXECUTION
+          ALL_EXECUTIONS
+    - name: edition_id
+      type: long
+      description: >
+        Shows the value that, in the session, would be reported by sys_context('USERENV', 'SESSION_EDITION_ID')
+    - name: creator.address
+      type: keyword
+      description: >
+        Address of the creating process or circuit
+    - name: creator.serial_number
+      type: long
+      description: >
+        Serial number of the creating process or circuit
+    - name: execution_context_id
+      type: keyword
+      description: >
+        Execution context identifier (sent by Application Server)
+    - name: sql_translation_profile_id
+      type: long
+      description: >
+        Object number of the SQL translation profile
+    - name: pga_tunable_mem
+      type: long
+      description: >
+        The amount of tunable PGA memory (in bytes). Untunable memory is PGA_ALLOC_MEM from V$PROCESS minus
+        PGA_TUNABLE_MEM from V$SESSION.
+    - name: shard_ddl_status
+      type: keyword
+      description: >
+        Indicates whether shard DDL is enabled in the current session (ENABLED) or not (DISABLED). This value is only
+        relevant for the shard catalog database.
+    - name: external_name
+      type: keyword
+      description: >
+        External name of the database user. For enterprise users, returns the Oracle Internet Directory DN.

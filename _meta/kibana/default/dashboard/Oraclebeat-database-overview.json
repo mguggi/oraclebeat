@@ -1,0 +1,68 @@
+{
+  "objects": [
+    {
+      "attributes": {
+        "description": "",
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{}"
+        },
+        "title": "Sessions Overview",
+        "uiStateJSON": "{}",
+        "version": 1,
+        "visState": "{\"aggs\":[],\"params\":{\"axis_formatter\":\"number\",\"axis_position\":\"left\",\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"index_pattern\":\"*\",\"interval\":\"auto\",\"series\":[{\"axis_position\":\"right\",\"chart_type\":\"line\",\"color\":\"rgba(252,220,0,1)\",\"fill\":\"0\",\"formatter\":\"number\",\"id\":\"61ca57f1-469d-11e7-af02-69e470af7417\",\"label\":\"Sessions by Type\",\"line_width\":1,\"metrics\":[{\"id\":\"61ca57f2-469d-11e7-af02-69e470af7417\",\"type\":\"count\"}],\"point_size\":\"0\",\"seperate_axis\":0,\"split_color_mode\":\"gradient\",\"split_mode\":\"terms\",\"stacked\":\"none\",\"steps\":0,\"terms_field\":\"oracle.session.type\",\"terms_size\":\"2\"},{\"axis_position\":\"right\",\"chart_type\":\"line\",\"color\":\"rgba(244,78,59,1)\",\"fill\":\"0\",\"formatter\":\"number\",\"id\":\"33b3cea0-cf73-11e7-bbbd-ab161bd044d9\",\"label\":\"Sessions by Status\",\"line_width\":1,\"metrics\":[{\"id\":\"33b3f5b0-cf73-11e7-bbbd-ab161bd044d9\",\"type\":\"count\"}],\"point_size\":\"0\",\"seperate_axis\":0,\"split_color_mode\":\"rainbow\",\"split_mode\":\"terms\",\"stacked\":\"none\",\"terms_field\":\"oracle.session.status\",\"terms_size\":\"2\"}],\"show_grid\":1,\"show_legend\":1,\"time_field\":\"@timestamp\",\"type\":\"timeseries\"},\"title\":\"Sessions Overview\",\"type\":\"metrics\"}"
+      },
+      "id": "5bfc5930-cf74-11e7-a712-f3ff54266592",
+      "type": "visualization",
+      "version": 1
+    },
+    {
+      "attributes": {
+        "description": "",
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"index\":\"ec507ee0-cf6e-11e7-a712-f3ff54266592\",\"filter\":[],\"query\":{\"language\":\"lucene\",\"query\":\"oracle.session.status: ACTIVE\"}}"
+        },
+        "title": "Active Sessions by User",
+        "uiStateJSON": "{}",
+        "version": 1,
+        "visState": "{\"title\":\"Active Sessions by User\",\"type\":\"tagcloud\",\"params\":{\"scale\":\"linear\",\"orientation\":\"single\",\"minFontSize\":12,\"maxFontSize\":62,\"hideLabel\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{\"customLabel\":\"Active Sessions\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"oracle.session.user.name\",\"size\":20,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"User\"}}]}"
+      },
+      "id": "b9f23790-cf7d-11e7-a712-f3ff54266592",
+      "type": "visualization",
+      "version": 1
+    },
+    {
+      "attributes": {
+        "description": "",
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{}"
+        },
+        "title": "Active Sessions by Wait Class",
+        "uiStateJSON": "{}",
+        "version": 1,
+        "visState": "{\"title\":\"Active Sessions by Wait Class\",\"type\":\"metrics\",\"params\":{\"axis_formatter\":\"number\",\"axis_position\":\"left\",\"filter\":\"oracle.session.status: ACTIVE AND oracle.session.wait.class.value: * !Idle\",\"id\":\"61ca57f0-469d-11e7-af02-69e470af7417\",\"index_pattern\":\"*\",\"interval\":\"auto\",\"series\":[{\"axis_position\":\"right\",\"chart_type\":\"line\",\"color\":\"rgba(164,221,0,1)\",\"fill\":0.5,\"formatter\":\"number\",\"id\":\"61ca57f1-469d-11e7-af02-69e470af7417\",\"label\":\"Active Sessions\",\"line_width\":1,\"metrics\":[{\"id\":\"61ca57f2-469d-11e7-af02-69e470af7417\",\"type\":\"count\"}],\"point_size\":\"0\",\"seperate_axis\":0,\"split_color_mode\":\"rainbow\",\"split_mode\":\"terms\",\"stacked\":\"stacked\",\"terms_field\":\"oracle.session.wait.class.value\",\"steps\":0}],\"show_grid\":1,\"show_legend\":1,\"time_field\":\"@timestamp\",\"type\":\"timeseries\"},\"aggs\":[]}"
+      },
+      "id": "f83c6b20-cf72-11e7-a712-f3ff54266592",
+      "type": "visualization",
+      "version": 2
+    },
+    {
+      "attributes": {
+        "description": "Displays metric data from an Oracle database",
+        "hits": 0,
+        "kibanaSavedObjectMeta": {
+          "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+        },
+        "optionsJSON": "{\"darkTheme\":false}",
+        "panelsJSON": "[{\"col\":1,\"id\":\"5bfc5930-cf74-11e7-a712-f3ff54266592\",\"panelIndex\":1,\"row\":1,\"size_x\":6,\"size_y\":2,\"type\":\"visualization\"},{\"col\":7,\"id\":\"b9f23790-cf7d-11e7-a712-f3ff54266592\",\"panelIndex\":2,\"row\":1,\"size_x\":6,\"size_y\":2,\"type\":\"visualization\"},{\"col\":1,\"id\":\"f83c6b20-cf72-11e7-a712-f3ff54266592\",\"panelIndex\":3,\"row\":3,\"size_x\":12,\"size_y\":3,\"type\":\"visualization\"}]",
+        "timeRestore": false,
+        "title": "Oracle Overview",
+        "uiStateJSON": "{}",
+        "version": 1
+      },
+      "id": "3a775ee0-cf7e-11e7-a712-f3ff54266592",
+      "type": "dashboard",
+      "version": 5
+    }
+  ],
+  "version": "6.0.0"
+}

@@ -1,0 +1,38 @@
+{
+    "@timestamp": "2016-05-23T08:05:34.853Z",
+    "beat": {
+        "hostname": "beathost",
+        "name": "beathost"
+    },
+    "metricset": {
+        "host": "localhost",
+        "module": "oracle",
+        "name": "filespace",
+        "rtt": 44269
+    },
+    "oracle": {
+        "filespace": {
+            "changescn": {
+                "base": "4.064307e+06",
+                "wrap": "0"
+            },
+            "database": {
+                "container": {
+                    "id": 0
+                }
+            },
+            "rfno": 5,
+            "allocated_space": 192,
+            "file_size": 1280,
+            "file_maxsize": 1280,
+            "tablespace": {
+                "id": 6,
+                "name": "PERFSTAT",
+                "bigfile": false,
+                "flashback": true
+            },
+            "flag": 10
+        }
+    },
+    "type": "metricsets"
+}

@@ -1,0 +1,79 @@
+{
+	"comment": "",
+	"ignore": "",
+	"package": [
+		{
+			"checksumSHA1": "l9R30405colbx305JqrEHENDby8=",
+			"path": "github.com/go-kit/kit/log",
+			"revision": "e3b2152e0063c5f05efea89ecbe297852af2a92d",
+			"revisionTime": "2017-11-12T23:47:20Z"
+		},
+		{
+			"checksumSHA1": "3pIKfOsbJ5J55nBRrp7XQ/sQuK0=",
+			"path": "github.com/go-logfmt/logfmt",
+			"revision": "390ab7935ee28ec6b286364bba9b4dd6410cb3d5",
+			"revisionTime": "2016-11-15T14:25:13Z"
+		},
+		{
+			"checksumSHA1": "oCMedp3nQNZDPWBjjDQ5KOcE2zw=",
+			"path": "github.com/go-stack/stack",
+			"revision": "259ab82a6cad3992b4e21ff5cac294ccb06474bc",
+			"revisionTime": "2017-11-12T03:14:02Z"
+		},
+		{
+			"checksumSHA1": "FcnEiHB4b0+eIrFQPTN+ylT80Fg=",
+			"path": "github.com/google/go-cmp/cmp",
+			"revision": "3f298f31d5756f2fe00ddfbeda978125ad24862e",
+			"revisionTime": "2017-11-24T00:01:45Z"
+		},
+		{
+			"checksumSHA1": "Mlr9qS/sdJPj22u9NYgKQWmvbHU=",
+			"path": "github.com/google/go-cmp/cmp/cmpopts",
+			"revision": "3f298f31d5756f2fe00ddfbeda978125ad24862e",
+			"revisionTime": "2017-11-24T00:01:45Z"
+		},
+		{
+			"checksumSHA1": "1DsDw5N3OeqXv09kZ48jEwTIy8Y=",
+			"path": "github.com/google/go-cmp/cmp/internal/diff",
+			"revision": "3f298f31d5756f2fe00ddfbeda978125ad24862e",
+			"revisionTime": "2017-11-24T00:01:45Z"
+		},
+		{
+			"checksumSHA1": "kYtvRhMjM0X4bvEjR3pqEHLw1qo=",
+			"path": "github.com/google/go-cmp/cmp/internal/function",
+			"revision": "3f298f31d5756f2fe00ddfbeda978125ad24862e",
+			"revisionTime": "2017-11-24T00:01:45Z"
+		},
+		{
+			"checksumSHA1": "Itk+/f1ovltPyypbROriCBPBeJ0=",
+			"path": "github.com/google/go-cmp/cmp/internal/testprotos",
+			"revision": "3f298f31d5756f2fe00ddfbeda978125ad24862e",
+			"revisionTime": "2017-11-24T00:01:45Z"
+		},
+		{
+			"checksumSHA1": "MGli0B4DTLkrpBuli0QkdLgMq6Y=",
+			"path": "github.com/google/go-cmp/cmp/internal/teststructs",
+			"revision": "3f298f31d5756f2fe00ddfbeda978125ad24862e",
+			"revisionTime": "2017-11-24T00:01:45Z"
+		},
+		{
+			"checksumSHA1": "GJFqH3Qql8QXCQL/t57Jcz28GXU=",
+			"path": "github.com/google/go-cmp/cmp/internal/value",
+			"revision": "3f298f31d5756f2fe00ddfbeda978125ad24862e",
+			"revisionTime": "2017-11-24T00:01:45Z"
+		},
+		{
+			"checksumSHA1": "Nc/PVw7qYrCRjcPdR4kAdmGnuQI=",
+			"path": "github.com/kr/logfmt",
+			"revision": "b84e30acd515aadc4b783ad4ff83aff3299bdfe0",
+			"revisionTime": "2014-02-26T03:06:59Z"
+		},
+		{
+			"checksumSHA1": "68Hs+dI0PjnG9cnNb/tL3xW+v+g=",
+			"path": "github.com/pkg/errors",
+			"revision": "f15c970de5b76fac0b59abb32d62c17cc7bed265",
+			"revisionTime": "2017-10-18T19:55:50Z"
+		}
+	],
+	"rootPath": "gopkg.in/goracle.v2"
+}

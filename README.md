@@ -80,3 +80,9 @@ make package
 ```
 
 This will fetch and create all images required for the build process. The hole process to finish can take several minutes.
+
+## TODO's
+
+* gv$recovery_area_usage --> metricset: recoveryarea
+* gv$osstat --> osstats
+

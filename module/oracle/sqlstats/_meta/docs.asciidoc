@@ -1,0 +1,3 @@
+=== oracle sqlstats MetricSet
+
+This is the sqlstats metricset of the module oracle.

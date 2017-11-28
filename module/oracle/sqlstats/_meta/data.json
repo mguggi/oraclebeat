@@ -1,0 +1,82 @@
+{
+    "@timestamp":"2016-05-23T08:05:34.853Z",
+    "beat":{
+        "hostname":"beathost",
+        "name":"beathost"
+    },
+    "metricset":{
+        "host":"localhost",
+        "module":"oracle",
+        "name":"sqlstats",
+        "rtt":44269
+    },
+    "oracle": {
+        "sqlstats": {
+            "concurrency_wait_time": 0,
+            "elapsed_time": 367649,
+            "parse_calls": 759,
+            "database": {
+                "container": {
+                    "id": 0,
+                    "dbid": "1.541642051e+09",
+                    "instance": {
+                        "id": 1
+                    }
+                }
+            },
+            "cpu_time": 368540,
+            "sharable_mem": 20232,
+            "direct": {
+                "writes": 0,
+                "reads": "0"
+            },
+            "fetches": 759,
+            "java_exec_time": 0,
+            "io_cell": {
+                "offload_eligible_bytes": 0,
+                "uncompressed_bytes": 0,
+                "offload_returned_bytes": 0
+            },
+            "avg_hard_parse_time": 3558,
+            "user_io_wait_time": 0,
+            "version_count": 1,
+            "sql": {
+                "id": "94qn6y14kw01g",
+                "text": "SELECT NVL(TO_NUMBER(EXTRACT(XMLTYPE(:B2 ), :B1 )), 0) FROM DUAL"
+            },
+            "invalidations": 0,
+            "end_of_fetch_count": 759,
+            "physical": {
+                "read": {
+                    "requests": 0,
+                    "bytes": 0
+                },
+                "write": {
+                    "bytes": 0,
+                    "requests": 0
+                }
+            },
+            "application_wait_time": 0,
+            "executions": 759,
+            "io_interconnect_bytes": 0,
+            "total_sharable_mem": 20232,
+            "cluster_wait_time": 0,
+            "sorts": 0,
+            "last_active": {
+                "time": "2017-11-24T13:25:11.000Z",
+                "child_address": "000000006e3af8c8"
+            },
+            "buffer_gets": 18,
+            "loads": 1,
+            "px_servers_executions": 0,
+            "plsql_exec_time": 0,
+            "obsolete_count": 0,
+            "disk_reads": "0",
+            "typecheck_mem": 0,
+            "rows_processed": 759,
+            "plan_hash_value": "1.388734953e+09",
+            "serializable_aborts": 0
+        }
+    },
+    "type":"metricsets"
+}
