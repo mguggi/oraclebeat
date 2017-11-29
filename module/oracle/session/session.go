@@ -1,10 +1,8 @@
 package session
 
 import (
-	"database/sql"
-
 	"context"
-
+	"database/sql"
 	"time"
 
 	"github.com/elastic/beats/libbeat/common"

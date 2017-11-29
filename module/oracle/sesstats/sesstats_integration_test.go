@@ -4,12 +4,14 @@ import (
 	"testing"
 
 	"github.com/elastic/beats/libbeat/common"
+	"github.com/elastic/beats/libbeat/tests/compose"
 	mbtest "github.com/elastic/beats/metricbeat/mb/testing"
+	"github.com/mguggi/oraclebeat/module/oracle"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestFetch(t *testing.T) {
-	//compose.EnsureUp(t, "oracle")
+	compose.EnsureUpWithTimeout(t, 20, "oracle")
 
 	f := mbtest.NewEventsFetcher(t, getConfig())
 	events, err := f.Fetch()
@@ -20,7 +22,7 @@ func TestFetch(t *testing.T) {
 	assert.True(t, len(events) > 0)
 	event := events[0]
 
-	t.Logf("%s/%s event: %+v", f.Module().Name(), f.Name(), event)
+	//t.Logf("%s/%s event: %+v", f.Module().Name(), f.Name(), event)
 
 	// Check event fields
 	database := event["database"].(common.MapStr)
@@ -40,6 +42,6 @@ func getConfig() map[string]interface{} {
 	return map[string]interface{}{
 		"module":     "oracle",
 		"metricsets": []string{"sesstats"},
-		"hosts":      []string{"oracle://system:oraclebeat@10.1.87.87:1521/ora12"},
+		"hosts":      []string{oracle.GetEnvDSN()},
 	}
 }

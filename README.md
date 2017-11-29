@@ -86,3 +86,11 @@ This will fetch and create all images required for the build process. The hole p
 * gv$recovery_area_usage --> metricset: recoveryarea
 * gv$osstat --> osstats
 
+```
+./buildDockerImage.sh -v 12.2.0.1 -s 
+docker build -t oraclebeat_oracle  . 
+docker run -v oraclebeat_oracle:/opt/oracle/oradata -p 1521:1521 -p 5500:5500 -e ORACLE_PWD=chang3Me oraclebeat_oracle
+...
+
+docker exec oraclebeat_oracle_1 ./setPassword.sh chang3Me
+```

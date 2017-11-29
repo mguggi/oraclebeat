@@ -84,7 +84,7 @@ func (m *MetricSet) Fetch() ([]common.MapStr, error) {
 	if err != nil {
 		return nil, errors.Wrapf(err, "%s failed query data", selector)
 	}
-	rows.Close()
+	defer rows.Close()
 
 	events := []common.MapStr{}
 	results, _ := oracle.Scan(rows)
