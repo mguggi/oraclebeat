@@ -8,6 +8,13 @@ GOPACKAGES=$(shell govendor list +local)
 PREFIX?=.
 NOTICE_FILE=NOTICE
 
+# Overwrite docker compose project name
+DOCKER_COMPOSE_PROJECT_NAME?=${BEAT_NAME}_
+
+# Load environment file and export variable(s)
+include module/oracle/_meta/env
+export $(shell sed -e '/^\#/d' -e 's/=.*//' module/oracle/_meta/env)
+
 # Path to the libbeat Makefile
 -include $(ES_BEATS)/metricbeat/Makefile
 
@@ -27,3 +34,4 @@ copy-vendor:
 # This is called by the beats packer before building starts
 .PHONY: before-build
 before-build:
+	if [ -f modules.d/oracle.yml.disabled ]; then mv modules.d/oracle.yml.disabled modules.d/oracle.yml; fi

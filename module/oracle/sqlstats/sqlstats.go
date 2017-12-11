@@ -99,7 +99,17 @@ func (m *MetricSet) Fetch() ([]common.MapStr, error) {
 // Closer is an optional interface that a MetricSet can implement in order to
 // cleanup any resources it has open at shutdown.
 func (m *MetricSet) Close() error {
-	defer m.db.Close()
-	defer m.stmt.Close()
-	return nil
+	logp.Info("Cleanup the resources of %s", selector)
+
+	var err error
+	// close prepared statement
+	if err = m.stmt.Close(); err != nil {
+		errors.Wrapf(err, "%s failed close prepared statement", selector)
+	}
+	// close db connection
+	if err = m.db.Close(); err != nil {
+		errors.Wrapf(err, "%s failed close connection", selector)
+	}
+
+	return err
 }

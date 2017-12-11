@@ -1,0 +1,22 @@
+- name: tablespace
+  type: group
+  description: >
+     Describes tablespace usage metrics for all types of tablespaces, including permanent, temporary, and undo tablespaces.
+  fields:
+    - name: name
+      type: keyword
+      description: >
+        Tablespace name
+    - name: size
+      type: long
+      description: >
+        Maximum size of the tablespace, in database blocks
+    - name: used.space
+      type: long
+      description: >
+        Total space consumed by the tablespace, in database blocks
+    - name: used.pct
+      type: float
+      description: >
+        Percentage of used space, as a function of the maximum possible tablespace size
+      format: percent

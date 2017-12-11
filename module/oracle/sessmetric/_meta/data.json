@@ -1,0 +1,48 @@
+{
+    "@timestamp": "2016-05-23T08:05:34.853Z",
+    "beat": {
+        "hostname": "beathost",
+        "name": "beathost"
+    },
+    "metricset": {
+        "host": "localhost",
+        "module": "oracle",
+        "name": "sessmetric",
+        "rtt": 44269
+    },
+    "oracle": {
+        "sessmetric": {
+            "cpu": "0",
+            "database": {
+                "container": {
+                    "instance": {
+                        "id": 1
+                    }
+                }
+            },
+            "interval": {
+                "csec": 2100
+            },
+            "parses": {
+                "hard": 0,
+                "soft": 0
+            },
+            "pga_memory": "974536",
+            "reads": {
+                "logical": {
+                    "count": 0,
+                    "pct": 0
+                },
+                "physical": {
+                    "count": 0,
+                    "pct": 0
+                }
+            },
+            "session": {
+                "id": 1,
+                "serial_number": 1
+            }
+        }
+    },
+    "type": "metricsets"
+}

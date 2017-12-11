@@ -212,64 +212,6 @@
       description: >
         Oracle database metrics.
       fields:
-        - name: filespace
-          type: group
-          description: >
-            Summarizes space allocation information of each data file and temp file.
-          fields:
-            - name: database.container.id
-              type: integer
-              description: >
-                The identifier of the container to which the data pertains. Possible values include:
-                  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
-                     rows in non-CDBs.
-                  1: This value is used for rows containing data that pertain to only the root
-                  n: Where n is the applicable container ID for the rows containing data
-            - name: tablespace.id
-              type: integer
-              description: >
-                Identifier of the tablespace
-            - name: tablespace.name
-              type: keyword
-              description: >
-                Tablespace name
-            - name: tablespace.bigfile
-              type: boolean
-              description: >
-                Indicates whether the tablespace is a bigfile tablespace or a smallfile tablespace
-            - name: tablespace.flashback
-              type: boolean
-              description: >
-                Indicates whether the tablespace participates in FLASHBACK DATABASE operations
-            - name: rfno
-              type: long
-              description: >
-                Relative file number of the file
-            - name: allocated_space
-              type: long
-              description: >
-                Total allocated space in the file
-            - name: file_size
-              type: long
-              description: >
-                Current file size
-            - name: file_maxsize
-              type: long
-              description: >
-                Maximum file size
-            - name: changescn.base
-              type: long
-              description: >
-                SCN base of the last change to the file
-            - name: changescn.wrap
-              type: long
-              description: >
-                SCN wrap of the last change to the file
-            - name: flag
-              type: long
-              description: >
-                Flags for file attributes
-
         - name: session
           type: group
           description: >
@@ -758,6 +700,81 @@
               description: >
                 External name of the database user. For enterprise users, returns the Oracle Internet Directory DN.
 
+        - name: sessmetric
+          type: group
+          description: >
+            Displays displays the metric values for all sessions.
+          fields:
+            - name: database.container.id
+              type: long
+              description: >
+                The identifier of the container to which the data pertains. Possible values include:
+                  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+                     rows in non-CDBs.
+                  1: This value is used for rows containing data that pertain to only the root
+                  n: Where n is the applicable container ID for the rows containing data
+            - name: database.container.instance.id
+              type: long
+              description: >
+                The instance identifier
+            - name: session.id
+              type: long
+              description: >
+                Session identifier
+            - name: session.serial_number
+              type: long
+              description: >
+                Session serial number. Used to uniquely identify a session's objects. Guarantees that session-level commands
+                are applied to the correct session objects if the session ends and another session begins with the same
+                session identifier.
+            - name: interval.begin
+              type: date
+              description: >
+                Begin time of the interval
+            - name: interval.end
+              type: date
+              description: >
+                End time of the interval
+            - name: interval.csec
+              type: long
+              description: >
+                Interval size (in hundredths of a second)
+            - name: cpu
+              type: long
+              description: >
+                CPU usage
+              format: percent
+            - name: reads.physical.count
+              type: long
+              description: >
+                Number of physical reads
+            - name: reads.physical.pct
+              type: float
+              description: >
+                Physical read ratio
+            - name: reads.logical.count
+              type: long
+              description: >
+                Number of logical reads
+            - name: reads.logical.pct
+              type: float
+              description: >
+                Logical read ratio
+              format: percent
+            - name: pga_memory
+              type: long
+              description: >
+                PGA size at the end of the interval
+              format: bytes
+            - name: parses.hard
+              type: long
+              description: >
+                Number of hard parses
+            - name: parses.soft
+              type: long
+              description: >
+                Number of soft parses
+
         - name: sesstats
           type: group
           description: >
@@ -794,6 +811,41 @@
               input_format: milliseconds
               description: >
                 Amount of time (in microseconds) that the session has spent in this operation
+
+        - name: sgastats
+          type: group
+          description: >
+            Displays detailed information on the system global area (SGA).
+          fields:
+            - name: database.container.id
+              type: long
+              description: >
+                The identifier of the container to which the data pertains. Possible values include:
+                  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+                     rows in non-CDBs.
+                  1: This value is used for rows containing data that pertain to only the root
+                  n: Where n is the applicable container ID for the rows containing data
+            - name: database.container.instance.id
+              type: long
+              description: >
+                The instance identifier
+            - name: pool
+              type: keyword
+              description: >
+                Designates the pool in which the memory in NAME resides:
+                  shared pool   - Memory is allocated from the shared pool
+                  large pool    - Memory is allocated from the large pool
+                  java pool     - Memory is allocated from the Java pool
+                  streams pool  - Memory is allocated from the Streams pool
+            - name: name
+              type: keyword
+              description: >
+                SGA component name
+            - name: value
+              type: long
+              format: bytes
+              description: >
+                Memory size (in bytes)
 
         - name: sqlstats
           type: group
@@ -1028,6 +1080,57 @@
               description: >
                 Number of times that a parent cursor became obsolete
 
+        - name: sysmetric
+          type: group
+          description: >
+            Displays the system metric values captured for the most current time interval for both the long duration (60-second)
+            and short duration (15-second) system metrics.
+          fields:
+            - name: database.container.id
+              type: long
+              description: >
+                The identifier of the container to which the data pertains. Possible values include:
+                  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+                     rows in non-CDBs.
+                  1: This value is used for rows containing data that pertain to only the root
+                  n: Where n is the applicable container ID for the rows containing data
+            - name: database.container.instance.id
+              type: long
+              description: >
+                The instance identifier
+            - name: interval.begin
+              type: date
+              description: >
+                Begin time of the interval
+            - name: interval.end
+              type: date
+              description: >
+                End time of the interval
+            - name: interval.csec
+              type: long
+              description: >
+                Interval size (in hundredths of a second)
+            - name: group_id
+              type: integer
+              description: >
+                Metric group ID
+            - name: id
+              type: long
+              description: >
+                Metric ID
+            - name: name
+              type: keyword
+              description: >
+                Metric name
+            - name: value
+              type: float
+              description: >
+                Metric value
+            - name: unit
+              type: keyword
+              description: >
+                Metric unit description
+
         - name: sysstats
           type: group
           description: >
@@ -1060,5 +1163,28 @@
               input_format: milliseconds
               description: >
                 Amount of time (in microseconds) that the session has spent in this operation
+
+        - name: tablespace
+          type: group
+          description: >
+             Describes tablespace usage metrics for all types of tablespaces, including permanent, temporary, and undo tablespaces.
+          fields:
+            - name: name
+              type: keyword
+              description: >
+                Tablespace name
+            - name: size
+              type: long
+              description: >
+                Maximum size of the tablespace, in database blocks
+            - name: used.space
+              type: long
+              description: >
+                Total space consumed by the tablespace, in database blocks
+            - name: used.pct
+              type: float
+              description: >
+                Percentage of used space, as a function of the maximum possible tablespace size
+              format: percent
 
 

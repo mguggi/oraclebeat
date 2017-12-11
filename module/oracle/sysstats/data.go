@@ -10,7 +10,7 @@ var (
 	schema = s.Schema{
 		"database": s.Object{
 			"container": s.Object{
-				"id": c.Int("CON_ID"),
+				"id": c.Int("CON_ID", s.Optional),
 				"instance": s.Object{
 					"id": c.Int("INST_ID"),
 				},

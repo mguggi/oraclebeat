@@ -1,0 +1,33 @@
+{
+    "@timestamp": "2016-05-23T08:05:34.853Z",
+    "beat": {
+        "hostname": "beathost",
+        "name": "beathost"
+    },
+    "metricset": {
+        "host": "localhost",
+        "module": "oracle",
+        "name": "sysmetric",
+        "rtt": 44269
+    },
+    "oracle": {
+        "sysmetric": {
+            "database": {
+                "container": {
+                    "instance": {
+                        "id": 1
+                    }
+                }
+            },
+            "group_id": 2,
+            "id": 2000,
+            "interval": {
+                "csec": 9000
+            },
+            "name": "Buffer Cache Hit Ratio",
+            "unit": "% (LogRead - PhyRead)/LogRead",
+            "value": 100
+        }
+    },
+    "type": "metricsets"
+}

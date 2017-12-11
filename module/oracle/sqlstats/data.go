@@ -12,8 +12,8 @@ var (
 	schema = s.Schema{
 		"database": s.Object{
 			"container": s.Object{
-				"id":   c.Int("CON_ID"),
-				"dbid": c.Int("CON_DBID"),
+				"id":   c.Int("CON_ID", s.Optional),
+				"dbid": c.Int("CON_DBID", s.Optional),
 				"instance": s.Object{
 					"id": c.Int("INST_ID"),
 				},
@@ -32,7 +32,7 @@ var (
 		"disk_reads":      c.Int("DISK_READS"),
 		"direct": s.Object{
 			"writes": c.Int("DIRECT_WRITES"),
-			"reads":  c.Int("DIRECT_READS"),
+			"reads":  c.Int("DIRECT_READS", s.Optional),
 		},
 		"buffer_gets":           c.Int("BUFFER_GETS"),
 		"rows_processed":        c.Int("ROWS_PROCESSED"),
@@ -75,6 +75,6 @@ var (
 			"uncompressed_bytes":     c.Int("IO_CELL_UNCOMPRESSED_BYTES"),
 			"offload_returned_bytes": c.Int("IO_CELL_OFFLOAD_RETURNED_BYTES"),
 		},
-		"obsolete_count": c.Int("OBSOLETE_COUNT"),
+		"obsolete_count": c.Int("OBSOLETE_COUNT", s.Optional),
 	}
 )

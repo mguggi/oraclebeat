@@ -1,3 +1,0 @@
-=== oracle filespace MetricSet
-
-This is the filespace metricset of the module oracle.

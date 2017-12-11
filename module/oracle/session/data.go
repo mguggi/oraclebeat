@@ -12,7 +12,7 @@ var (
 	schema = s.Schema{
 		"database": s.Object{
 			"container": s.Object{
-				"id": c.Int("CON_ID"),
+				"id": c.Int("CON_ID", s.Optional),
 				"instance": s.Object{
 					"id": c.Int("INST_ID"),
 				},
@@ -165,9 +165,9 @@ var (
 			"serial_number": c.Int("CREATOR_SERIAL#"),
 		},
 		"execution_context_id":       c.Str("ECID"),
-		"sql_translation_profile_id": c.Int("SQL_TRANSLATION_PROFILE_ID"),
-		"pga_tunable_mem":            c.Int("PGA_TUNABLE_MEM"),
+		"sql_translation_profile_id": c.Int("SQL_TRANSLATION_PROFILE_ID", s.Optional),
+		"pga_tunable_mem":            c.Int("PGA_TUNABLE_MEM", s.Optional),
 		"shard_ddl_status":           c.Str("SHARD_DDL_STATUS", s.Optional),
-		"external_name":              c.Str("EXTERNAL_NAME"),
+		"external_name":              c.Str("EXTERNAL_NAME", s.Optional),
 	}
 )

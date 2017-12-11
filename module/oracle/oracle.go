@@ -85,7 +85,6 @@ func Scan(rows *sql.Rows) ([]map[string]interface{}, error) {
 		var buf bytes.Buffer
 		result := map[string]interface{}{}
 		for i, _ := range columns {
-			logp.Debug(selector, "column: %v", columns[i])
 			switch columns[i].DatabaseTypeName() {
 			case "CLOB":
 				lob := vals[i].(*goracle.Lob)
@@ -95,9 +94,11 @@ func Scan(rows *sql.Rows) ([]map[string]interface{}, error) {
 				}
 				result[columns[i].Name()] = buf.String()
 			case "NUMBER":
-				result[columns[i].Name()] = vals[i].(goracle.Number).String()
+				if vals[i] != nil {
+					result[columns[i].Name()] = vals[i].(goracle.Number).String()
+				}
 			case "DATE":
-				result[columns[i].Name()] = vals[i].(time.Time).String()
+				result[columns[i].Name()] = vals[i].(time.Time).Format(time.RFC3339)
 			case "RAW":
 				result[columns[i].Name()] = hex.EncodeToString(vals[i].([]byte))
 			default:

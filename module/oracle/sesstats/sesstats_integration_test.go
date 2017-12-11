@@ -11,7 +11,7 @@ import (
 )
 
 func TestFetch(t *testing.T) {
-	compose.EnsureUpWithTimeout(t, 20, "oracle")
+	compose.EnsureUpWithTimeout(t, 180, "oracle")
 
 	f := mbtest.NewEventsFetcher(t, getConfig())
 	events, err := f.Fetch()
@@ -22,8 +22,6 @@ func TestFetch(t *testing.T) {
 	assert.True(t, len(events) > 0)
 	event := events[0]
 
-	//t.Logf("%s/%s event: %+v", f.Module().Name(), f.Name(), event)
-
 	// Check event fields
 	database := event["database"].(common.MapStr)
 	container := database["container"].(common.MapStr)
@@ -31,11 +29,14 @@ func TestFetch(t *testing.T) {
 	session := event["session"].(common.MapStr)
 
 	assert.True(t, instance["id"].(int64) > 0)
-	assert.True(t, container["id"].(int64) >= 0)
 	assert.True(t, session["id"].(int64) > 0)
 	assert.NotEmpty(t, event["id"])
 	assert.NotEmpty(t, event["name"])
 	assert.NotEmpty(t, event["value"])
+
+	if t.Failed() {
+		t.Logf("%s/%s event: %+v", f.Module().Name(), f.Name(), event)
+	}
 }
 
 func getConfig() map[string]interface{} {

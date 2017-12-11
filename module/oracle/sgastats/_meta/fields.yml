@@ -1,0 +1,34 @@
+- name: sgastats
+  type: group
+  description: >
+    Displays detailed information on the system global area (SGA).
+  fields:
+    - name: database.container.id
+      type: long
+      description: >
+        The identifier of the container to which the data pertains. Possible values include:
+          0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+             rows in non-CDBs.
+          1: This value is used for rows containing data that pertain to only the root
+          n: Where n is the applicable container ID for the rows containing data
+    - name: database.container.instance.id
+      type: long
+      description: >
+        The instance identifier
+    - name: pool
+      type: keyword
+      description: >
+        Designates the pool in which the memory in NAME resides:
+          shared pool   - Memory is allocated from the shared pool
+          large pool    - Memory is allocated from the large pool
+          java pool     - Memory is allocated from the Java pool
+          streams pool  - Memory is allocated from the Streams pool
+    - name: name
+      type: keyword
+      description: >
+        SGA component name
+    - name: value
+      type: long
+      format: bytes
+      description: >
+        Memory size (in bytes)

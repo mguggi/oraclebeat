@@ -19,17 +19,23 @@ in <<configuration-metricbeat>>. Here is an example configuration:
 ----
 oraclebeat.modules:
 - module: oracle
-  metricsets: ["sesstats"]
-  enabled: true
-  period: 10s
+  period: 30s
+  metricsets:
+    - session
+    - sgastats
+  # List of Oracle connection strings
+  hosts: ["oracle://system:Login4Me@localhost:1521/XE"]
+
+- module: oracle
+  period: 1m
+  metricsets:
+    - sqlstats
+    - sysmetric
+    - sessmetric
+    - tablespace
 
   # List of Oracle connection strings
-  hosts: ["oracle://system:S3cur3M3@localhost:1521/ORCLPDB1"]
-
-  # Timeout after which time a metric-set should return an error
-  # Timeout is by default defined as period, as a fetch of a metric-set
-  # should never take longer then period, as otherwise calls can pile up.
-  #timeout: 1s
+  hosts: ["oracle://system:Login4Me@localhost:1521/XE"]
 ----
 
 [float]
@@ -37,23 +43,35 @@ oraclebeat.modules:
 
 The following metricsets are available:
 
-* <<metricbeat-metricset-oracle-filespace,filespace>>
-
 * <<metricbeat-metricset-oracle-session,session>>
+
+* <<metricbeat-metricset-oracle-sessmetric,sessmetric>>
 
 * <<metricbeat-metricset-oracle-sesstats,sesstats>>
 
+* <<metricbeat-metricset-oracle-sgastats,sgastats>>
+
 * <<metricbeat-metricset-oracle-sqlstats,sqlstats>>
+
+* <<metricbeat-metricset-oracle-sysmetric,sysmetric>>
 
 * <<metricbeat-metricset-oracle-sysstats,sysstats>>
 
-include::oracle/filespace.asciidoc[]
+* <<metricbeat-metricset-oracle-tablespace,tablespace>>
 
 include::oracle/session.asciidoc[]
 
+include::oracle/sessmetric.asciidoc[]
+
 include::oracle/sesstats.asciidoc[]
+
+include::oracle/sgastats.asciidoc[]
 
 include::oracle/sqlstats.asciidoc[]
 
+include::oracle/sysmetric.asciidoc[]
+
 include::oracle/sysstats.asciidoc[]
+
+include::oracle/tablespace.asciidoc[]
 

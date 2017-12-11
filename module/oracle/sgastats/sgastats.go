@@ -1,4 +1,4 @@
-package filespace
+package sgastats
 
 import (
 	"context"
@@ -14,12 +14,12 @@ import (
 	_ "gopkg.in/goracle.v2"
 )
 
-const selector = "oracle/filespace"
+const selector = "oracle/sgastats"
 
 // init registers the MetricSet with the central registry.
 // The New method will be called after the setup of the module and before starting to fetch data
 func init() {
-	if err := mb.Registry.AddMetricSet("oracle", "filespace", New, oracle.ParseDSN); err != nil {
+	if err := mb.Registry.AddMetricSet("oracle", "sgastats", New, oracle.ParseDSN); err != nil {
 		panic(err)
 	}
 }
@@ -42,7 +42,7 @@ func New(base mb.BaseMetricSet) (mb.MetricSet, error) {
 
 	config := struct{}{}
 
-	logp.Info("EXPERIMENTAL: The oracle filespace metricset is experimental")
+	logp.Info("EXPERIMENTAL: The oracle sgastats metricset is experimental")
 
 	if err := base.Module().UnpackConfig(&config); err != nil {
 		return nil, err
@@ -56,10 +56,7 @@ func New(base mb.BaseMetricSet) (mb.MetricSet, error) {
 	}
 
 	stmt, err := db.Prepare(
-		"select /* metricset: filespace */ " +
-			"ts.name, decode(ts.bigfile, 'NO', 'F', 'T') bigfile, decode(ts.flashback_on, 'NO', 'F', 'T') flashback_on, fsu.* " +
-			"from v$tablespace ts " +
-			"join v$filespace_usage fsu on ts.ts# = fsu.tablespace_id")
+		"select /* metricset: sgastats */ * from gv$sgastat")
 
 	if err != nil {
 		return nil, errors.Wrapf(err, "%s failed prepare statement", selector)
@@ -102,7 +99,17 @@ func (m *MetricSet) Fetch() ([]common.MapStr, error) {
 // Closer is an optional interface that a MetricSet can implement in order to
 // cleanup any resources it has open at shutdown.
 func (m *MetricSet) Close() error {
-	defer m.db.Close()
-	defer m.stmt.Close()
-	return nil
+	logp.Info("Cleanup the resources of %s", selector)
+
+	var err error
+	// close prepared statement
+	if err = m.stmt.Close(); err != nil {
+		errors.Wrapf(err, "%s failed close prepared statement", selector)
+	}
+	// close db connection
+	if err = m.db.Close(); err != nil {
+		errors.Wrapf(err, "%s failed close connection", selector)
+	}
+
+	return err
 }

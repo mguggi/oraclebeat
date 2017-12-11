@@ -1,5 +1,2 @@
-# set default password for SYS, SYSTEM ane PDBADMIN
-ORACLE_PWD=chang3Me
-
-# connection string for integrtion tests 
-ORACLE_DSN=oracle://system:chang3Me@localhost:1521/ORCLPDB1
+# connection string for integrtion tests
+ORACLE_DSN=oracle://system:Login4Me@localhost:1521/XE

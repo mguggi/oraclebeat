@@ -1,0 +1,74 @@
+- name: sessmetric
+  type: group
+  description: >
+    Displays displays the metric values for all sessions.
+  fields:
+    - name: database.container.id
+      type: long
+      description: >
+        The identifier of the container to which the data pertains. Possible values include:
+          0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+             rows in non-CDBs.
+          1: This value is used for rows containing data that pertain to only the root
+          n: Where n is the applicable container ID for the rows containing data
+    - name: database.container.instance.id
+      type: long
+      description: >
+        The instance identifier
+    - name: session.id
+      type: long
+      description: >
+        Session identifier
+    - name: session.serial_number
+      type: long
+      description: >
+        Session serial number. Used to uniquely identify a session's objects. Guarantees that session-level commands
+        are applied to the correct session objects if the session ends and another session begins with the same
+        session identifier.
+    - name: interval.begin
+      type: date
+      description: >
+        Begin time of the interval
+    - name: interval.end
+      type: date
+      description: >
+        End time of the interval
+    - name: interval.csec
+      type: long
+      description: >
+        Interval size (in hundredths of a second)
+    - name: cpu
+      type: long
+      description: >
+        CPU usage
+      format: percent
+    - name: reads.physical.count
+      type: long
+      description: >
+        Number of physical reads
+    - name: reads.physical.pct
+      type: float
+      description: >
+        Physical read ratio
+    - name: reads.logical.count
+      type: long
+      description: >
+        Number of logical reads
+    - name: reads.logical.pct
+      type: float
+      description: >
+        Logical read ratio
+      format: percent
+    - name: pga_memory
+      type: long
+      description: >
+        PGA size at the end of the interval
+      format: bytes
+    - name: parses.hard
+      type: long
+      description: >
+        Number of hard parses
+    - name: parses.soft
+      type: long
+      description: >
+        Number of soft parses

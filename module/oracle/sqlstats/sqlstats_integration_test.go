@@ -22,16 +22,16 @@ func TestFetch(t *testing.T) {
 	assert.True(t, len(events) > 0)
 	event := events[0]
 
-	//t.Logf("%s/%s event: %+v", f.Module().Name(), f.Name(), event)
-
 	// Check event fields
 	database := event["database"].(common.MapStr)
 	container := database["container"].(common.MapStr)
 	instance := container["instance"].(common.MapStr)
 
 	assert.True(t, instance["id"].(int64) > 0)
-	assert.True(t, container["id"].(int64) >= 0)
-	assert.True(t, container["dbid"].(int64) > 0)
+
+	if t.Failed() {
+		t.Logf("%s/%s event: %+v", f.Module().Name(), f.Name(), event)
+	}
 }
 
 func getConfig() map[string]interface{} {

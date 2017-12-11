@@ -1,0 +1,50 @@
+- name: sysmetric
+  type: group
+  description: >
+    Displays the system metric values captured for the most current time interval for both the long duration (60-second)
+    and short duration (15-second) system metrics.
+  fields:
+    - name: database.container.id
+      type: long
+      description: >
+        The identifier of the container to which the data pertains. Possible values include:
+          0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+             rows in non-CDBs.
+          1: This value is used for rows containing data that pertain to only the root
+          n: Where n is the applicable container ID for the rows containing data
+    - name: database.container.instance.id
+      type: long
+      description: >
+        The instance identifier
+    - name: interval.begin
+      type: date
+      description: >
+        Begin time of the interval
+    - name: interval.end
+      type: date
+      description: >
+        End time of the interval
+    - name: interval.csec
+      type: long
+      description: >
+        Interval size (in hundredths of a second)
+    - name: group_id
+      type: integer
+      description: >
+        Metric group ID
+    - name: id
+      type: long
+      description: >
+        Metric ID
+    - name: name
+      type: keyword
+      description: >
+        Metric name
+    - name: value
+      type: float
+      description: >
+        Metric value
+    - name: unit
+      type: keyword
+      description: >
+        Metric unit description

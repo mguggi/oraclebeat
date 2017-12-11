@@ -14,7 +14,7 @@ import (
 	_ "gopkg.in/goracle.v2"
 )
 
-const selector = "oracle/sysstat"
+const selector = "oracle/sysstats"
 
 // init registers the MetricSet with the central registry.
 // The New method will be called after the setup of the module and before starting to fetch data
@@ -99,7 +99,17 @@ func (m *MetricSet) Fetch() ([]common.MapStr, error) {
 // Closer is an optional interface that a MetricSet can implement in order to
 // cleanup any resources it has open at shutdown.
 func (m *MetricSet) Close() error {
-	defer m.db.Close()
-	defer m.stmt.Close()
-	return nil
+	logp.Info("Cleanup the resources of %s", selector)
+
+	var err error
+	// close prepared statement
+	if err = m.stmt.Close(); err != nil {
+		errors.Wrapf(err, "%s failed close prepared statement", selector)
+	}
+	// close db connection
+	if err = m.db.Close(); err != nil {
+		errors.Wrapf(err, "%s failed close connection", selector)
+	}
+
+	return err
 }
