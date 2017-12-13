@@ -88,8 +88,7 @@ This will fetch and create all images required for the build process. The hole p
 Next metricset(s):
 
 ```
-gv$recovery_area_usage metricset: recoveryarea
-gv$osstat; metricset: osstats
+v$rman_backup_job_details metricset: rmanjob
 ```
 
 
