@@ -88,7 +88,7 @@ This will fetch and create all images required for the build process. The hole p
 Next metricset(s):
 
 ```
-v$rman_backup_job_details metricset: rmanjob
+...
 ```
 
 ### Test Module

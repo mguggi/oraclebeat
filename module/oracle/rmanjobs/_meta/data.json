@@ -1,0 +1,48 @@
+{
+    "@timestamp": "2016-05-23T08:05:34.853Z",
+    "beat": {
+        "hostname": "beathost",
+        "name": "beathost"
+    },
+    "metricset": {
+        "host": "localhost",
+        "module": "oracle",
+        "name": "rman",
+        "rtt": 44269
+    },
+    "oracle": {
+        "rmanjobs": {
+            "autobackup": {
+                "count": 0,
+                "done": "NO"
+            },
+            "backed_by_osb": "NO",
+            "command_id": "2017-12-13T12:04:31",
+            "compression_ratio": 1,
+            "database": {
+                "container": {}
+            },
+            "input": {
+                "bytes": 9732096,
+                "type": "DATAFILE FULL"
+            },
+            "interval": {
+                "duration": 37,
+                "end": "2017-12-13T11:05:14.000Z",
+                "start": "2017-12-13T11:04:37.000Z"
+            },
+            "optimized": "NO",
+            "output": {
+                "bytes": 9895936,
+                "device_type": "DISK"
+            },
+            "session": {
+                "key": 1,
+                "recid": 1,
+                "stamp": 962625871
+            },
+            "status": "FAILED"
+        }
+    },
+    "type": "metricsets"
+}
