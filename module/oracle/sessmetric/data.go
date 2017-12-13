@@ -7,7 +7,7 @@ import (
 	c "github.com/elastic/beats/libbeat/common/schema/mapstrstr"
 )
 
-// Based on https://docs.oracle.com/database/122/REFRN/V-SESSMETRIC.htm#REFRN30339
+// Based on https://docs.oracle.com/en/database/oracle/oracle-database/12.2/refrn/V-SESSMETRIC.html#GUID-FFC5A6B9-9FBE-477A-91A8-0675C345725C
 var (
 	schema = s.Schema{
 		"database": s.Object{

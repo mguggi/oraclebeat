@@ -14,7 +14,7 @@ import (
 	_ "gopkg.in/goracle.v2"
 )
 
-const selector = "oracle/sysstat"
+const selector = "oracle/sysmetric"
 
 // init registers the MetricSet with the central registry.
 // The New method will be called after the setup of the module and before starting to fetch data

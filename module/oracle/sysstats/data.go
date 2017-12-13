@@ -5,7 +5,7 @@ import (
 	c "github.com/elastic/beats/libbeat/common/schema/mapstrstr"
 )
 
-// Based on https://docs.oracle.com/database/122/REFRN/V-SYS_TIME_MODEL.htm#REFRN30346
+// Based on https://docs.oracle.com/en/database/oracle/oracle-database/12.2/refrn/V-SYS_TIME_MODEL.html#GUID-DC16AB84-4978-497B-8AFB-C3C23D83FC3C
 var (
 	schema = s.Schema{
 		"database": s.Object{
