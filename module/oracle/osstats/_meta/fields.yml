@@ -1,0 +1,37 @@
+- name: osstats
+  type: group
+  description: >
+    Displays system utilization statistics from the operating system. One row is returned for each system statistic.
+  fields:
+    - name: database.container.id
+      type: long
+      description: >
+        The identifier of the container to which the data pertains. Possible values include:
+          0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+             rows in non-CDBs.
+          1: This value is used for rows containing data that pertain to only the root
+          n: Where n is the applicable container ID for the rows containing data
+    - name: database.container.instance.id
+      type: long
+      description: >
+        The instance identifier
+    - name: id
+      type: long
+      description: >
+        Statistic ID
+    - name: name
+      type: keyword
+      description: >
+        Name of the statistic
+    - name: value
+      type: long
+      description: >
+        Instantaneous statistic value
+    - name: comments
+      type: keyword
+      description: >
+        Any additional operating system-specific clarifications for the statistic
+    - name: cumulative
+      type: keyword
+      description: >
+        Indicates whether the statistic is cumulative (that is, accumulates over time) (YES) or not (NO)

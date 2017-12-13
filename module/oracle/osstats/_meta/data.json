@@ -1,0 +1,29 @@
+{
+    "@timestamp": "2016-05-23T08:05:34.853Z",
+    "beat": {
+        "hostname": "beathost",
+        "name": "beathost"
+    },
+    "metricset": {
+        "host": "localhost",
+        "module": "oracle",
+        "name": "osstats",
+        "rtt": 44269
+    },
+    "oracle": {
+        "osstats": {
+            "cumulativ": "NO",
+            "database": {
+                "container": {
+                    "instance": {
+                        "id": 1
+                    }
+                }
+            },
+            "id": 0,
+            "name": "NUM_CPUS",
+            "value": 8
+        }
+    },
+    "type": "metricsets"
+}
