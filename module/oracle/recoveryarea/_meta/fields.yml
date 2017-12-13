@@ -1,0 +1,38 @@
+- name: recoveryarea
+  type: group
+  description: >
+    Displays usage information about recovery areas.
+  fields:
+    - name: database.container.id
+      type: long
+      description: >
+        The identifier of the container to which the data pertains. Possible values include:
+          0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+             rows in non-CDBs.
+          1: This value is used for rows containing data that pertain to only the root
+          n: Where n is the applicable container ID for the rows containing data
+    - name: file_type
+      type: keyword
+      description: >
+        File type:
+          CONTROL FILE
+          REDO LOG
+          ARCHIVED LOG
+          BACKUP PIECE
+          IMAGE COPY
+          FLASHBACK LOG
+          REMOTE ARCHIVED LOG
+    - name: space.used.pct
+      type: float
+      description: >
+      format: percent
+        Percent of the recovery area that is in use
+    - name: space.reclaimable.pct
+      type: float
+      format: percent
+      description: >
+        Percent of the recovery area that is reclaimable
+    - name: number_of_files
+      type: long
+      description: >
+        Number of files in the recovery area

@@ -1,0 +1,31 @@
+{
+    "@timestamp": "2016-05-23T08:05:34.853Z",
+    "beat": {
+        "hostname": "beathost",
+        "name": "beathost"
+    },
+    "metricset": {
+        "host": "localhost",
+        "module": "oracle",
+        "name": "recoveryarea",
+        "rtt": 44269
+    },
+    "oracle": {
+        "recoveryarea": {
+            "database": {
+                "container": {}
+            },
+            "file_type": "CONTROL FILE",
+            "number_of_files": 0,
+            "space": {
+                "reclaimable": {
+                    "pct": 0
+                },
+                "used": {
+                    "pct": 0
+                }
+            }
+        }
+    },
+    "type": "metricsets"
+}
