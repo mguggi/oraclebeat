@@ -23,16 +23,27 @@ oraclebeat.modules:
   metricsets:
     - session
     - sgastats
+
   # List of Oracle connection strings
   hosts: ["oracle://system:Login4Me@localhost:1521/XE"]
 
 - module: oracle
   period: 1m
   metricsets:
+    - osstats
     - sqlstats
     - sysmetric
     - sessmetric
     - tablespace
+    - recoveryarea
+
+  # List of Oracle connection strings
+  hosts: ["oracle://system:Login4Me@localhost:1521/XE"]
+
+- module: oracle
+  period: 1h
+  metricsets:
+    - rmanjobs
 
   # List of Oracle connection strings
   hosts: ["oracle://system:Login4Me@localhost:1521/XE"]
@@ -42,6 +53,12 @@ oraclebeat.modules:
 === Metricsets
 
 The following metricsets are available:
+
+* <<metricbeat-metricset-oracle-osstats,osstats>>
+
+* <<metricbeat-metricset-oracle-recoveryarea,recoveryarea>>
+
+* <<metricbeat-metricset-oracle-rmanjobs,rmanjobs>>
 
 * <<metricbeat-metricset-oracle-session,session>>
 
@@ -58,6 +75,12 @@ The following metricsets are available:
 * <<metricbeat-metricset-oracle-sysstats,sysstats>>
 
 * <<metricbeat-metricset-oracle-tablespace,tablespace>>
+
+include::oracle/osstats.asciidoc[]
+
+include::oracle/recoveryarea.asciidoc[]
+
+include::oracle/rmanjobs.asciidoc[]
 
 include::oracle/session.asciidoc[]
 

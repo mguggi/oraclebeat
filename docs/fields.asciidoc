@@ -12,3 +12,2359 @@ This file is generated! See _meta/fields.yml and scripts/generate_field_docs.py
 This document describes the fields that are exported by Oraclebeat. They are
 grouped in the following categories:
 
+* <<exported-fields-beat>>
+* <<exported-fields-cloud>>
+* <<exported-fields-common>>
+* <<exported-fields-docker-processor>>
+* <<exported-fields-kubernetes-processor>>
+* <<exported-fields-oracle>>
+
+--
+[[exported-fields-beat]]
+== Beat Fields
+
+Contains common beat fields available in all event types.
+
+
+
+[float]
+=== beat.name
+
+The name of the Beat sending the log messages. If the Beat name is set in the configuration file, then that value is used. If it is not set, the hostname is used. To set the Beat name, use the `name` option in the configuration file.
+
+
+[float]
+=== beat.hostname
+
+The hostname as returned by the operating system on which the Beat is running.
+
+
+[float]
+=== beat.timezone
+
+The timezone as returned by the operating system on which the Beat is running.
+
+
+[float]
+=== beat.version
+
+The version of the beat that generated this event.
+
+
+[float]
+=== @timestamp
+
+type: date
+
+example: August 26th 2016, 12:35:53.332
+
+format: date
+
+required: True
+
+The timestamp when the event log record was generated.
+
+
+[float]
+=== tags
+
+Arbitrary tags that can be set per Beat and per transaction type.
+
+
+[float]
+=== fields
+
+type: object
+
+Contains user configurable fields.
+
+
+[float]
+== error Fields
+
+Error fields containing additional info in case of errors.
+
+
+
+[float]
+=== error.message
+
+type: text
+
+Error message.
+
+
+[float]
+=== error.code
+
+type: long
+
+Error code.
+
+
+[float]
+=== error.type
+
+type: keyword
+
+Error type.
+
+
+[[exported-fields-cloud]]
+== Cloud Provider Metadata Fields
+
+Metadata from cloud providers added by the add_cloud_metadata processor.
+
+
+
+[float]
+=== meta.cloud.provider
+
+example: ec2
+
+Name of the cloud provider. Possible values are ec2, gce, or digitalocean.
+
+
+[float]
+=== meta.cloud.instance_id
+
+Instance ID of the host machine.
+
+
+[float]
+=== meta.cloud.instance_name
+
+Instance name of the host machine.
+
+
+[float]
+=== meta.cloud.machine_type
+
+example: t2.medium
+
+Machine type of the host machine.
+
+
+[float]
+=== meta.cloud.availability_zone
+
+example: us-east-1c
+
+Availability zone in which this host is running.
+
+
+[float]
+=== meta.cloud.project_id
+
+example: project-x
+
+Name of the project in Google Cloud.
+
+
+[float]
+=== meta.cloud.region
+
+Region in which this host is running.
+
+
+[[exported-fields-common]]
+== Common Fields
+
+Contains common fields available in all event types.
+
+
+
+[float]
+=== metricset.module
+
+The name of the module that generated the event.
+
+
+[float]
+=== metricset.name
+
+The name of the metricset that generated the event.
+
+
+[float]
+=== metricset.host
+
+Hostname of the machine from which the metricset was collected. This field may not be present when the data was collected locally.
+
+
+[float]
+=== metricset.rtt
+
+type: long
+
+required: True
+
+Event round trip time in microseconds.
+
+
+[float]
+=== metricset.namespace
+
+type: keyword
+
+Namespace of dynamic metricsets.
+
+
+[float]
+=== type
+
+example: metricsets
+
+required: True
+
+The document type. Always set to "metricsets".
+
+
+[[exported-fields-docker-processor]]
+== docker Fields
+
+beta[]
+Docker stats collected from Docker.
+
+
+
+
+[float]
+=== docker.container.id
+
+type: keyword
+
+Unique container id.
+
+
+[float]
+=== docker.container.image
+
+type: keyword
+
+Name of the image the container was built on.
+
+
+[float]
+=== docker.container.name
+
+type: keyword
+
+Container name.
+
+
+[float]
+=== docker.container.labels
+
+type: object
+
+Image labels.
+
+
+[[exported-fields-kubernetes-processor]]
+== kubernetes Fields
+
+beta[]
+Kubernetes metadata added by the kubernetes processor
+
+
+
+
+[float]
+=== kubernetes.pod.name
+
+type: keyword
+
+Kubernetes pod name
+
+
+[float]
+=== kubernetes.namespace
+
+type: keyword
+
+Kubernetes namespace
+
+
+[float]
+=== kubernetes.labels
+
+type: object
+
+Kubernetes labels map
+
+
+[float]
+=== kubernetes.annotations
+
+type: object
+
+Kubernetes annotations map
+
+
+[float]
+=== kubernetes.container.name
+
+type: keyword
+
+Kubernetes container name
+
+
+[float]
+=== kubernetes.container.image
+
+type: keyword
+
+Kubernetes container image
+
+
+[[exported-fields-oracle]]
+== Oracle Module Fields
+
+Experimental: Metrics collected from an Oracle database.
+
+
+
+[float]
+== oracle Fields
+
+Oracle database metrics.
+
+
+
+[float]
+== osstats Fields
+
+Displays system utilization statistics from the operating system. One row is returned for each system statistic.
+
+
+
+[float]
+=== oracle.osstats.database.container.id
+
+type: long
+
+The identifier of the container to which the data pertains. Possible values include:
+  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+     rows in non-CDBs.
+  1: This value is used for rows containing data that pertain to only the root
+  n: Where n is the applicable container ID for the rows containing data
+
+
+[float]
+=== oracle.osstats.database.container.instance.id
+
+type: long
+
+The instance identifier
+
+
+[float]
+=== oracle.osstats.id
+
+type: long
+
+Statistic ID
+
+
+[float]
+=== oracle.osstats.name
+
+type: keyword
+
+Name of the statistic
+
+
+[float]
+=== oracle.osstats.value
+
+type: long
+
+Instantaneous statistic value
+
+
+[float]
+=== oracle.osstats.comments
+
+type: keyword
+
+Any additional operating system-specific clarifications for the statistic
+
+
+[float]
+=== oracle.osstats.cumulative
+
+type: keyword
+
+Indicates whether the statistic is cumulative (that is, accumulates over time) (YES) or not (NO)
+
+
+[float]
+== recoveryarea Fields
+
+Displays usage information about recovery areas.
+
+
+
+[float]
+=== oracle.recoveryarea.database.container.id
+
+type: long
+
+The identifier of the container to which the data pertains. Possible values include:
+  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+     rows in non-CDBs.
+  1: This value is used for rows containing data that pertain to only the root
+  n: Where n is the applicable container ID for the rows containing data
+
+
+[float]
+=== oracle.recoveryarea.file_type
+
+type: keyword
+
+File type:
+  CONTROL FILE
+  REDO LOG
+  ARCHIVED LOG
+  BACKUP PIECE
+  IMAGE COPY
+  FLASHBACK LOG
+  REMOTE ARCHIVED LOG
+
+
+[float]
+=== oracle.recoveryarea.space.used.pct
+
+type: float
+
+format: percent Percent of the recovery area that is in use
+
+
+
+[float]
+=== oracle.recoveryarea.space.reclaimable.pct
+
+type: float
+
+format: percent
+
+Percent of the recovery area that is reclaimable
+
+
+[float]
+=== oracle.recoveryarea.number_of_files
+
+type: long
+
+Number of files in the recovery area
+
+
+[float]
+== rmanjobs Fields
+
+Displays details about backup jobs.
+
+
+
+[float]
+=== oracle.rmanjobs.database.container.id
+
+type: long
+
+The identifier of the container to which the data pertains. Possible values include:
+  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+     rows in non-CDBs.
+  1: This value is used for rows containing data that pertain to only the root
+  n: Where n is the applicable container ID for the rows containing data
+
+
+[float]
+=== oracle.rmanjobs.session.key
+
+type: long
+
+Session identifier
+
+
+[float]
+=== oracle.rmanjobs.session.recid
+
+type: long
+
+Together, with SESSION_KEY and SESSION_STAMP, used to uniquely identify job output
+
+
+[float]
+=== oracle.rmanjobs.session.stamp
+
+type: long
+
+Together, with SESSION_KEY and SESSION_RECID, used to uniquely identify job output
+
+
+[float]
+=== oracle.rmanjobs.command_id
+
+type: keyword
+
+Either a user-specified SET COMMAND ID or a unique command ID generated by RMAN
+
+
+[float]
+=== oracle.rmanjobs.interval.start
+
+type: date
+
+Start time of the first BACKUP command in the job
+
+
+[float]
+=== oracle.rmanjobs.interval.end
+
+type: date
+
+End time of the last BACKUP command in the job
+
+
+[float]
+=== oracle.rmanjobs.interval.duration
+
+type: float
+
+Number of elapsed seconds
+
+
+[float]
+=== oracle.rmanjobs.input.type
+
+type: keyword
+
+Contains one of the following values. If the user command does not satisfy one of them, then preference is given in order, from top to bottom of the list.
+  DB FULL
+  RECVR AREA
+  DB INCR
+  DATAFILE FULL
+  DATAFILE INCR
+  ARCHIVELOG
+  CONTROLFILE
+  SPFILE
+
+
+[float]
+=== oracle.rmanjobs.input.bytes
+
+type: long
+
+format: bytes
+
+Sum of all input file sizes backed up by this job
+
+
+[float]
+=== oracle.rmanjobs.input.bytes_per_sec
+
+type: long
+
+format: duration
+
+Input read-rate-per-second
+
+
+[float]
+=== oracle.rmanjobs.output.device_type
+
+type: keyword
+
+Can be DISK, SBT, or *. An * indicates more than one device (in most cases, it will be DISK or SBT).
+
+
+[float]
+=== oracle.rmanjobs.output.bytes
+
+type: long
+
+format: bytes
+
+Output size of all pieces generated by this job
+
+
+[float]
+=== oracle.rmanjobs.output.bytes_per_sec
+
+type: long
+
+format: duration
+
+Output write-rate-per-second
+
+
+[float]
+=== oracle.rmanjobs.backed_by_osb
+
+type: keyword
+
+A value of YES means the backup was done to Oracle Secure Backup. Otherwise, backed up by other third party tape library.
+
+
+[float]
+=== oracle.rmanjobs.autobackup.count
+
+type: integer
+
+Number of autobackups performed by this job
+
+
+[float]
+=== oracle.rmanjobs.autobackup.done
+
+type: keyword
+
+YES or NO, depending upon whether or not a control file autobackup was done as part of this backup job
+
+
+[float]
+=== oracle.rmanjobs.status
+
+type: keyword
+
+One of the following values:
+  RUNNING WITH WARNINGS
+  RUNNING WITH ERRORS
+  COMPLETED
+  COMPLETED WITH WARNINGS
+  COMPLETED WITH ERRORS
+  FAILED
+
+
+[float]
+=== oracle.rmanjobs.optimized
+
+type: keyword
+
+YES or NO, depending on whether optimization was applied. Applicable to backup jobs only.
+
+
+[float]
+=== oracle.rmanjobs.compression_ratio
+
+type: float
+
+Compression ratio
+
+
+[float]
+== session Fields
+
+Displays session information for each current session.
+
+
+
+[float]
+=== oracle.session.database.container.id
+
+type: integer
+
+The identifier of the container to which the data pertains. Possible values include:
+  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+     rows in non-CDBs.
+  1: This value is used for rows containing data that pertain to only the root
+  n: Where n is the applicable container ID for the rows containing data
+
+
+[float]
+=== oracle.session.database.container.instance.id
+
+type: integer
+
+The instance identifier
+
+
+[float]
+=== oracle.session.address
+
+type: keyword
+
+Session address
+
+
+[float]
+=== oracle.session.id
+
+type: long
+
+Session identifier
+
+
+[float]
+=== oracle.session.serial_number
+
+type: long
+
+Session serial number. Used to uniquely identify a session's objects. Guarantees that session-level commands are applied to the correct session objects if the session ends and another session begins with the same session identifier.
+
+
+[float]
+=== oracle.session.audit_session_id
+
+type: long
+
+Auditing session identifier
+
+
+[float]
+=== oracle.session.status
+
+type: keyword
+
+Status of the session:
+  ACTIVE   - Session currently executing SQL
+  INACTIVE - Session which is inactive and either has no configured limits or has not yet exceeded the
+             configured limits
+  KILLED   - Session marked to be killed
+  CACHED   - Session temporarily cached for use by Oracle*XA
+  SNIPED   - An inactive session that has exceeded some configured limits (for example, resource limits
+             specified for the resource manager consumer group or idle_time specified in the user's profile).
+             Such sessions will not be allowed to become active again.
+
+
+[float]
+=== oracle.session.type
+
+type: keyword
+
+Session type
+
+
+[float]
+=== oracle.session.process.id
+
+type: keyword
+
+Operating system client process identifier
+
+
+[float]
+=== oracle.session.process.address
+
+type: keyword
+
+Address of the process that owns the session
+
+
+[float]
+=== oracle.session.process.user
+
+type: keyword
+
+Operating system client user name
+
+
+[float]
+=== oracle.session.process.machine
+
+type: keyword
+
+Operating system machine name
+
+
+[float]
+=== oracle.session.process.port
+
+type: long
+
+Client port number
+
+
+[float]
+=== oracle.session.process.terminal
+
+type: keyword
+
+Operating system terminal name
+
+
+[float]
+=== oracle.session.process.program
+
+type: keyword
+
+Operating system program name
+
+
+[float]
+=== oracle.session.process.type
+
+type: keyword
+
+Server type:
+  DEDICATED
+  SHARED
+  PSEUDO
+  POOLED
+  NONE
+
+
+[float]
+=== oracle.session.user.id
+
+type: long
+
+Oracle user identifier
+
+
+[float]
+=== oracle.session.user.name
+
+type: keyword
+
+Oracle username
+
+
+[float]
+=== oracle.session.user.schema.id
+
+type: long
+
+Schema user identifier
+
+
+[float]
+=== oracle.session.user.schema.name
+
+type: keyword
+
+Schema user name
+
+
+[float]
+=== oracle.session.command
+
+type: integer
+
+Command in progress (last statement parsed). A value of 0 in this COMMAND column means the command is not recorded.
+
+
+[float]
+=== oracle.session.owner
+
+type: long
+
+Identifier of the user who owns the migratable session; the column contents are invalid if the value is 2147483644. For operations using Parallel Slaves, interpret this value as a 4-byte value. The low-order 2 bytes represent the session number and the high-order bytes represent the instance identifier of the query coordinator.
+
+
+[float]
+=== oracle.session.execution.address
+
+type: keyword
+
+Address of the transaction state object
+
+
+[float]
+=== oracle.session.execution.lock.address
+
+type: keyword
+
+Address of the lock the session is waiting for; NULL if none
+
+
+[float]
+=== oracle.session.sql.address
+
+type: keyword
+
+Used with SQL_HASH_VALUE to identify the SQL statement that is currently being executed
+
+
+[float]
+=== oracle.session.sql.hash
+
+type: long
+
+Used with SQL_ADDRESS to identify the SQL statement that is currently being executed
+
+
+[float]
+=== oracle.session.sql.id
+
+type: keyword
+
+SQL identifier of the SQL statement that is currently being executed
+
+
+[float]
+=== oracle.session.sql.child_number
+
+type: long
+
+Child number of the SQL statement that is currently being executed
+
+
+[float]
+=== oracle.session.sql.execution.start
+
+type: date
+
+Time when the execution of the SQL currently executed by this session started; NULL if SQL_ID is NULL
+
+
+[float]
+=== oracle.session.sql_execution.id
+
+type: long
+
+SQL execution identifier; NULL if SQL_ID is NULL or if the execution of that SQL has not yet started
+
+
+[float]
+=== oracle.session.sql.precursor.address
+
+type: keyword
+
+Used with PREV_HASH_VALUE to identify the last SQL statement executed
+
+
+[float]
+=== oracle.session.sql.precursor.hash
+
+type: long
+
+Used with SQL_HASH_VALUE to identify the last SQL statement executed
+
+
+[float]
+=== oracle.session.sql.precursor.id
+
+type: keyword
+
+SQL identifier of the last SQL statement executed
+
+
+[float]
+=== oracle.session.sql.precursor.child_number
+
+type: long
+
+Child number of the last SQL statement executed
+
+
+[float]
+=== oracle.session.sql.precursor.execution.start
+
+type: date
+
+SQL execution start of the last executed SQL statement
+
+
+[float]
+=== oracle.session.sql.precursor.execution.id
+
+type: long
+
+SQL execution identifier of the last executed SQL statement
+
+
+[float]
+=== oracle.session.plsql.entry.object_id
+
+type: long
+
+Object identifier of the top-most PL/SQL subprogram on the stack; NULL if there is no PL/SQL subprogram on the stack
+
+
+[float]
+=== oracle.session.plsql.entry.subprogram_id
+
+type: long
+
+Subprogram identifier of the top-most PL/SQL subprogram on the stack; NULL if there is no PL/SQL subprogram on the stack
+
+
+[float]
+=== oracle.session.plsql.object_id
+
+type: long
+
+Object identifier of the currently executing PL/SQL subprogram; NULL if executing SQL
+
+
+[float]
+=== oracle.session.plsql.subprogram_id
+
+type: long
+
+Subprogram identifier of the currently executing PL/SQL object; NULL if executing SQL
+
+
+[float]
+=== oracle.session.plsql.debugger_connected
+
+type: keyword
+
+Indicates whether the session is connected to a PL/SQL debugger. Possible values: TRUE or FALSE
+
+
+[float]
+=== oracle.session.module.name
+
+type: keyword
+
+Name of the currently executing module as set by calling the DBMS_APPLICATION_INFO.SET_MODULE procedure
+
+
+[float]
+=== oracle.session.module.hash
+
+type: long
+
+Hash value of the MODULE column
+
+
+[float]
+=== oracle.session.action.name
+
+type: keyword
+
+Name of the currently executing action as set by calling the DBMS_APPLICATION_INFO.SET_ACTION procedure
+
+
+[float]
+=== oracle.session.action.hash
+
+type: long
+
+Hash value of the ACTION column
+
+
+[float]
+=== oracle.session.client.id
+
+type: keyword
+
+Client identifier of the session
+
+
+[float]
+=== oracle.session.client.info
+
+type: keyword
+
+Information set by the DBMS_APPLICATION_INFO.SET_CLIENT_INFO procedure
+
+
+[float]
+=== oracle.session.fixed_table_sequence
+
+type: long
+
+This contains a number that increases every time the session completes a call to the database and there has been an intervening select from a dynamic performance table. This column can be used by performance monitors to monitor statistics in the database. Each time the performance monitor looks at the database, it only needs to look at sessions that are currently active or have a higher value in this column than the highest value that the performance monitor saw the last time. All the other sessions have been idle since the last time the performance monitor looked at the database.
+
+
+[float]
+=== oracle.session.row_lock.object_id
+
+type: long
+
+Object identifier for the table containing the row specified in ROW_WAIT_ROW#
+
+
+[float]
+=== oracle.session.row_lock.file_id
+
+type: long
+
+Identifier for the data file containing the row specified in ROW_WAIT_ROW#. This column is valid only if the session is currently waiting for another transaction to commit and the value of ROW_WAIT_OBJ# is not -1.
+
+
+[float]
+=== oracle.session.row_lock.block_id
+
+type: long
+
+Identifier for the block containing the row specified in ROW_WAIT_ROW#. This column is valid only if the session is currently waiting for another transaction to commit and the value of ROW_WAIT_OBJ# is not -1.
+
+
+[float]
+=== oracle.session.row_lock.row_id
+
+type: long
+
+Current row being locked. This column is valid only if the session is currently waiting for another transaction to commit and the value of ROW_WAIT_OBJ# is not -1.
+
+
+[float]
+=== oracle.session.top_level_call_number
+
+type: long
+
+Oracle top level call number
+
+
+[float]
+=== oracle.session.logon_time
+
+type: date
+
+Time of logon
+
+
+[float]
+=== oracle.session.last_call_et
+
+type: long
+
+If the session STATUS is currently ACTIVE, then the value represents the elapsed time (in seconds) since the session has become active. If the session STATUS is currently INACTIVE, then the value represents the elapsed time (in seconds) since the session has become inactive.
+
+
+[float]
+=== oracle.session.failover.type
+
+type: keyword
+
+Indicates whether and to what extent transparent application failover (TAF) is enabled for the session:
+  NONE    - Failover is disabled for this session
+  SESSION - Client can fail over its session following a disconnect
+  SELECT  - Client can fail over queries in progress as well
+
+
+[float]
+=== oracle.session.failover.method
+
+type: keyword
+
+Indicates the transparent application failover method for the session:
+  NONE       - Failover is disabled for this session
+  BASIC      - Client itself reconnects following a disconnect
+  PRECONNECT - Backup instance can support all connections from every instance for which it is backed up
+
+
+[float]
+=== oracle.session.failover.failed_over
+
+type: keyword
+
+Indicates whether the session is running in failover mode and failover has occurred (YES) or not (NO)
+
+
+[float]
+=== oracle.session.resource_consumer_group
+
+type: keyword
+
+Name of the session's current resource consumer group
+
+
+[float]
+=== oracle.session.pdml_status
+
+type: keyword
+
+If ENABLED, the session is in a PARALLEL DML enabled mode. If DISABLED, PARALLEL DML enabled mode is not supported for the session. If FORCED, the session has been altered to force PARALLEL DML.
+
+
+[float]
+=== oracle.session.pddl_status
+
+type: keyword
+
+If ENABLED, the session is in a PARALLEL DDL enabled mode. If DISABLED, PARALLEL DDL enabled mode is not supported for the session. If FORCED, the session has been altered to force PARALLEL DDL.
+
+
+[float]
+=== oracle.session.pq_status
+
+type: keyword
+
+If ENABLED, the session is in a PARALLEL QUERY enabled mode. If DISABLED, PARALLEL QUERY enabled mode is not supported for the session. If FORCED, the session has been altered to force PARALLEL QUERY.
+
+
+[float]
+=== oracle.session.current_queue_duration
+
+type: long
+
+If queued (1), the current amount of time the session has been queued. If not currently queued, the value is 0.
+
+
+[float]
+=== oracle.session.blocker.status
+
+type: keyword
+
+This column provides details on whether there is a blocking session:
+  VALID       - there is a blocking session, and it is identified in the BLOCKING_INSTANCE and BLOCKING_SESSION
+                columns
+  NO HOLDER   - there is no session blocking this session
+  NOT IN WAIT - this session is not in a wait
+  UNKNOWN     - the blocking session is unknown
+
+
+[float]
+=== oracle.session.blocker.instance_id
+
+type: long
+
+Instance identifier of the blocking session. This column is valid only if BLOCKING_SESSION_STATUS has the value VALID.
+
+
+[float]
+=== oracle.session.blocker.session_id
+
+type: long
+
+Session identifier of the blocking session. This column is valid only if BLOCKING_SESSION_STATUS has the value VALID.
+
+
+[float]
+=== oracle.session.blocker.final.status
+
+type: keyword
+
+The final blocking session is the final element in the wait chain constructed by following the sessions that are blocked by one another starting with this session. In the case of a cyclical wait chain, one of the sessions in the wait chain will be chosen as the final blocker. This column provides details on whether there is a final blocking session:
+  VALID       - there is a final blocking session and it is identified in the FINAL_BLOCKING_INSTANCE and
+                FINAL_BLOCKING_SESSION columns
+  NO HOLDER   - there is no session blocking this session
+  NOT IN WAIT - this session is not in a wait
+  UNKNOWN     - the final blocking session is unknown
+
+
+[float]
+=== oracle.session.blocker.final.instance_id
+
+type: integer
+
+Instance identifier of the final blocking session. This column is valid only if FINAL_BLOCKING_SESSION_STATUS has the value VALID.
+
+
+[float]
+=== oracle.session.fblocker.final.session_id
+
+type: long
+
+Session identifier of the blocking session. This column is valid only if FINAL_BLOCKING_SESSION_STATUS has the value VALID.
+
+
+[float]
+=== oracle.session.wait.sequence
+
+type: long
+
+A number that uniquely identifies the current or last wait (incremented for each wait)
+
+
+[float]
+=== oracle.session.wait.event.number
+
+type: long
+
+Event number
+
+
+[float]
+=== oracle.session.wait.event.value
+
+type: keyword
+
+Resource or event for which the session is waiting
+
+
+[float]
+=== oracle.session.wait.p1.number
+
+type: long
+
+First wait event parameter (in decimal)
+
+
+[float]
+=== oracle.session.wait.p1.text
+
+type: keyword
+
+Description of the first wait event parameter
+
+
+[float]
+=== oracle.session.wait.p1.raw
+
+type: keyword
+
+First wait event parameter (in hexadecimal)
+
+
+[float]
+=== oracle.session.wait.p2.number
+
+type: long
+
+Second wait event parameter (in decimal)
+
+
+[float]
+=== oracle.session.wait.p2.text
+
+type: keyword
+
+Description of the second wait event parameter
+
+
+[float]
+=== oracle.session.wait.p2.raw
+
+type: keyword
+
+Second wait event parameter (in decimal)
+
+
+[float]
+=== oracle.session.wait.p3.number
+
+type: long
+
+Third wait event parameter (in decimal)
+
+
+[float]
+=== oracle.session.wait.p3.text
+
+type: keyword
+
+Description of the third wait event parameter
+
+
+[float]
+=== oracle.session.wait.p3.raw
+
+type: keyword
+
+Third wait event parameter (in hexadecimal)
+
+
+[float]
+=== oracle.session.wait.class.id
+
+type: long
+
+Identifier of the class of the wait event
+
+
+[float]
+=== oracle.session.wait.class.number
+
+type: long
+
+Number of the class of the wait event
+
+
+[float]
+=== oracle.session.wait.class.value
+
+type: keyword
+
+Name of the class of the wait event
+
+
+[float]
+=== oracle.session.wait.state
+
+type: keyword
+
+Wait state:
+  WAITING             - Session is currently waiting
+  WAITED UNKNOWN TIME - Duration of the last wait is unknown; this is the value when the parameter
+                        TIMED_STATISTICS is set to false
+  WAITED SHORT TIME   - Last wait was less than a hundredth of a second
+  WAITED KNOWN TIME   - Duration of the last wait is specified in the WAIT_TIME column
+
+
+[float]
+=== oracle.session.wait.time_us
+
+type: long
+
+Amount of time waited (in microseconds). If the session is currently waiting, then the value is the time spent in the current wait. If the session is currently not in a wait, then the value is the amount of time waited in the last wait.
+
+
+[float]
+=== oracle.session.wait.time_remaining_us
+
+type: long
+
+Value is interpreted as follows:
+  > 0  - Amount of time remaining for the current wait (in microseconds)
+    0  - Current wait has timed out
+   -1  - Session can indefinitely wait in the current wait
+  NULL - Session is not currently waiting
+
+
+[float]
+=== oracle.session.wait.time_since_last_wait_us
+
+type: long
+
+Time elapsed since the end of the last wait (in microseconds). If the session is currently in a wait, then the value is 0.
+
+
+[float]
+=== oracle.session.service_name
+
+type: keyword
+
+Service name of the session
+
+
+[float]
+=== oracle.session.trace.sql
+
+type: keyword
+
+Indicates whether SQL tracing is enabled (ENABLED) or disabled (DISABLED)
+
+
+[float]
+=== oracle.session.trace.waits
+
+type: keyword
+
+Indicates whether wait tracing is enabled (TRUE) or not (FALSE)
+
+
+[float]
+=== oracle.session.trace.binds
+
+type: keyword
+
+Indicates whether bind tracing is enabled (TRUE) or not (FALSE)
+
+
+[float]
+=== oracle.session.trace.plan_stats
+
+type: keyword
+
+Frequency at which row source statistics are dumped in the trace files for each cursor:
+  NEVER
+  FIRST_EXECUTION
+  ALL_EXECUTIONS
+
+
+[float]
+=== oracle.session.edition_id
+
+type: long
+
+Shows the value that, in the session, would be reported by sys_context('USERENV', 'SESSION_EDITION_ID')
+
+
+[float]
+=== oracle.session.creator.address
+
+type: keyword
+
+Address of the creating process or circuit
+
+
+[float]
+=== oracle.session.creator.serial_number
+
+type: long
+
+Serial number of the creating process or circuit
+
+
+[float]
+=== oracle.session.execution_context_id
+
+type: keyword
+
+Execution context identifier (sent by Application Server)
+
+
+[float]
+=== oracle.session.sql_translation_profile_id
+
+type: long
+
+Object number of the SQL translation profile
+
+
+[float]
+=== oracle.session.pga_tunable_mem
+
+type: long
+
+The amount of tunable PGA memory (in bytes). Untunable memory is PGA_ALLOC_MEM from V$PROCESS minus PGA_TUNABLE_MEM from V$SESSION.
+
+
+[float]
+=== oracle.session.shard_ddl_status
+
+type: keyword
+
+Indicates whether shard DDL is enabled in the current session (ENABLED) or not (DISABLED). This value is only relevant for the shard catalog database.
+
+
+[float]
+=== oracle.session.external_name
+
+type: keyword
+
+External name of the database user. For enterprise users, returns the Oracle Internet Directory DN.
+
+
+[float]
+== sessmetric Fields
+
+Displays displays the metric values for all sessions.
+
+
+
+[float]
+=== oracle.sessmetric.database.container.id
+
+type: long
+
+The identifier of the container to which the data pertains. Possible values include:
+  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+     rows in non-CDBs.
+  1: This value is used for rows containing data that pertain to only the root
+  n: Where n is the applicable container ID for the rows containing data
+
+
+[float]
+=== oracle.sessmetric.database.container.instance.id
+
+type: long
+
+The instance identifier
+
+
+[float]
+=== oracle.sessmetric.session.id
+
+type: long
+
+Session identifier
+
+
+[float]
+=== oracle.sessmetric.session.serial_number
+
+type: long
+
+Session serial number. Used to uniquely identify a session's objects. Guarantees that session-level commands are applied to the correct session objects if the session ends and another session begins with the same session identifier.
+
+
+[float]
+=== oracle.sessmetric.interval.begin
+
+type: date
+
+Begin time of the interval
+
+
+[float]
+=== oracle.sessmetric.interval.end
+
+type: date
+
+End time of the interval
+
+
+[float]
+=== oracle.sessmetric.interval.csec
+
+type: long
+
+Interval size (in hundredths of a second)
+
+
+[float]
+=== oracle.sessmetric.cpu
+
+type: long
+
+format: percent
+
+CPU usage
+
+
+[float]
+=== oracle.sessmetric.reads.physical.count
+
+type: long
+
+Number of physical reads
+
+
+[float]
+=== oracle.sessmetric.reads.physical.pct
+
+type: float
+
+Physical read ratio
+
+
+[float]
+=== oracle.sessmetric.reads.logical.count
+
+type: long
+
+Number of logical reads
+
+
+[float]
+=== oracle.sessmetric.reads.logical.pct
+
+type: float
+
+format: percent
+
+Logical read ratio
+
+
+[float]
+=== oracle.sessmetric.pga_memory
+
+type: long
+
+format: bytes
+
+PGA size at the end of the interval
+
+
+[float]
+=== oracle.sessmetric.parses.hard
+
+type: long
+
+Number of hard parses
+
+
+[float]
+=== oracle.sessmetric.parses.soft
+
+type: long
+
+Number of soft parses
+
+
+[float]
+== sesstats Fields
+
+Displays the session-accumulated time for various operations. The time reported is the total elapsed or CPU time (in microseconds).
+
+
+
+[float]
+=== oracle.sesstats.database.container.id
+
+type: long
+
+The identifier of the container to which the data pertains. Possible values include:
+  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+     rows in non-CDBs.
+  1: This value is used for rows containing data that pertain to only the root
+  n: Where n is the applicable container ID for the rows containing data
+
+
+[float]
+=== oracle.sesstats.database.container.instance.id
+
+type: long
+
+The instance identifier
+
+
+[float]
+=== oracle.sesstats.session.id
+
+type: long
+
+Session identifier
+
+
+[float]
+=== oracle.sesstats.id
+
+type: long
+
+Statistic identifier for the time statistic
+
+
+[float]
+=== oracle.sesstats.name
+
+type: keyword
+
+Name of the statistic
+
+
+[float]
+=== oracle.sesstats.value
+
+type: long
+
+format: duration
+
+Amount of time (in microseconds) that the session has spent in this operation
+
+
+[float]
+== sgastats Fields
+
+Displays detailed information on the system global area (SGA).
+
+
+
+[float]
+=== oracle.sgastats.database.container.id
+
+type: long
+
+The identifier of the container to which the data pertains. Possible values include:
+  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+     rows in non-CDBs.
+  1: This value is used for rows containing data that pertain to only the root
+  n: Where n is the applicable container ID for the rows containing data
+
+
+[float]
+=== oracle.sgastats.database.container.instance.id
+
+type: long
+
+The instance identifier
+
+
+[float]
+=== oracle.sgastats.pool
+
+type: keyword
+
+Designates the pool in which the memory in NAME resides:
+  shared pool   - Memory is allocated from the shared pool
+  large pool    - Memory is allocated from the large pool
+  java pool     - Memory is allocated from the Java pool
+  streams pool  - Memory is allocated from the Streams pool
+
+
+[float]
+=== oracle.sgastats.name
+
+type: keyword
+
+SGA component name
+
+
+[float]
+=== oracle.sgastats.value
+
+type: long
+
+format: bytes
+
+Memory size (in bytes)
+
+
+[float]
+== sqlstats Fields
+
+Displays basic performance statistics for SQL cursors and contains one row per SQL statement.
+
+
+
+[float]
+=== oracle.sqlstats.database.container.id
+
+type: integer
+
+The identifier of the container to which the data pertains. Possible values include:
+  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+     rows in non-CDBs.
+  1: This value is used for rows containing data that pertain to only the root
+  n: Where n is the applicable container ID for the rows containing data
+
+
+[float]
+=== oracle.sqlstats.database.container.dbid
+
+type: long
+
+The database ID of the PDB
+
+
+[float]
+=== oracle.sqlstats.database.container.instance.id
+
+type: integer
+
+The instance identifier
+
+
+[float]
+=== oracle.sqlstats.sql.id
+
+type: keyword
+
+SQL identifier of the parent cursor in the library cache
+
+
+[float]
+=== oracle.sqlstats.sql.text
+
+type: text
+
+The full text of a SQL statement
+
+
+[float]
+=== oracle.sqlstats.last_active.time
+
+type: date
+
+Last time the statistics of a contributing cursor were updated
+
+
+[float]
+=== oracle.sqlstats.last_active.child_address
+
+type: keyword
+
+Address of the contributing cursor that last updated these statistics
+
+
+[float]
+=== oracle.sqlstats.plan_hash_value
+
+type: long
+
+Numeric representation of the current SQL plan for this cursor. Comparing one PLAN_HASH_VALUE to another easily identifies whether or not two plans are the same (rather than comparing the two plans line by line).
+
+
+[float]
+=== oracle.sqlstats.parse_calls
+
+type: long
+
+Number of parse calls for all cursors with this SQL text and plan
+
+
+[float]
+=== oracle.sqlstats.disk_reads
+
+type: long
+
+Number of disk reads for all cursors with this SQL text and plan
+
+
+[float]
+=== oracle.sqlstats.direct.writes
+
+type: long
+
+Number of direct writes for all cursors with this SQL text and plan
+
+
+[float]
+=== oracle.sqlstats.direct.reads
+
+type: long
+
+Number of direct reads for all cursors with this SQL text and plan
+
+
+[float]
+=== oracle.sqlstats.buffer_gets
+
+type: long
+
+Number of buffer gets for all cursors with this SQL text and plan
+
+
+[float]
+=== oracle.sqlstats.rows_processed
+
+type: long
+
+Total number of rows the parsed SQL statement returns
+
+
+[float]
+=== oracle.sqlstats.serializable_aborts
+
+type: long
+
+Number of times the transaction failed to serialize, producing ORA-08177 errors, per cursor
+
+
+[float]
+=== oracle.sqlstats.fetches
+
+type: long
+
+Number of fetches associated with the SQL statement
+
+
+[float]
+=== oracle.sqlstats.executions
+
+type: long
+
+Number of executions that took place on this object since it was brought into the library cache
+
+
+[float]
+=== oracle.sqlstats.end_of_fetch_count
+
+type: long
+
+Number of times this cursor was fully executed since the cursor was brought into the library cache. The value of this statistic is not incremented when the cursor is partially executed, either because it failed during the execution or because only the first few rows produced by this cursor are fetched before the cursor is closed or re-executed. By definition, the value of the END_OF_FETCH_COUNT column should be less or equal to the value of the EXECUTIONS column.
+
+
+[float]
+=== oracle.sqlstats.loads
+
+type: long
+
+Number of times the object was either loaded or reloaded
+
+
+[float]
+=== oracle.sqlstats.version_count
+
+type: long
+
+Number of cursors present in the cache with this SQL text and plan
+
+
+[float]
+=== oracle.sqlstats.invalidations
+
+type: long
+
+Number of times this child cursor has been invalidated
+
+
+[float]
+=== oracle.sqlstats.px_servers_executions
+
+type: long
+
+Total number of executions performed by parallel execution servers (0 when the statement has never been executed in parallel)
+
+
+[float]
+=== oracle.sqlstats.cpu_time
+
+type: long
+
+format: duration
+
+CPU time (in microseconds) used by this cursor for parsing, executing, and fetching
+
+
+[float]
+=== oracle.sqlstats.elapsed_time
+
+type: long
+
+format: duration
+
+Elapsed time (in microseconds) used by this cursor for parsing, executing, and fetching. If the cursor uses parallel execution, then ELAPSED_TIME is the cumulative time for the query coordinator, plus all parallel query slave processes.
+
+
+[float]
+=== oracle.sqlstats.avg_hard_parse_time
+
+type: long
+
+format: duration
+
+Average hard parse time (in microseconds) used by this cursor
+
+
+[float]
+=== oracle.sqlstats.application_wait_time
+
+type: long
+
+format: duration
+
+Application wait time (in microseconds)
+
+
+[float]
+=== oracle.sqlstats.concurrency_wait_time
+
+type: long
+
+format: duration
+
+Concurrency wait time (in microseconds)
+
+
+[float]
+=== oracle.sqlstats.cluster_wait_time
+
+type: long
+
+format: duration
+
+Cluster wait time (in microseconds). This value is specific to Oracle RAC. It shows the total time spent waiting for all waits that are categorized under the cluster class of wait events. The value is this column is an accumulated wait time spent waiting for Oracle RAC cluster resources.
+
+
+[float]
+=== oracle.sqlstats.user_io_wait_time
+
+type: long
+
+format: duration
+
+User I/O wait time (in microseconds)
+
+
+[float]
+=== oracle.sqlstats.plsql_exec_time
+
+type: long
+
+format: duration
+
+PL/SQL execution time (in microseconds)
+
+
+[float]
+=== oracle.sqlstats.java_exec_time
+
+type: long
+
+format: duration
+
+Java execution time (in microseconds)
+
+
+[float]
+=== oracle.sqlstats.sorts
+
+type: long
+
+Number of sorts that were done for the child cursor
+
+
+[float]
+=== oracle.sqlstats.sharable_mem
+
+type: long
+
+format: bytes
+
+Total shared memory (in bytes) currently occupied by all cursors with this SQL text and plan
+
+
+[float]
+=== oracle.sqlstats.total_sharable_mem
+
+type: long
+
+format: bytes
+
+Total shared memory (in bytes) occupied by all cursors with this SQL text and plan if they were to be fully loaded in the shared pool (that is, cursor size)
+
+
+[float]
+=== oracle.sqlstats.typecheck_mem
+
+type: long
+
+format: bytes
+
+Typecheck memory (in bytes)
+
+
+[float]
+=== oracle.sqlstats.io_interconnect_bytes
+
+type: long
+
+format: bytes
+
+Number of I/O bytes exchanged between Oracle Database and the storage system. Typically used for Cache Fusion or parallel queries.
+
+
+[float]
+=== oracle.sqlstats.physical.read.requests
+
+type: long
+
+Number of physical read I/O requests issued by the monitored SQL. The requests may not be disk reads.
+
+
+[float]
+=== oracle.sqlstats.physical.read.bytes
+
+type: long
+
+format: bytes
+
+Number of bytes read from disks by the monitored SQL
+
+
+[float]
+=== oracle.sqlstats.physical.write.requests
+
+type: long
+
+Number of physical write I/O requests issued by the monitored SQL
+
+
+[float]
+=== oracle.sqlstats.physical.write.bytes
+
+type: long
+
+format: bytes
+
+Number of bytes written to disks by the monitored SQL
+
+
+[float]
+=== oracle.sqlstats.exact_matching_signature
+
+type: keyword
+
+Signature used when the CURSOR_SHARING parameter is set to EXACT
+
+
+[float]
+=== oracle.sqlstats.force_matching_signature
+
+type: keyword
+
+Signature used when the CURSOR_SHARING parameter is set to FORCE
+
+
+[float]
+=== oracle.sqlstats.io_cell.offload_eligible_bytes
+
+type: long
+
+format: bytes
+
+Number of I/O bytes which can be filtered by the Exadata storage system
+
+
+[float]
+=== oracle.sqlstats.io_cell.uncompressed_bytes
+
+type: long
+
+format: bytes
+
+Number of uncompressed bytes (that is, size after decompression) that are offloaded to the Exadata cells
+
+
+[float]
+=== oracle.sqlstats.io_cell.offload_returned_bytes
+
+type: long
+
+format: bytes
+
+Number of bytes that are returned by Exadata cell through the regular I/O path
+
+
+[float]
+=== oracle.sqlstats.obsolete_count
+
+type: long
+
+Number of times that a parent cursor became obsolete
+
+
+[float]
+== sysmetric Fields
+
+Displays the system metric values captured for the most current time interval for both the long duration (60-second) and short duration (15-second) system metrics.
+
+
+
+[float]
+=== oracle.sysmetric.database.container.id
+
+type: long
+
+The identifier of the container to which the data pertains. Possible values include:
+  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+     rows in non-CDBs.
+  1: This value is used for rows containing data that pertain to only the root
+  n: Where n is the applicable container ID for the rows containing data
+
+
+[float]
+=== oracle.sysmetric.database.container.instance.id
+
+type: long
+
+The instance identifier
+
+
+[float]
+=== oracle.sysmetric.interval.begin
+
+type: date
+
+Begin time of the interval
+
+
+[float]
+=== oracle.sysmetric.interval.end
+
+type: date
+
+End time of the interval
+
+
+[float]
+=== oracle.sysmetric.interval.csec
+
+type: long
+
+Interval size (in hundredths of a second)
+
+
+[float]
+=== oracle.sysmetric.group_id
+
+type: integer
+
+Metric group ID
+
+
+[float]
+=== oracle.sysmetric.id
+
+type: long
+
+Metric ID
+
+
+[float]
+=== oracle.sysmetric.name
+
+type: keyword
+
+Metric name
+
+
+[float]
+=== oracle.sysmetric.value
+
+type: float
+
+Metric value
+
+
+[float]
+=== oracle.sysmetric.unit
+
+type: keyword
+
+Metric unit description
+
+
+[float]
+== sysstats Fields
+
+Displays the system-wide accumulated times for various operations. The time reported is the total elapsed or CPU time (in microseconds).
+
+
+
+[float]
+=== oracle.sysstats.database.container.id
+
+type: long
+
+The identifier of the container to which the data pertains. Possible values include:
+  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+     rows in non-CDBs.
+  1: This value is used for rows containing data that pertain to only the root
+  n: Where n is the applicable container ID for the rows containing data
+
+
+[float]
+=== oracle.sysstats.database.container.instance.id
+
+type: long
+
+The instance identifier
+
+
+[float]
+=== oracle.sysstats.id
+
+type: long
+
+Statistic identifier for the time statistic
+
+
+[float]
+=== oracle.sysstats.name
+
+type: keyword
+
+Name of the statistic
+
+
+[float]
+=== oracle.sysstats.value
+
+type: long
+
+format: duration
+
+Amount of time (in microseconds) that the session has spent in this operation
+
+
+[float]
+== tablespace Fields
+
+Describes tablespace usage metrics for all types of tablespaces, including permanent, temporary, and undo tablespaces.
+
+
+
+[float]
+=== oracle.tablespace.name
+
+type: keyword
+
+Tablespace name
+
+
+[float]
+=== oracle.tablespace.size
+
+type: long
+
+Maximum size of the tablespace, in database blocks
+
+
+[float]
+=== oracle.tablespace.used.space
+
+type: long
+
+Total space consumed by the tablespace, in database blocks
+
+
+[float]
+=== oracle.tablespace.used.pct
+
+type: float
+
+format: percent
+
+Percentage of used space, as a function of the maximum possible tablespace size
+
+
