@@ -91,8 +91,6 @@ Next metricset(s):
 v$rman_backup_job_details metricset: rmanjob
 ```
 
-
-
 ### Test Module
 
 Prepare Docker Image
