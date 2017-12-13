@@ -18,7 +18,7 @@ var (
 		},
 		"id":         c.Int("OSSTAT_ID"),
 		"name":       c.Str("STAT_NAME"),
-		"value":      c.Int("VALUE"),
+		"value":      c.Str("VALUE"),
 		"comments":   c.Str("COMMENTS"),
 		"cumulative": c.Str("CUMULATIVE"),
 	}
