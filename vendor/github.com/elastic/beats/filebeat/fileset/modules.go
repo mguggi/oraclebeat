@@ -278,7 +278,7 @@ func (reg *ModuleRegistry) LoadPipelines(esClient PipelineLoader) error {
 				}
 			}
 
-			pipelineID, content, err := fileset.GetPipeline()
+			pipelineID, content, err := fileset.GetPipeline(esClient.GetVersion())
 			if err != nil {
 				return fmt.Errorf("Error getting pipeline for fileset %s/%s: %v", module, name, err)
 			}
@@ -449,7 +449,7 @@ func interpretError(initialErr error, body []byte) error {
 	return fmt.Errorf("couldn't load pipeline: %v. Response body: %s", initialErr, body)
 }
 
-// LoadML loads the machine-learning configurations into Elasticsearch, if Xpack is avaiable
+// LoadML loads the machine-learning configurations into Elasticsearch, if Xpack is available
 func (reg *ModuleRegistry) LoadML(esClient PipelineLoader) error {
 	haveXpack, err := mlimporter.HaveXpackML(esClient)
 	if err != nil {

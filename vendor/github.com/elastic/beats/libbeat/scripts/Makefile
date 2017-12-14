@@ -1,9 +1,11 @@
 ### VARIABLE SETUP ###
 ### Application using libbeat may override the following variables in their Makefile
-BEAT_NAME?=libbeat ## @packaging Name of the application
+BEAT_NAME?=libbeat## @packaging Name of the binary
+BEAT_TITLE?=${BEAT_NAME}## @packaging Title of the application
 BEAT_DESCRIPTION?=Sends events to Elasticsearch or Logstash ## @packaging Description of the application
 BEAT_PATH?=github.com/elastic/beats/${BEAT_NAME}
 BEAT_PACKAGE_NAME?=${BEAT_NAME}
+BEAT_INDEX_PREFIX?=${BEAT_NAME}
 BEAT_URL?=https://www.elastic.co/products/beats/${BEAT_NAME} ## @packaging Link to the homepage of the application
 BEAT_DOC_URL?=https://www.elastic.co/guide/en/beats/${BEAT_NAME}/current/index.html ## @packaging Link to the user documentation of the application
 BEAT_LICENSE?=ASL 2.0 ## @packaging Software license of the application
@@ -28,19 +30,19 @@ SHELL=bash
 ES_HOST?="elasticsearch"
 PWD=$(shell pwd)
 BUILD_DIR?=$(shell pwd)/build
-COVERAGE_DIR=${BUILD_DIR}/coverage
-COVERAGE_TOOL=${BEAT_GOPATH}/bin/gotestcover
-COVERAGE_TOOL_REPO=github.com/elastic/beats/vendor/github.com/pierrre/gotestcover
-TESTIFY_TOOL_REPO=github.com/elastic/beats/vendor/github.com/stretchr/testify
-LIBCOMPOSE_TOOL_REPO=github.com/docker/libcompose
+COVERAGE_DIR?=${BUILD_DIR}/coverage
+COVERAGE_TOOL?=${BEAT_GOPATH}/bin/gotestcover
+COVERAGE_TOOL_REPO?=github.com/elastic/beats/vendor/github.com/pierrre/gotestcover
+TESTIFY_TOOL_REPO?=github.com/elastic/beats/vendor/github.com/stretchr/testify
+LIBCOMPOSE_TOOL_REPO?=github.com/docker/libcompose
 GOIMPORTS=goimports
-GOIMPORTS_REPO=golang.org/x/tools/cmd/goimports
+GOIMPORTS_REPO?=golang.org/x/tools/cmd/goimports
 GOIMPORTS_LOCAL_PREFIX?=github.com/elastic
 GOLINT=golint
-GOLINT_REPO=github.com/golang/lint/golint
-REVIEWDOG=reviewdog -conf ${ES_BEATS}/reviewdog.yml
+GOLINT_REPO?=github.com/golang/lint/golint
+REVIEWDOG?=reviewdog -conf ${ES_BEATS}/reviewdog.yml
 REVIEWDOG_OPTIONS?=-diff "git diff master"
-REVIEWDOG_REPO=github.com/haya14busa/reviewdog/cmd/reviewdog
+REVIEWDOG_REPO?=github.com/haya14busa/reviewdog/cmd/reviewdog
 PROCESSES?= 4
 TIMEOUT?= 90
 NOSETESTS_OPTIONS?=--process-timeout=$(TIMEOUT) --with-timer -v --with-xunit --xunit-file=${BUILD_DIR}/TEST-system.xml ## @testing the options to pass when calling nosetests
@@ -61,6 +63,7 @@ BUILDID?=$(shell git rev-parse HEAD) ## @Building The build ID
 VIRTUALENV_PARAMS?=
 INTEGRATION_TESTS?=
 FIND=. ${PYTHON_ENV}/bin/activate; find . -type f -not -path "*/vendor/*" -not -path "*/build/*" -not -path "*/.git/*"
+PERM_EXEC=$(shell [ `uname -s` = "Darwin" ] && echo "+111" || echo "/a+x")
 
 # Cross compiling targets
 CGO?=true ## @building if true, Build with C Go support
@@ -85,10 +88,11 @@ endif
 
 
 ${BEAT_NAME}: $(GOFILES_ALL) ## @build build the beat application
-	go build
+	go build -i
 
 # Create test coverage binary
 ${BEAT_NAME}.test: $(GOFILES_ALL)
+	@go build -i -o /dev/null
 	@go test $(RACE) -c -coverpkg ${GOPACKAGES_COMMA_SEP}
 
 .PHONY: crosscompile
@@ -102,8 +106,9 @@ crosscompile: $(GOFILES)
 check: python-env ## @build Checks project and source code if everything is according to standard
 	@go vet ${GOPACKAGES}
 	@go get $(GOIMPORTS_REPO)
-	@goimports -local ${GOIMPORTS_LOCAL_PREFIX} -l ${GOFILES_NOVENDOR} | (! grep . -q) || (echo "Code differs from goimports' style" && false)
+	@goimports -local ${GOIMPORTS_LOCAL_PREFIX} -l ${GOFILES_NOVENDOR} | (! grep .) || (echo "Code differs from goimports' style ^" && false)
 	@${FIND} -name *.py -exec autopep8 -d --max-line-length 120  {} \; | (! grep . -q) || (echo "Code differs from autopep8's style" && false)
+	@${FIND} -wholename "*tests/system/test_*.py" -perm ${PERM_EXEC} -exec false {} + || (echo "Python test files shouldn't be executable, otherwise nose doesn't find them" && false)
 
 .PHONY: fmt
 fmt: python-env ## @build Runs `goimports -l -w` and `autopep8`on the project's source code, modifying any files that do not match its style.
@@ -147,10 +152,12 @@ prepare-tests:
 .PHONY: unit-tests
 unit-tests: ## @testing Runs the unit tests with coverage.  Race is not enabled for unit tests because tests run much slower.
 unit-tests: prepare-tests
+	go test -i ${GOPACKAGES}
 	$(COVERAGE_TOOL) $(RACE) -coverprofile=${COVERAGE_DIR}/unit.cov  ${GOPACKAGES}
 
 .PHONY: unit
 unit: ## @testing Runs the unit tests without coverage reports.
+	go test -i ${GOPACKAGES}
 	go test $(RACE) ${GOPACKAGES}
 
 .PHONY: integration-tests
@@ -262,11 +269,11 @@ update: python-env collect
 	@echo "Updating generated files for ${BEAT_NAME}"
 
 	@# Update config files.
-	@cat _meta/beat.yml ${ES_BEATS}/libbeat/_meta/config.yml | sed -e "s/beatname/${BEAT_NAME}/g" > ${BEAT_NAME}.yml
+	@cat _meta/beat.yml ${ES_BEATS}/libbeat/_meta/config.yml | sed -e "s/beatname/${BEAT_NAME}/g;s/beat-index-prefix/${BEAT_INDEX_PREFIX}/g" > ${BEAT_NAME}.yml
 	@if [ -e _meta/beat.reference.yml ]; then \
-        cat _meta/beat.reference.yml ${ES_BEATS}/libbeat/_meta/config.reference.yml | sed -e "s/beatname/${BEAT_NAME}/g" > ${BEAT_NAME}.reference.yml ; \
+        cat _meta/beat.reference.yml ${ES_BEATS}/libbeat/_meta/config.reference.yml | sed -e "s/beatname/${BEAT_NAME}/g;s/beat-index-prefix/${BEAT_INDEX_PREFIX}/g" > ${BEAT_NAME}.reference.yml ; \
     else \
-        cat _meta/beat.yml ${ES_BEATS}/libbeat/_meta/config.reference.yml | sed -e "s/beatname/${BEAT_NAME}/g" > ${BEAT_NAME}.reference.yml ; \
+        cat _meta/beat.yml ${ES_BEATS}/libbeat/_meta/config.reference.yml | sed -e "s/beatname/${BEAT_NAME}/g;s/beat-index-prefix/${BEAT_INDEX_PREFIX}/g" > ${BEAT_NAME}.reference.yml ; \
     fi;
 	@chmod 0640 ${BEAT_NAME}.yml ${BEAT_NAME}.reference.yml
 
@@ -283,27 +290,25 @@ endif
 
 	@# Update docs
 	@mkdir -p docs
-	@${PYTHON_ENV}/bin/python ${ES_BEATS}/libbeat/scripts/generate_fields_docs.py $(PWD) ${BEAT_NAME} ${ES_BEATS}
+	@${PYTHON_ENV}/bin/python ${ES_BEATS}/libbeat/scripts/generate_fields_docs.py $(PWD) ${BEAT_TITLE} ${ES_BEATS}
 
 	@# Generate Kibana index pattern
 	@mkdir -p $(PWD)/_meta/kibana/5.x/index-pattern
 	@mkdir -p $(PWD)/_meta/kibana/default/index-pattern
-	@${PYTHON_ENV}/bin/python ${ES_BEATS}/libbeat/scripts/generate_index_pattern.py --index '${BEAT_NAME}-*' --beat $(PWD) --version ${BEAT_VERSION}
-
+	@go run ${ES_BEATS}/dev-tools/cmd/kibana_index_pattern/kibana_index_pattern.go -index '${BEAT_INDEX_PREFIX}-*' -beat-name ${BEAT_NAME} -beat-dir $(PWD) -version ${BEAT_VERSION}
 
 .PHONY: docs
 docs:  ## @build Builds the documents for the beat
-	sh ${ES_BEATS}/libbeat/scripts/build_docs.sh ${BEAT_NAME}
+	sh ${ES_BEATS}/script/build_docs.sh ${BEAT_NAME} ${BEAT_PATH}/docs ${BUILD_DIR}
 
 
 .PHONY: docs-preview
 docs-preview:  ## @build Preview the documents for the beat in the browser
-	if [ ! -d "build/docs" ]; then $(MAKE) docs; fi;
-	${BUILD_DIR}/docs/build_docs.pl --chunk=1 -open chunk=1 -open --doc ${BEAT_GOPATH}/src/github.com/elastic/beats/${BEAT_NAME}/docs/index.asciidoc -out ${BUILD_DIR}/html_docs
+	PREVIEW=1 $(MAKE) docs
 
 .PHONY: index-template
 index-template: ## @build Generate index templates for the given $VERSION. This is for manual testing.
-	go run ${ES_BEATS}/dev-tools/cmd/index_template/index_template.go -index ${BEAT_NAME} -output ${BEAT_GOPATH}/src/${BEAT_PATH}/${BEAT_NAME}.template-es${VERSION}.json -file ${BEAT_GOPATH}/src/${BEAT_PATH}/fields.yml -es.version=${VERSION}
+	go run ${ES_BEATS}/dev-tools/cmd/index_template/index_template.go -index ${BEAT_INDEX_PREFIX} -output ${BEAT_GOPATH}/src/${BEAT_PATH}/${BEAT_NAME}.template-es${VERSION}.json -file ${BEAT_GOPATH}/src/${BEAT_PATH}/fields.yml -es.version=${VERSION}
 
 ### KIBANA FILES HANDLING ###
 ES_URL?=http://localhost:9200

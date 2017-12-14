@@ -3,6 +3,10 @@ This file is generated! See scripts/docs_collector.py
 ////
 
 [[metricbeat-metricset-oracle-sysmetric]]
+=== Oracle Module sysmetric metricset
+
+experimental[]
+
 include::../../../module/oracle/sysmetric/_meta/docs.asciidoc[]
 
 

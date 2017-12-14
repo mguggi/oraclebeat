@@ -3,6 +3,10 @@ This file is generated! See scripts/docs_collector.py
 ////
 
 [[metricbeat-metricset-oracle-session]]
+=== Oracle Module session metricset
+
+experimental[]
+
 include::../../../module/oracle/session/_meta/docs.asciidoc[]
 
 

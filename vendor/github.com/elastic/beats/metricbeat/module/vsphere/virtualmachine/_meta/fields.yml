@@ -2,6 +2,7 @@
   type: group
   description: >
     virtualmachine
+  release: beta
   fields:
     - name: datacenter
       type: keyword
@@ -38,5 +39,5 @@
     - name: custom_fields
       type: object
       object_type: keyword
-      descripton: >
-        Custom fields      
+      description: >
+        Custom fields

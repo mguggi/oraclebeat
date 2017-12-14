@@ -139,11 +139,27 @@ processors:
 
 {%- endif %}
 
+#============================== Autodiscover ==================================
+
+{% if autodiscover %}
+metricbeat.autodiscover:
+  providers:
+  {%- for provider, settings in autodiscover.items() %}
+  - type: {{provider}}
+    {%- if settings %}
+    {%- for k, v in settings.items() %}
+    {{k}}:
+      {{v | default([])}}
+    {%- endfor %}
+    {%- endif %}
+  {%- endfor %}
+{% endif %}
+
 #================================ Queue =====================================
 
 queue.mem:
   events: 4096
-  flush.min_events: 8
+  flush.min_events: {{ flush_min_events|default(8) }}
   flush.timeout: 0.1s
 
 #================================ Outputs =====================================

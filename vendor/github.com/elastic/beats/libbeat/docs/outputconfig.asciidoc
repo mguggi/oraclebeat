@@ -444,10 +444,10 @@ output.logstash:
 
 ===== `pipelining`
 
-Configures number of batches to be send asynchronously to logstash while waiting
+Configures number of batches to be sent asynchronously to logstash while waiting
 for ACK from logstash. Output only becomes blocking once number of `pipelining`
 batches have been written. Pipelining is disabled if a values of 0 is
-configured. The default value is 0.
+configured. The default value is 5.
 
 [[port]]
 ===== `port`
@@ -532,7 +532,7 @@ number of events to be contained in a batch.
 
 ===== `slow_start`
 
-If enabled only a subset of events in a batch of events is transfered per transaction.
+If enabled only a subset of events in a batch of events is transferred per transaction.
 The number of events to be sent increases up to `bulk_max_size` if no error is encountered.
 On error the number of events per transaction is reduced again.
 
@@ -976,6 +976,7 @@ output.file:
   filename: {beatname_lc}
   #rotate_every_kb: 10000
   #number_of_files: 7
+  #permissions: 0600
 ------------------------------------------------------------------------------
 
 ==== Configuration options
@@ -1010,6 +1011,10 @@ rotated. The default value is 10240 KB.
 The maximum number of files to save under <<path,`path`>>. When this number of files is reached, the
 oldest file is deleted, and the rest of the files are shifted from last to first. The default
 is 7 files.
+
+===== `permissions`
+
+Permissions to use for file creation. The default is 0600.
 
 ===== `codec`
 
@@ -1066,7 +1071,7 @@ splitting of batches. When splitting is disabled, the queue decides on the
 number of events to be contained in a batch.
 
 [[configuration-output-codec]]
-=== Configure the ouput codec
+=== Configure the output codec
 
 ++++
 <titleabbrev>Output codec</titleabbrev>

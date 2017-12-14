@@ -1,4 +1,4 @@
-BUILD_DIR=build
+BUILD_DIR=$(CURDIR)/build
 COVERAGE_DIR=$(BUILD_DIR)/coverage
 BEATS=packetbeat filebeat winlogbeat metricbeat heartbeat auditbeat
 PROJECTS=libbeat $(BEATS)
@@ -15,9 +15,15 @@ REVIEWDOG_REPO=github.com/haya14busa/reviewdog/cmd/reviewdog
 
 # Runs complete testsuites (unit, system, integration) for all beats with coverage and race detection.
 # Also it builds the docs and the generators
+
 .PHONY: testsuite
 testsuite:
 	@$(foreach var,$(PROJECTS),$(MAKE) -C $(var) testsuite || exit 1;)
+
+.PHONY: setup-commit-hook
+setup-commit-hook:
+	@cp script/pre_commit.sh .git/hooks/pre-commit
+	@chmod 751 .git/hooks/pre-commit
 
 stop-environments:
 	@$(foreach var,$(PROJECTS_ENV),$(MAKE) -C $(var) stop-environment || exit 0;)
@@ -73,7 +79,8 @@ check: python-env
 .PHONY: misspell
 misspell:
 	go get github.com/client9/misspell
-	$(FIND) -name '*' -exec misspell -w {} \;
+	# Ignore Kibana files (.json)
+	$(FIND) -not -path "*.json" -name '*' -exec misspell -w {} \;
 
 .PHONY: fmt
 fmt: python-env
@@ -95,7 +102,8 @@ beats-dashboards:
 # Builds the documents for each beat
 .PHONY: docs
 docs:
-	@sh libbeat/scripts/build_docs.sh $(PROJECTS)
+	@$(foreach var,$(PROJECTS),BUILD_DIR=${BUILD_DIR} $(MAKE) -C $(var) docs || exit 1;)
+	sh ./script/build_docs.sh dev-guide github.com/elastic/beats/docs/devguide ${BUILD_DIR}
 
 .PHONY: package
 package: update beats-dashboards
@@ -103,7 +111,7 @@ package: update beats-dashboards
 
 	@echo "Start building the dashboards package"
 	@mkdir -p build/upload/
-	@BUILD_DIR=$(CURDIR)/build SNAPSHOT=$(SNAPSHOT) $(MAKE) -C dev-tools/packer package-dashboards $(CURDIR)/build/upload/build_id.txt
+	@BUILD_DIR=${BUILD_DIR} SNAPSHOT=$(SNAPSHOT) $(MAKE) -C dev-tools/packer package-dashboards ${BUILD_DIR}/upload/build_id.txt
 	@mv build/upload build/dashboards-upload
 
 	@# Copy build files over to top build directory
@@ -111,7 +119,7 @@ package: update beats-dashboards
 	@$(foreach var,$(BEATS),cp -r $(var)/build/upload/ build/upload/$(var)  || exit 1;)
 	@cp -r build/dashboards-upload build/upload/dashboards
 	@# Run tests on the generated packages.
-	@go test ./dev-tools/package_test.go -files "$(CURDIR)/build/upload/*/*"
+	@go test ./dev-tools/package_test.go -files "${BUILD_DIR}/upload/*/*"
 
 # Upload nightly builds to S3
 .PHONY: upload-nightlies-s3
@@ -140,3 +148,8 @@ notice: python-env
 python-env:
 	@test -d $(PYTHON_ENV) || virtualenv $(VIRTUALENV_PARAMS) $(PYTHON_ENV)
 	@$(PYTHON_ENV)/bin/pip install -q --upgrade pip autopep8 six
+
+# Tests if apm works with the current code
+.PHONY: test-apm
+test-apm:
+	sh ./script/test_apm.sh

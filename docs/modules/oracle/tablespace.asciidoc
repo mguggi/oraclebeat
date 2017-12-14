@@ -3,6 +3,10 @@ This file is generated! See scripts/docs_collector.py
 ////
 
 [[metricbeat-metricset-oracle-tablespace]]
+=== Oracle Module tablespace metricset
+
+experimental[]
+
 include::../../../module/oracle/tablespace/_meta/docs.asciidoc[]
 
 

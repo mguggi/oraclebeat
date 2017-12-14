@@ -3,6 +3,10 @@ This file is generated! See scripts/docs_collector.py
 ////
 
 [[metricbeat-metricset-oracle-recoveryarea]]
+=== Oracle Module recoveryarea metricset
+
+experimental[]
+
 include::../../../module/oracle/recoveryarea/_meta/docs.asciidoc[]
 
 

@@ -5,7 +5,7 @@ This file is generated! See scripts/docs_collector.py
 [[metricbeat-module-rabbitmq]]
 == RabbitMQ module
 
-experimental[]
+beta[]
 
 The RabbitMQ module uses http://www.rabbitmq.com/management.html[HTTP API] created by the management plugin to collect metrics.
 
@@ -21,7 +21,7 @@ in <<configuration-metricbeat>>. Here is an example configuration:
 ----
 metricbeat.modules:
 - module: rabbitmq
-  metricsets: ["node"]
+  metricsets: ["node", "queue"]
   period: 10s
   hosts: ["localhost:15672"]
 
@@ -36,5 +36,9 @@ The following metricsets are available:
 
 * <<metricbeat-metricset-rabbitmq-node,node>>
 
+* <<metricbeat-metricset-rabbitmq-queue,queue>>
+
 include::rabbitmq/node.asciidoc[]
+
+include::rabbitmq/queue.asciidoc[]
 

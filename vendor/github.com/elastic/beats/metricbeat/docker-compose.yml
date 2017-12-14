@@ -17,12 +17,14 @@ services:
       - ./module/couchbase/_meta/env
       - ./module/dropwizard/_meta/env
       - ./module/elasticsearch/_meta/env
+      - ./module/etcd/_meta/env
       - ./module/haproxy/_meta/env
       - ./module/http/_meta/env
       - ./module/jolokia/_meta/env
       - ./module/kafka/_meta/env
       - ./module/kibana/_meta/env
       - ./module/kubernetes/_meta/env
+      - ./module/logstash/_meta/env
       - ./module/memcached/_meta/env
       - ./module/mongodb/_meta/env
       - ./module/mysql/_meta/env
@@ -59,6 +61,9 @@ services:
       - "http.host=0.0.0.0"
       - "xpack.security.enabled=false"
 
+  etcd:
+    build: ./module/etcd/_meta
+
   haproxy:
     build: ./module/haproxy/_meta
 
@@ -73,8 +78,6 @@ services:
 
   kibana:
     build: ./module/kibana/_meta
-    depends_on:
-      - elasticsearch
 
   kubernetes:
     build: ./module/kubernetes/_meta
@@ -93,6 +96,9 @@ services:
       dockerfile: Dockerfile.kube-state
     depends_on:
       - kubernetes
+
+  logstash:
+    build: ./module/logstash/_meta
 
   memcached:
     build: ./module/memcached/_meta

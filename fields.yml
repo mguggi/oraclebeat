@@ -60,7 +60,7 @@
           description: >
             Error type.
 - key: cloud
-  title: Cloud Provider Metadata
+  title: Cloud provider metadata
   description: >
     Metadata from cloud providers added by the add_cloud_metadata processor.
   fields:
@@ -97,7 +97,7 @@
       description: >
         Region in which this host is running.
 - key: docker
-  title: docker
+  title: Docker
   description: >
     beta[]
 
@@ -126,7 +126,7 @@
           description: >
             Image labels.
 - key: kubernetes
-  title: kubernetes
+  title: Kubernetes
   description: >
     beta[]
 
@@ -1375,5 +1375,15 @@
               description: >
                 Percentage of used space, as a function of the maximum possible tablespace size
               format: percent
+
+        - name: test
+          type: group
+          description: >
+            test
+          fields:
+            - name: example
+              type: keyword
+              description: >
+                Example field
 
 

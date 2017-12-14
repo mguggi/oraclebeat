@@ -3,10 +3,18 @@ package udp
 import (
 	"github.com/elastic/beats/filebeat/channel"
 	"github.com/elastic/beats/filebeat/harvester"
+	"github.com/elastic/beats/filebeat/prospector"
 	"github.com/elastic/beats/libbeat/common"
 	"github.com/elastic/beats/libbeat/common/cfgwarn"
 	"github.com/elastic/beats/libbeat/logp"
 )
+
+func init() {
+	err := prospector.Register("udp", NewProspector)
+	if err != nil {
+		panic(err)
+	}
+}
 
 type Prospector struct {
 	harvester *Harvester
@@ -14,10 +22,10 @@ type Prospector struct {
 	outlet    channel.Outleter
 }
 
-func NewProspector(cfg *common.Config, outlet channel.OutleterFactory) (*Prospector, error) {
+func NewProspector(cfg *common.Config, outlet channel.Factory, context prospector.Context) (prospector.Prospectorer, error) {
 	cfgwarn.Experimental("UDP prospector type is used")
 
-	out, err := outlet(cfg)
+	out, err := outlet(cfg, context.DynamicFields)
 	if err != nil {
 		return nil, err
 	}

@@ -3,6 +3,10 @@ This file is generated! See scripts/docs_collector.py
 ////
 
 [[metricbeat-metricset-oracle-sessmetric]]
+=== Oracle Module sessmetric metricset
+
+experimental[]
+
 include::../../../module/oracle/sessmetric/_meta/docs.asciidoc[]
 
 

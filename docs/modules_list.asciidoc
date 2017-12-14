@@ -2,8 +2,23 @@
 This file is generated! See scripts/docs_collector.py
 ////
 
-  * <<metricbeat-module-oracle,Oracle Module>>
-
+[options="header"]
+|========================
+|Modules   |Metricsets   
+|<<metricbeat-module-oracle,Oracle Module>>  experimental[]   |    
+.12+|   |<<metricbeat-metricset-oracle-osstats,osstats>> experimental[]  
+|<<metricbeat-metricset-oracle-recoveryarea,recoveryarea>> experimental[]  
+|<<metricbeat-metricset-oracle-rmanjobs,rmanjobs>> experimental[]  
+|<<metricbeat-metricset-oracle-session,session>> experimental[]  
+|<<metricbeat-metricset-oracle-sessmetric,sessmetric>> experimental[]  
+|<<metricbeat-metricset-oracle-sesstats,sesstats>> experimental[]  
+|<<metricbeat-metricset-oracle-sgastats,sgastats>> experimental[]  
+|<<metricbeat-metricset-oracle-sqlstats,sqlstats>> experimental[]  
+|<<metricbeat-metricset-oracle-sysmetric,sysmetric>> experimental[]  
+|<<metricbeat-metricset-oracle-sysstats,sysstats>> experimental[]  
+|<<metricbeat-metricset-oracle-tablespace,tablespace>> experimental[]  
+|<<metricbeat-metricset-oracle-test,test>> experimental[]  
+|================================
 
 --
 

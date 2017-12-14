@@ -1208,4 +1208,14 @@
                 Percentage of used space, as a function of the maximum possible tablespace size
               format: percent
 
+        - name: test
+          type: group
+          description: >
+            test
+          fields:
+            - name: example
+              type: keyword
+              description: >
+                Example field
+
 

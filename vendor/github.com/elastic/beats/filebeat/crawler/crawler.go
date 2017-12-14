@@ -12,13 +12,17 @@ import (
 	"github.com/elastic/beats/libbeat/cfgfile"
 	"github.com/elastic/beats/libbeat/common"
 	"github.com/elastic/beats/libbeat/logp"
+
+	_ "github.com/elastic/beats/filebeat/include"
 )
 
 type Crawler struct {
 	prospectors         map[uint64]*prospector.Prospector
 	prospectorConfigs   []*common.Config
-	out                 channel.OutleterFactory
+	out                 channel.Factory
 	wg                  sync.WaitGroup
+	ProspectorsFactory  cfgfile.RunnerFactory
+	ModulesFactory      cfgfile.RunnerFactory
 	modulesReloader     *cfgfile.Reloader
 	prospectorsReloader *cfgfile.Reloader
 	once                bool
@@ -26,7 +30,7 @@ type Crawler struct {
 	beatDone            chan struct{}
 }
 
-func New(out channel.OutleterFactory, prospectorConfigs []*common.Config, beatVersion string, beatDone chan struct{}, once bool) (*Crawler, error) {
+func New(out channel.Factory, prospectorConfigs []*common.Config, beatVersion string, beatDone chan struct{}, once bool) (*Crawler, error) {
 	return &Crawler{
 		out:               out,
 		prospectors:       map[uint64]*prospector.Prospector{},
@@ -51,27 +55,27 @@ func (c *Crawler) Start(r *registrar.Registrar, configProspectors *common.Config
 		}
 	}
 
+	c.ProspectorsFactory = prospector.NewRunnerFactory(c.out, r, c.beatDone)
 	if configProspectors.Enabled() {
 		c.prospectorsReloader = cfgfile.NewReloader(configProspectors)
-		prospectorsFactory := prospector.NewFactory(c.out, r, c.beatDone)
-		if err := c.prospectorsReloader.Check(prospectorsFactory); err != nil {
+		if err := c.prospectorsReloader.Check(c.ProspectorsFactory); err != nil {
 			return err
 		}
 
 		go func() {
-			c.prospectorsReloader.Run(prospectorsFactory)
+			c.prospectorsReloader.Run(c.ProspectorsFactory)
 		}()
 	}
 
+	c.ModulesFactory = fileset.NewFactory(c.out, r, c.beatVersion, pipelineLoaderFactory, c.beatDone)
 	if configModules.Enabled() {
 		c.modulesReloader = cfgfile.NewReloader(configModules)
-		modulesFactory := fileset.NewFactory(c.out, r, c.beatVersion, pipelineLoaderFactory, c.beatDone)
-		if err := c.modulesReloader.Check(modulesFactory); err != nil {
+		if err := c.modulesReloader.Check(c.ModulesFactory); err != nil {
 			return err
 		}
 
 		go func() {
-			c.modulesReloader.Run(modulesFactory)
+			c.modulesReloader.Run(c.ModulesFactory)
 		}()
 	}
 
@@ -84,17 +88,17 @@ func (c *Crawler) startProspector(config *common.Config, states []file.State) er
 	if !config.Enabled() {
 		return nil
 	}
-	p, err := prospector.NewProspector(config, c.out, c.beatDone, states)
+	p, err := prospector.New(config, c.out, c.beatDone, states, nil)
 	if err != nil {
 		return fmt.Errorf("Error in initing prospector: %s", err)
 	}
 	p.Once = c.once
 
-	if _, ok := c.prospectors[p.ID()]; ok {
-		return fmt.Errorf("Prospector with same ID already exists: %v", p.ID())
+	if _, ok := c.prospectors[p.ID]; ok {
+		return fmt.Errorf("Prospector with same ID already exists: %d", p.ID)
 	}
 
-	c.prospectors[p.ID()] = p
+	c.prospectors[p.ID] = p
 
 	p.Start()
 

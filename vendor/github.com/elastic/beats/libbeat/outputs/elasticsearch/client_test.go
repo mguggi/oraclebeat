@@ -283,8 +283,12 @@ func TestClientWithHeaders(t *testing.T) {
 	// start a mock HTTP server
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		assert.Equal(t, "testing value", r.Header.Get("X-Test"))
-		requestCount++
+		// from the documentation: https://golang.org/pkg/net/http/
+		// For incoming requests, the Host header is promoted to the
+		// Request.Host field and removed from the Header map.
+		assert.Equal(t, "myhost.local", r.Host)
 		fmt.Fprintln(w, "Hello, client")
+		requestCount++
 	}))
 	defer ts.Close()
 
@@ -292,6 +296,7 @@ func TestClientWithHeaders(t *testing.T) {
 		URL:   ts.URL,
 		Index: outil.MakeSelector(outil.ConstSelectorExpr("test")),
 		Headers: map[string]string{
+			"host":   "myhost.local",
 			"X-Test": "testing value",
 		},
 	}, nil)
@@ -312,4 +317,50 @@ func TestClientWithHeaders(t *testing.T) {
 	err = client.Publish(batch)
 	assert.NoError(t, err)
 	assert.Equal(t, 2, requestCount)
+}
+
+func TestAddToURL(t *testing.T) {
+	type Test struct {
+		url      string
+		path     string
+		pipeline string
+		params   map[string]string
+		expected string
+	}
+	tests := []Test{
+		{
+			url:      "localhost:9200",
+			path:     "/path",
+			pipeline: "",
+			params:   make(map[string]string),
+			expected: "localhost:9200/path",
+		},
+		{
+			url:      "localhost:9200/",
+			path:     "/path",
+			pipeline: "",
+			params:   make(map[string]string),
+			expected: "localhost:9200/path",
+		},
+		{
+			url:      "localhost:9200",
+			path:     "/path",
+			pipeline: "pipeline_1",
+			params:   make(map[string]string),
+			expected: "localhost:9200/path?pipeline=pipeline_1",
+		},
+		{
+			url:      "localhost:9200/",
+			path:     "/path",
+			pipeline: "",
+			params: map[string]string{
+				"param": "value",
+			},
+			expected: "localhost:9200/path?param=value",
+		},
+	}
+	for _, test := range tests {
+		url := addToURL(test.url, test.path, test.pipeline, test.params)
+		assert.Equal(t, url, test.expected)
+	}
 }

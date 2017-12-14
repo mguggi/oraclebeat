@@ -70,6 +70,27 @@ class Test(BaseTest):
                         test_file=test_file,
                         cfgfile=cfgfile)
 
+    def _test_expected_events(self, module, test_file, res, objects):
+        with open(test_file + "-expected.json", "r") as f:
+            expected = json.load(f)
+
+        if len(expected) > len(objects):
+            res = self.es.search(index=self.index_name,
+                                 body={"query": {"match_all": {}},
+                                       "size": len(expected)})
+            objects = [o["_source"] for o in res["hits"]["hits"]]
+
+        assert len(expected) == res['hits']['total'], "expected {} but got {}".format(
+            len(expected), res['hits']['total'])
+
+        for ev in expected:
+            found = False
+            for obj in objects:
+                if ev["_source"][module] == obj[module]:
+                    found = True
+                    break
+            assert found, "The following expected object was not found: {}".format(obj)
+
     def run_on_file(self, module, fileset, test_file, cfgfile):
         print("Testing {}/{} on {}".format(module, fileset, test_file))
 
@@ -117,23 +138,12 @@ class Test(BaseTest):
 
             assert "error" not in obj, "not error expected but got: {}".format(obj)
 
-            if module != "auditd" and fileset != "log":
+            if (module != "auditd" and fileset != "log"):
                 # There are dynamic fields in audit logs that are not documented.
                 self.assert_fields_are_documented(obj)
 
         if os.path.exists(test_file + "-expected.json"):
-            with open(test_file + "-expected.json", "r") as f:
-                expected = json.load(f)
-                assert len(expected) == len(objects), "expected {} but got {}".format(len(expected), len(objects))
-                for ev in expected:
-                    found = False
-                    for obj in objects:
-                        if ev["_source"][module] == obj[module]:
-                            found = True
-                            break
-                    if not found:
-                        raise Exception("The following expected object was" +
-                                        " not found: {}".format(obj))
+            self._test_expected_events(module, test_file, res, objects)
 
     @unittest.skipIf(not INTEGRATION_TESTS or
                      os.getenv("TESTING_ENVIRONMENT") == "2x",

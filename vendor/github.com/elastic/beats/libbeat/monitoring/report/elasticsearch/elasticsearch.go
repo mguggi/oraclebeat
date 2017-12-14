@@ -45,7 +45,7 @@ var errNoMonitoring = errors.New("xpack monitoring not available")
 // default monitoring api parameters
 var defaultParams = map[string]string{
 	"system_id":          "beats",
-	"system_api_version": "2",
+	"system_api_version": "6",
 }
 
 func init() {
@@ -58,7 +58,7 @@ func makeReporter(beat beat.Info, cfg *common.Config) (report.Reporter, error) {
 		return nil, err
 	}
 
-	// check endpoint availablity on startup only every 30 seconds
+	// check endpoint availability on startup only every 30 seconds
 	checkRetry := 30 * time.Second
 	windowSize := config.BulkMaxSize - 1
 	if windowSize <= 0 {
