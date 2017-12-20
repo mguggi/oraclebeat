@@ -2786,7 +2786,7 @@
           "scroll": false,
           "showHeader": true,
           "sort": {
-            "col": 9,
+            "col": 3,
             "desc": true
           },
           "span": 12,
@@ -3016,56 +3016,56 @@
                   "id": "7",
                   "meta": {},
                   "settings": {},
-                  "type": "sum"
+                  "type": "max"
                 },
                 {
                   "field": "oracle.sessmetric.reads.physical.count",
                   "id": "9",
                   "meta": {},
                   "settings": {},
-                  "type": "sum"
+                  "type": "max"
                 },
                 {
                   "field": "oracle.sessmetric.reads.logical.count",
                   "id": "10",
                   "meta": {},
                   "settings": {},
-                  "type": "sum"
+                  "type": "max"
                 },
                 {
                   "field": "oracle.sessmetric.pga_memory",
                   "id": "11",
                   "meta": {},
                   "settings": {},
-                  "type": "sum"
+                  "type": "max"
                 },
                 {
                   "field": "oracle.sessmetric.parses.hard",
                   "id": "13",
                   "meta": {},
                   "settings": {},
-                  "type": "sum"
+                  "type": "max"
                 },
                 {
                   "field": "oracle.sessmetric.parses.soft",
                   "id": "14",
                   "meta": {},
                   "settings": {},
-                  "type": "sum"
+                  "type": "max"
                 },
                 {
                   "field": "oracle.sessmetric.reads.physical.pct",
                   "id": "21",
                   "meta": {},
                   "settings": {},
-                  "type": "avg"
+                  "type": "max"
                 },
                 {
                   "field": "oracle.sessmetric.reads.logical.pct",
                   "id": "22",
                   "meta": {},
                   "settings": {},
-                  "type": "avg"
+                  "type": "max"
                 }
               ],
               "query": "_exists_:oracle.sessmetric.session.id",
@@ -3565,5 +3565,5 @@
   },
   "timezone": "",
   "title": "Oracle Performance Monitor",
-  "version": 17
+  "version": 20
 }

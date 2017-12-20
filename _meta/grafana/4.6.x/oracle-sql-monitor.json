@@ -143,8 +143,8 @@
           "scroll": false,
           "showHeader": true,
           "sort": {
-            "col": 6,
-            "desc": false
+            "col": 9,
+            "desc": true
           },
           "span": 12,
           "styles": [

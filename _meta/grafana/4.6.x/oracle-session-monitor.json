@@ -71,8 +71,8 @@
           "scroll": false,
           "showHeader": true,
           "sort": {
-            "col": 6,
-            "desc": true
+            "col": null,
+            "desc": false
           },
           "span": 12,
           "styles": [
@@ -197,7 +197,8 @@
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "decimals": 2,
               "link": true,
-              "linkUrl": "",
+              "linkTooltip": "$__cell_0 : $__cell_6",
+              "linkUrl": "dashboard/db/oracle-sql-monitor?var-Filters=oracle.sqlstats.database.container.instance.id%7C%3D%7C$__cell_0&var-Filters=oracle.sqlstats.sql.id%7C%3D%7C$__cell_6&from=now%2Fd&to=now%2Fd",
               "pattern": "oracle.session.sql.id",
               "thresholds": [],
               "type": "string",
@@ -535,14 +536,15 @@
         "datasource": "mguggiws",
         "filters": [
           {
-            "key": "oracle.session.status",
-            "operator": "=",
-            "value": "ACTIVE"
-          },
-          {
+            "condition": "AND",
             "key": "oracle.session.type",
             "operator": "=",
             "value": "USER"
+          },
+          {
+            "key": "oracle.session.status",
+            "operator": "=",
+            "value": "ACTIVE"
           }
         ],
         "hide": 0,
@@ -583,5 +585,5 @@
   },
   "timezone": "",
   "title": "Oracle Session Monitor",
-  "version": 8
+  "version": 10
 }
