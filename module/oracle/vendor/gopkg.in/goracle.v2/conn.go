@@ -104,11 +104,14 @@ func (c *conn) Close() error {
 	}
 	c.Lock()
 	defer c.Unlock()
+	c.setTraceTag(TraceTag{})
 	dpiConn := c.dpiConn
 	c.dpiConn = nil
 	if dpiConn == nil {
 		return nil
 	}
+	// Just to be sure, break anything in progress.
+	C.dpiConn_breakExecution(dpiConn)
 	if C.dpiConn_release(dpiConn) == C.DPI_FAILURE {
 		return errors.Wrap(c.getError(), "Close")
 	}
@@ -153,6 +156,9 @@ func (c *conn) BeginTx(ctx context.Context, opts driver.TxOptions) (driver.Tx, e
 		return nil, errors.New("already in transaction")
 	}
 	c.inTransaction = true
+	if tt, ok := ctx.Value(traceTagCtxKey).(TraceTag); ok {
+		c.setTraceTag(tt)
+	}
 	return c, nil
 }
 
@@ -165,6 +171,9 @@ func (c *conn) PrepareContext(ctx context.Context, query string) (driver.Stmt, e
 	}
 	c.Lock()
 	defer c.Unlock()
+	if tt, ok := ctx.Value(traceTagCtxKey).(TraceTag); ok {
+		c.setTraceTag(tt)
+	}
 	if query == getConnection {
 		if Log != nil {
 			Log("msg", "PrepareContext", "shortcut", query)
@@ -281,7 +290,7 @@ func maybeBadConn(err error) error {
 	}); ok {
 		// Yes, this is copied from rana/ora, but I've put it there, so it's mine. @tgulacsi
 		switch cd.Code() {
-		case 1012, 3113, 3114, 12170, 12528, 12545, 12547, 28547:
+		case 1012, 3113, 3114, 12170, 12528, 12545, 12547, 24315, 28547:
 			// ORA-01012: Not logged on
 			// ORA-03113: end-of-file on communication channel
 			// ORA-03114: not connected to ORACLE
@@ -289,9 +298,71 @@ func maybeBadConn(err error) error {
 			// ORA-12528: TNS:listener: all appropriate instances are blocking new connections
 			// ORA-12545: Connect failed because target host or object does not exist
 			// ORA-12547: TNS:lost contact
+			// ORA-24315: illegal attribute type
 			// ORA-28547: connection to server failed, probable Oracle Net admin error
 			return driver.ErrBadConn
 		}
 	}
 	return err
+}
+
+func (c *conn) setTraceTag(tt TraceTag) error {
+	if c.dpiConn == nil {
+		return nil
+	}
+	//fmt.Fprintf(os.Stderr, "setTraceTag %s\n", tt)
+	var err error
+	for nm, v := range map[string]*string{
+		"action":     &tt.Action,
+		"module":     &tt.Module,
+		"info":       &tt.ClientInfo,
+		"identifier": &tt.ClientIdentifier,
+		"op":         &tt.DbOp,
+	} {
+		var s *C.char
+		if *v != "" {
+			s = C.CString(*v)
+		}
+		var rc C.int
+		switch nm {
+		case "action":
+			rc = C.dpiConn_setAction(c.dpiConn, s, C.uint32_t(len(*v)))
+		case "module":
+			rc = C.dpiConn_setModule(c.dpiConn, s, C.uint32_t(len(*v)))
+		case "info":
+			rc = C.dpiConn_setClientInfo(c.dpiConn, s, C.uint32_t(len(*v)))
+		case "identifier":
+			rc = C.dpiConn_setClientIdentifier(c.dpiConn, s, C.uint32_t(len(*v)))
+		case "op":
+			rc = C.dpiConn_setDbOp(c.dpiConn, s, C.uint32_t(len(*v)))
+		}
+		if rc == C.DPI_FAILURE && err == nil {
+			err = errors.Wrap(c.getError(), nm)
+		}
+		if s != nil {
+			C.free(unsafe.Pointer(s))
+		}
+	}
+	return err
+}
+
+const traceTagCtxKey = ctxKey("tracetag")
+
+// ContextWithTraceTag returns a context with the specified TraceTag, which will
+// be set on the session used.
+func ContextWithTraceTag(ctx context.Context, tt TraceTag) context.Context {
+	return context.WithValue(ctx, traceTagCtxKey, tt)
+}
+
+type TraceTag struct {
+	// ClientIdentifier - specifies an end user based on the logon ID, such as HR.HR
+	ClientIdentifier string
+	// ClientInfo - client-specific info
+	ClientInfo string
+	// DbOp - database operation
+	DbOp string
+	// Module - specifies a functional block, such as Accounts Receivable or General Ledger, of an application
+	Module string
+	// Action - specifies an action, such as an INSERT or UPDATE operation, in a module
+	Action string
 }

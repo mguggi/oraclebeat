@@ -333,6 +333,252 @@ Oracle database metrics.
 
 
 [float]
+== alertlog fields
+
+Shows the contents of the XML-based alert log in the Automatic Diagnostic Repository (ADR) for the current database.
+
+
+
+[float]
+=== `oracle.alertlog.database.container.id`
+
+type: long
+
+The identifier of the container to which the data pertains. Possible values include:
+  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+     rows in non-CDBs.
+  1: This value is used for rows containing data that pertain to only the root
+  n: Where n is the applicable container ID for the rows containing data
+
+
+[float]
+=== `oracle.alertlog.database.container.uid`
+
+type: long
+
+The unique ID of the container to which the data pertains
+
+
+[float]
+=== `oracle.alertlog.database.container.name`
+
+type: keyword
+
+The name of the container to which the data pertains
+
+
+[float]
+=== `oracle.alertlog.database.container.instance.id`
+
+type: long
+
+The instance identifier
+
+
+[float]
+=== `oracle.alertlog.timestamp`
+
+type: date
+
+Date and time when the message was generated
+
+
+[float]
+=== `oracle.alertlog.adr_home`
+
+type: keyword
+
+Path to the current ADR home
+
+
+[float]
+=== `oracle.alertlog.organization`
+
+type: keyword
+
+ID of the organization that wrote the originating component, usually the domain of the organization
+
+
+[float]
+=== `oracle.alertlog.component`
+
+type: keyword
+
+ID of the product or component that originated the message
+
+
+[float]
+=== `oracle.alertlog.host.id`
+
+type: keyword
+
+DNS hostname of originating host
+
+
+[float]
+=== `oracle.alertlog.host.address`
+
+type: keyword
+
+IP of other network address of the originating host for the mesaage
+
+
+[float]
+=== `oracle.alertlog.message.id`
+
+type: keyword
+
+ID of the message
+
+
+[float]
+=== `oracle.alertlog.message.type`
+
+type: integer
+
+Type of the message, indicating that a different type of response is required. Possible values include:
+  1: UNKNOWN - Essentially the NULL type
+  2: INCIDENT_ERROR - The program has encountered an error for some internal or unexpected reason, and it must
+                      be reported to Oracle Support
+  3: ERROR - An error of some kind has occurred
+  4: WARNING: An action occurred or a condition was discovered that should be reviewed and may require action
+  5: NOTIFICATION: reports a normal action or event. This could be a user action such as "logon completed"
+  6: TRACE: Output of a diagnostic trace
+
+
+[float]
+=== `oracle.alertlog.message.level`
+
+type: integer
+
+Level the message belongs to. Lower level values imply higher severity for errors. Possible values include:
+  1: CRITICAL: critical errors
+  2: SEVERE: severe errors
+  8: IMPORTANT: important message
+  16: NORMAL: normal message
+
+
+[float]
+=== `oracle.alertlog.message.group`
+
+type: keyword
+
+Name of the group to which the message belongs
+
+
+[float]
+=== `oracle.alertlog.message.text`
+
+type: text
+
+Fully formed and localized text of the message
+
+
+[float]
+=== `oracle.alertlog.message.arguments`
+
+type: text
+
+Arguments to be bound with the generic text of the message
+
+
+[float]
+=== `oracle.alertlog.message.attributes`
+
+type: text
+
+Supplemental attributes that are specific to a message. This field contains the impacts for an incident type error message.
+
+
+[float]
+=== `oracle.alertlog.message.details`
+
+type: text
+
+Supplemental data that is specific to a particular program and error message required to complete the diagnosis. Similar to the extra detail referred to in DETAILED_LOCATION but short enough to simply provide in the message itself
+
+
+[float]
+=== `oracle.alertlog.message.record`
+
+type: long
+
+Record number for the message (this value is same as the row number)
+
+
+[float]
+=== `oracle.alertlog.message.version`
+
+type: integer
+
+ARB version number for the message
+
+
+[float]
+=== `oracle.alertlog.client`
+
+type: keyword
+
+ID of the client or security group that the message relates to
+
+
+[float]
+=== `oracle.alertlog.module`
+
+type: keyword
+
+ID of the module that originated the message. This value is unique within a component.
+
+
+[float]
+=== `oracle.alertlog.process`
+
+type: keyword
+
+ID of the process that originated the message
+
+
+[float]
+=== `oracle.alertlog.thread`
+
+type: keyword
+
+ID of the thread of the process that originated the message
+
+
+[float]
+=== `oracle.alertlog.user`
+
+type: keyword
+
+ID of the user that originated the message
+
+
+[float]
+=== `oracle.alertlog.partion`
+
+type: integer
+
+Segment number of physical file
+
+
+[float]
+=== `oracle.alertlog.filename`
+
+type: text
+
+Physical file on disk
+
+
+[float]
+=== `oracle.alertlog.problem`
+
+type: keyword
+
+Describes the key for the current problem that the message is associated with
+
+
+[float]
 == osstats fields
 
 Displays system utilization statistics from the operating system. One row is returned for each system statistic.

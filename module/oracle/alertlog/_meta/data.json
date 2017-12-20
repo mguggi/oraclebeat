@@ -1,0 +1,53 @@
+{
+    "@timestamp": "2016-05-23T08:05:34.853Z",
+    "beat": {
+        "hostname": "beathost",
+        "name": "beathost"
+    },
+    "metricset": {
+        "host": "localhost",
+        "module": "oracle",
+        "name": "alertlog",
+        "rtt": 44269
+    },
+    "oracle": {
+        "alertlog": {
+            "adr_home": "diag/tnslsnr/10decce85d51/listener",
+            "client": "",
+            "component": "tnslsnr",
+            "database": {
+                "container": {
+                    "instance": {
+                        "id": 1
+                    }
+                }
+            },
+            "filename": "/u01/app/oracle/diag/tnslsnr/10decce85d51/listener/alert/log.xml",
+            "host": {
+                "address": "172.24.0.2",
+                "id": "10decce85d51"
+            },
+            "message": {
+                "arguments": "",
+                "attributes": "",
+                "details": "",
+                "group": "",
+                "id": "",
+                "level": 16,
+                "record": 317,
+                "text": "18-DEC-2017 16:01:40 * (CONNECT_DATA=(SERVICE_NAME=XE)(CID=(PROGRAM=___Test_Module__alertlog_)(HOST=localhost)(USER=mguggi))) * (ADDRESS=(PROTOCOL=tcp)(HOST=127.0.0.1)(PORT=38242)) * establish * XE * 0\n",
+                "type": 1,
+                "version": "0"
+            },
+            "module": "",
+            "organization": "oracle",
+            "partion": 1,
+            "problem": "",
+            "process": "",
+            "thread": "",
+            "timestamp": "2017-12-18T16:01:40.624Z",
+            "user": ""
+        }
+    },
+    "type": "metricsets"
+}

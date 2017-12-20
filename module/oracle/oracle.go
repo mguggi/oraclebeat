@@ -3,6 +3,7 @@ package oracle
 import (
 	"database/sql"
 	"fmt"
+	"hash/fnv"
 
 	"encoding/hex"
 
@@ -29,13 +30,12 @@ func init() {
 func NewModule(base mb.BaseModule) (mb.Module, error) {
 	// Validate that at least one host has been specified.
 	config := struct {
-		Hosts []string `config:"hosts"   validate: "nonzero,required"`
+		Hosts []string `config:"hosts"     validate: "nonzero,required"`
 	}{}
 
 	if err := base.UnpackConfig(&config); err != nil {
 		return nil, err
 	}
-
 	return &base, nil
 }
 
@@ -46,6 +46,7 @@ func NewModule(base mb.BaseModule) (mb.Module, error) {
 //   Example: oracle://system:changeme@hostname:1521/orcl
 func ParseDSN(mod mb.Module, host string) (mb.HostData, error) {
 
+	// Parse the provided connection string.
 	cp, err := goracle.ParseConnString(host)
 	if err != nil {
 		return mb.HostData{}, errors.Wrapf(err, "%s failed parsing url", selector)
@@ -62,6 +63,7 @@ func ParseDSN(mod mb.Module, host string) (mb.HostData, error) {
 	}, nil
 }
 
+// Scan data retrived from metricset queries
 func Scan(rows *sql.Rows) ([]map[string]interface{}, error) {
 
 	columns, err := rows.ColumnTypes()
@@ -99,6 +101,8 @@ func Scan(rows *sql.Rows) ([]map[string]interface{}, error) {
 				}
 			case "DATE":
 				result[columns[i].Name()] = vals[i].(time.Time).Format(time.RFC3339)
+			case "TIMESTAMP WITH TIMEZONE":
+				result[columns[i].Name()] = vals[i].(time.Time).Format(time.RFC3339Nano)
 			case "RAW":
 				result[columns[i].Name()] = hex.EncodeToString(vals[i].([]byte))
 			default:
@@ -110,4 +114,11 @@ func Scan(rows *sql.Rows) ([]map[string]interface{}, error) {
 		results = append(results, result)
 	}
 	return results, nil
+}
+
+// Generates a short unique hash and returns the result as hex string
+func GetHash(text string) string {
+	hasher := fnv.New32()
+	hasher.Write([]byte(text))
+	return fmt.Sprintf("%x", hasher.Sum32())
 }

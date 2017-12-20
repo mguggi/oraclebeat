@@ -29,12 +29,12 @@ var (
 		"input": s.Object{
 			"type":          c.Str("INPUT_TYPE"),
 			"bytes":         c.Int("INPUT_BYTES"),
-			"bytes_per_sec": c.Int("INPUT_BYTES_PER_SEC"),
+			"bytes_per_sec": c.Float("INPUT_BYTES_PER_SEC"),
 		},
 		"output": s.Object{
 			"device_type":   c.Str("OUTPUT_DEVICE_TYPE"),
 			"bytes":         c.Int("OUTPUT_BYTES"),
-			"bytes_per_sec": c.Int("OUTPUT_BYTES_PER_SEC"),
+			"bytes_per_sec": c.Float("OUTPUT_BYTES_PER_SEC"),
 		},
 		"backed_by_osb": c.Str("BACKED_BY_OSB"),
 		"autobackup": s.Object{

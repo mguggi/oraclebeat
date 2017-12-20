@@ -3,34 +3,24 @@
 	"ignore": "test github.com/elastic/beats",
 	"package": [
 		{
-			"checksumSHA1": "hwNfbSjyZ0NTMn3edG9edJJt/5I=",
+			"checksumSHA1": "kHrNY4ktruLxWd+qxbMw90KfO1Y=",
+			"path": "github.com/google/btree",
+			"revision": "316fb6d3f031ae8f4d457c6c5186b9e3ded70435",
+			"revisionTime": "2016-12-17T18:35:37Z"
+		},
+		{
+			"checksumSHA1": "HCBEZni41uRhZlY2NUY+0mo0Whc=",
+			"path": "github.com/peterbourgon/diskv",
+			"revision": "5f041e8faa004a95c88a202771f4cc3e991971e6",
+			"revisionTime": "2017-08-14T17:35:58Z",
+			"version": "v2.0.1",
+			"versionExact": "v2.0.1"
+		},
+		{
+			"checksumSHA1": "JCwjVyD2+RGd+H48RJBKR6UUd9w=",
 			"path": "gopkg.in/goracle.v2",
-			"revision": "939a9dd61239663a02aa6fd6530bc19a34b9b6d4",
-			"revisionTime": "2017-11-25T11:18:45Z"
-		},
-		{
-			"checksumSHA1": "YON9G1RVQ6Tdn3VCnjF1yt/S5ww=",
-			"path": "gopkg.in/rana/ora.v4",
-			"revision": "711f361c6a264539c5e41aa3037a1aa92eb31ccd",
-			"revisionTime": "2017-11-07T17:23:47Z",
-			"version": "v4.1.14",
-			"versionExact": "v4.1.14"
-		},
-		{
-			"checksumSHA1": "eb7n//W2ifbgTNGmrL7NnvZi/DU=",
-			"path": "gopkg.in/rana/ora.v4/date",
-			"revision": "711f361c6a264539c5e41aa3037a1aa92eb31ccd",
-			"revisionTime": "2017-11-07T17:23:47Z",
-			"version": "v4.1.14",
-			"versionExact": "v4.1.14"
-		},
-		{
-			"checksumSHA1": "1yIMtU64nASjTJpCihJwk1xmLWA=",
-			"path": "gopkg.in/rana/ora.v4/num",
-			"revision": "711f361c6a264539c5e41aa3037a1aa92eb31ccd",
-			"revisionTime": "2017-11-07T17:23:47Z",
-			"version": "v4.1.14",
-			"versionExact": "v4.1.14"
+			"revision": "bbc026ed4bf12e087805b02f0787e410900f1742",
+			"revisionTime": "2017-12-12T11:50:47Z"
 		}
 	],
 	"rootPath": "github.com/mguggi/oraclebeat/module/oracle"
