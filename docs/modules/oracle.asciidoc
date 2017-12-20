@@ -25,7 +25,30 @@ oraclebeat.modules:
 - module: oracle
   period: 30s
   metricsets:
+    - session
+    - sgastats
     - alertlog
+
+  # List of Oracle connection strings
+  hosts: ["oracle://system:Login4Me@localhost:1521/XE"]
+
+- module: oracle
+  period: 1m
+  metricsets:
+    - osstats
+    - sqlstats
+    - sysmetric
+    - sessmetric
+    - tablespace
+    - recoveryarea
+
+  # List of Oracle connection strings
+  hosts: ["oracle://system:Login4Me@localhost:1521/XE"]
+
+- module: oracle
+  period: 30m
+  metricsets:
+    - rmanjobs
 
   # List of Oracle connection strings
   hosts: ["oracle://system:Login4Me@localhost:1521/XE"]
