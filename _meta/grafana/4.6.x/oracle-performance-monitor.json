@@ -88,7 +88,30 @@
           },
           "id": 4,
           "interval": null,
-          "links": [],
+          "links": [
+            {
+              "dashUri": "db/oracle-session-monitor",
+              "dashboard": "Oracle Session Monitor",
+              "keepTime": true,
+              "title": "Session Monitor",
+              "type": "dashboard"
+            },
+            {
+              "dashUri": "db/oracle-sql-monitor",
+              "dashboard": "Oracle SQL Monitor",
+              "includeVars": false,
+              "keepTime": true,
+              "title": "SQL Monitor",
+              "type": "dashboard"
+            },
+            {
+              "dashUri": "db/oracle-alert-log",
+              "dashboard": "Oracle Alert Log",
+              "keepTime": true,
+              "title": "Alert Log",
+              "type": "dashboard"
+            }
+          ],
           "mappingType": 1,
           "mappingTypes": [
             {
@@ -1669,29 +1692,7 @@
           },
           "lines": true,
           "linewidth": 1,
-          "links": [
-            {
-              "dashUri": "db/oracle-alert-log",
-              "dashboard": "Oracle Alert Log",
-              "keepTime": true,
-              "title": "Alert Log",
-              "type": "dashboard"
-            },
-            {
-              "dashUri": "db/oracle-session-monitor",
-              "dashboard": "Oracle Session Monitor",
-              "keepTime": true,
-              "title": "Session Monitor",
-              "type": "dashboard"
-            },
-            {
-              "dashUri": "db/oracle-sql-monitor",
-              "dashboard": "Oracle SQL Monitor",
-              "keepTime": true,
-              "title": "SQL Monitor",
-              "type": "dashboard"
-            }
-          ],
+          "links": [],
           "nullPointMode": "null",
           "percentage": false,
           "pointradius": 5,
@@ -3564,5 +3565,5 @@
   },
   "timezone": "",
   "title": "Oracle Performance Monitor",
-  "version": 16
+  "version": 17
 }
