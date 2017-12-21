@@ -1,0 +1,52 @@
+services:
+  - docker
+
+language: go
+
+env:
+  global:
+    # Cross-compile for amd64 only to speed up testing.
+    - GOX_FLAGS="-arch amd64"
+    - DOCKER_COMPOSE_VERSION=1.11.1
+    - GO_VERSION="1.9.2"
+
+jobs:
+  include:
+    # General checks
+    - os: linux
+      env: TARGETS="check"
+      go: $GO_VERSION
+      stage: check
+
+    # Oraclebeat
+    - os: linux
+      env: TARGETS="-C oraclebeat testsuite"
+      go: $GO_VERSION
+      stage: test
+
+addons:
+  apt:
+    packages:
+      - python-virtualenv
+      - libpcap-dev
+
+before_install:
+  - python --version
+  - umask 022
+  - chmod -R go-w $GOPATH/src/github.com/mguggi/oraclebeats
+  # Docker-compose installation
+  - sudo rm /usr/local/bin/docker-compose || true
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+# Skips installations step
+install: true
+
+script:
+  - make $TARGETS
+
+after_success:
+  # Copy full.cov to coverage.txt because codecov.io requires this file
+  - test -f oraclebeat/build/coverage/full.cov && bash <(curl -s https://codecov.io/bash) -f oraclebeat/build/coverage/full.cov
+
