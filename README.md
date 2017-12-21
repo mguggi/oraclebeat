@@ -1,4 +1,5 @@
 [![Travis](https://travis-ci.org/mguggi/oraclebeat.svg?branch=master)](https://travis-ci.org/mguggi/oraclebeat)
+[![codecov.io](https://codecov.io/github/mguggi/oraclebeat/coverage.svg?branch=master)](https://codecov.io/github/mguggi/oraclebeat?branch=master)
 
 # Oraclebeat 
 
