@@ -54,80 +54,7 @@
       "height": 250,
       "panels": [
         {
-          "columns": [
-            {
-              "text": "oracle.sqlstats.database.container.instance.id",
-              "value": "oracle.sqlstats.database.container.instance.id"
-            },
-            {
-              "text": "oracle.sqlstats.sql.id",
-              "value": "oracle.sqlstats.sql.id"
-            },
-            {
-              "text": "oracle.sqlstats.last_active.time",
-              "value": "oracle.sqlstats.last_active.time"
-            },
-            {
-              "text": "oracle.sqlstats.plan_hash_value",
-              "value": "oracle.sqlstats.plan_hash_value"
-            },
-            {
-              "text": "oracle.sqlstats.parse_calls",
-              "value": "oracle.sqlstats.parse_calls"
-            },
-            {
-              "text": "oracle.sqlstats.disk_reads",
-              "value": "oracle.sqlstats.disk_reads"
-            },
-            {
-              "text": "oracle.sqlstats.direct.writes",
-              "value": "oracle.sqlstats.direct.writes"
-            },
-            {
-              "text": "oracle.sqlstats.physical.read.bytes",
-              "value": "oracle.sqlstats.physical.read.bytes"
-            },
-            {
-              "text": "oracle.sqlstats.physical.write.bytes",
-              "value": "oracle.sqlstats.physical.write.bytes"
-            },
-            {
-              "text": "oracle.sqlstats.buffer_gets",
-              "value": "oracle.sqlstats.buffer_gets"
-            },
-            {
-              "text": "oracle.sqlstats.rows_processed",
-              "value": "oracle.sqlstats.rows_processed"
-            },
-            {
-              "text": "oracle.sqlstats.fetches",
-              "value": "oracle.sqlstats.fetches"
-            },
-            {
-              "text": "oracle.sqlstats.executions",
-              "value": "oracle.sqlstats.executions"
-            },
-            {
-              "text": "oracle.sqlstats.loads",
-              "value": "oracle.sqlstats.loads"
-            },
-            {
-              "text": "oracle.sqlstats.version_count",
-              "value": "oracle.sqlstats.version_count"
-            },
-            {
-              "text": "oracle.sqlstats.cpu_time",
-              "value": "oracle.sqlstats.cpu_time"
-            },
-            {
-              "text": "oracle.sqlstats.elapsed_time",
-              "value": "oracle.sqlstats.elapsed_time"
-            },
-            {
-              "text": "oracle.sqlstats.sorts",
-              "value": "oracle.sqlstats.sorts"
-            }
-          ],
+          "columns": [],
           "datasource": "${DS_MGUGGIWS}",
           "fontSize": "80%",
           "id": 2,
@@ -192,7 +119,7 @@
               ],
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "decimals": 2,
-              "pattern": "oracle.sqlstats.last_active.time",
+              "pattern": "/.+oracle.sqlstats.last_active.time$/",
               "thresholds": [],
               "type": "date",
               "unit": "short"
@@ -209,7 +136,7 @@
               "decimals": 2,
               "pattern": "oracle.sqlstats.plan_hash_value",
               "thresholds": [],
-              "type": "hidden",
+              "type": "string",
               "unit": "short"
             },
             {
@@ -222,7 +149,7 @@
               ],
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "decimals": 2,
-              "pattern": "oracle.sqlstats.parse_calls",
+              "pattern": "/.+oracle.sqlstats.parse_calls$/",
               "thresholds": [],
               "type": "hidden",
               "unit": "short"
@@ -237,22 +164,7 @@
               ],
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "decimals": 0,
-              "pattern": "oracle.sqlstats.disk_reads",
-              "thresholds": [],
-              "type": "number",
-              "unit": "none"
-            },
-            {
-              "alias": "DIRECT_WRITES",
-              "colorMode": null,
-              "colors": [
-                "rgba(245, 54, 54, 0.9)",
-                "rgba(237, 129, 40, 0.89)",
-                "rgba(50, 172, 45, 0.97)"
-              ],
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
-              "decimals": 0,
-              "pattern": "oracle.sqlstats.direct.writes",
+              "pattern": "/.+oracle.sqlstats.disk_reads$/",
               "thresholds": [],
               "type": "number",
               "unit": "none"
@@ -267,7 +179,7 @@
               ],
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "decimals": 0,
-              "pattern": "oracle.sqlstats.physical.read.bytes",
+              "pattern": "/.+oracle.sqlstats.physical.read.bytes$/",
               "thresholds": [],
               "type": "number",
               "unit": "bytes"
@@ -282,7 +194,7 @@
               ],
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "decimals": 0,
-              "pattern": "oracle.sqlstats.physical.write.bytes",
+              "pattern": "/.+oracle.sqlstats.physical.write.bytes$/",
               "thresholds": [],
               "type": "number",
               "unit": "bytes"
@@ -297,7 +209,7 @@
               ],
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "decimals": 0,
-              "pattern": "oracle.sqlstats.buffer_gets",
+              "pattern": "/.+oracle.sqlstats.buffer_gets$/",
               "thresholds": [],
               "type": "number",
               "unit": "none"
@@ -312,7 +224,7 @@
               ],
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "decimals": 0,
-              "pattern": "oracle.sqlstats.rows_processed",
+              "pattern": "/.+oracle.sqlstats.rows_processed$/",
               "thresholds": [],
               "type": "number",
               "unit": "none"
@@ -327,7 +239,7 @@
               ],
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "decimals": 0,
-              "pattern": "oracle.sqlstats.fetches",
+              "pattern": "/.+oracle.sqlstats.fetches$/",
               "thresholds": [],
               "type": "number",
               "unit": "none"
@@ -342,7 +254,7 @@
               ],
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "decimals": 0,
-              "pattern": "oracle.sqlstats.executions",
+              "pattern": "/.+oracle.sqlstats.executions$/",
               "thresholds": [],
               "type": "number",
               "unit": "none"
@@ -357,7 +269,7 @@
               ],
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "decimals": 0,
-              "pattern": "oracle.sqlstats.loads",
+              "pattern": "/.+oracle.sqlstats.loads$/",
               "thresholds": [],
               "type": "number",
               "unit": "none"
@@ -372,7 +284,7 @@
               ],
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "decimals": 2,
-              "pattern": "oracle.sqlstats.version_count",
+              "pattern": "/.+oracle.sqlstats.version_count$/",
               "thresholds": [],
               "type": "hidden",
               "unit": "short"
@@ -387,7 +299,7 @@
               ],
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "decimals": 0,
-              "pattern": "oracle.sqlstats.cpu_time",
+              "pattern": "/.+oracle.sqlstats.cpu_time$/",
               "thresholds": [],
               "type": "number",
               "unit": "µs"
@@ -402,7 +314,7 @@
               ],
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "decimals": 0,
-              "pattern": "oracle.sqlstats.elapsed_time",
+              "pattern": "/.+oracle.sqlstats.elapsed_time$/",
               "thresholds": [],
               "type": "number",
               "unit": "µs"
@@ -417,25 +329,195 @@
               ],
               "dateFormat": "YYYY-MM-DD HH:mm:ss",
               "decimals": 2,
-              "pattern": "oracle.sqlstats.sorts",
+              "pattern": "/.+oracle.sqlstats.sorts$/",
               "thresholds": [],
               "type": "hidden",
               "unit": "short"
+            },
+            {
+              "alias": "DIRECT_READS",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 0,
+              "pattern": "/.+oracle.sqlstats.direct.reads$/",
+              "thresholds": [],
+              "type": "number",
+              "unit": "none"
+            },
+            {
+              "alias": "DIRECT_WRITES",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 0,
+              "pattern": "/.+oracle.sqlstats.direct.writes$/",
+              "thresholds": [],
+              "type": "number",
+              "unit": "none"
             }
           ],
           "targets": [
             {
-              "bucketAggs": [],
+              "bucketAggs": [
+                {
+                  "fake": true,
+                  "field": "oracle.sqlstats.database.container.instance.id",
+                  "id": "4",
+                  "settings": {
+                    "min_doc_count": 1,
+                    "order": "desc",
+                    "orderBy": "_term",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "fake": true,
+                  "field": "oracle.sqlstats.sql.id",
+                  "id": "5",
+                  "settings": {
+                    "min_doc_count": 1,
+                    "order": "desc",
+                    "orderBy": "_term",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                },
+                {
+                  "fake": true,
+                  "field": "oracle.sqlstats.plan_hash_value",
+                  "id": "6",
+                  "settings": {
+                    "min_doc_count": 1,
+                    "order": "desc",
+                    "orderBy": "_term",
+                    "size": "0"
+                  },
+                  "type": "terms"
+                }
+              ],
               "dsType": "elasticsearch",
               "metrics": [
                 {
-                  "field": "select field",
+                  "field": "oracle.sqlstats.last_active.time",
                   "id": "1",
                   "meta": {},
-                  "settings": {
-                    "size": 500
-                  },
-                  "type": "raw_document"
+                  "settings": {},
+                  "type": "max"
+                },
+                {
+                  "field": "oracle.sqlstats.parse_calls",
+                  "id": "3",
+                  "meta": {},
+                  "settings": {},
+                  "type": "max"
+                },
+                {
+                  "field": "oracle.sqlstats.disk_reads",
+                  "id": "7",
+                  "meta": {},
+                  "settings": {},
+                  "type": "max"
+                },
+                {
+                  "field": "oracle.sqlstats.direct.reads",
+                  "id": "8",
+                  "meta": {},
+                  "settings": {},
+                  "type": "max"
+                },
+                {
+                  "field": "oracle.sqlstats.direct.writes",
+                  "id": "9",
+                  "meta": {},
+                  "settings": {},
+                  "type": "max"
+                },
+                {
+                  "field": "oracle.sqlstats.physical.read.bytes",
+                  "id": "10",
+                  "meta": {},
+                  "settings": {},
+                  "type": "max"
+                },
+                {
+                  "field": "oracle.sqlstats.physical.write.bytes",
+                  "id": "11",
+                  "meta": {},
+                  "settings": {},
+                  "type": "max"
+                },
+                {
+                  "field": "oracle.sqlstats.buffer_gets",
+                  "id": "12",
+                  "meta": {},
+                  "settings": {},
+                  "type": "max"
+                },
+                {
+                  "field": "oracle.sqlstats.rows_processed",
+                  "id": "13",
+                  "meta": {},
+                  "settings": {},
+                  "type": "max"
+                },
+                {
+                  "field": "oracle.sqlstats.fetches",
+                  "id": "14",
+                  "meta": {},
+                  "settings": {},
+                  "type": "max"
+                },
+                {
+                  "field": "oracle.sqlstats.executions",
+                  "id": "15",
+                  "meta": {},
+                  "settings": {},
+                  "type": "max"
+                },
+                {
+                  "field": "oracle.sqlstats.loads",
+                  "id": "16",
+                  "meta": {},
+                  "settings": {},
+                  "type": "max"
+                },
+                {
+                  "field": "oracle.sqlstats.version_count",
+                  "id": "17",
+                  "meta": {},
+                  "settings": {},
+                  "type": "max"
+                },
+                {
+                  "field": "oracle.sqlstats.cpu_time",
+                  "id": "18",
+                  "meta": {},
+                  "settings": {},
+                  "type": "max"
+                },
+                {
+                  "field": "oracle.sqlstats.elapsed_time",
+                  "id": "19",
+                  "meta": {},
+                  "settings": {},
+                  "type": "max"
+                },
+                {
+                  "field": "oracle.sqlstats.sorts",
+                  "id": "20",
+                  "meta": {},
+                  "settings": {},
+                  "type": "max"
                 }
               ],
               "query": "_exists_:oracle.sqlstats.sql.id",
@@ -444,7 +526,7 @@
             }
           ],
           "title": "",
-          "transform": "json",
+          "transform": "table",
           "type": "table"
         }
       ],
@@ -502,5 +584,5 @@
   },
   "timezone": "",
   "title": "Oracle SQL Monitor",
-  "version": 7
+  "version": 8
 }
