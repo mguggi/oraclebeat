@@ -60,8 +60,8 @@ COPY $INSTALL_FILE_1 $CONFIG_RSP $RUN_FILE $PWD_FILE $CHECK_DB_FILE $SWAPSCRIPT 
 
 RUN yum -y install unzip libaio bc initscripts net-tools openssl && \
     rm -rf /var/cache/yum && \
-    $SWAPSCRIPT && \
     cd $INSTALL_DIR && \
+    $SWAPSCRIPT && \
     unzip $INSTALL_FILE_1 && \
     rm $INSTALL_FILE_1 &&    \
     rpm -i Disk1/*.rpm &&    \
