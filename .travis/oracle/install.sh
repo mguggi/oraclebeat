@@ -29,6 +29,7 @@ sudo usermod -aG dba $USER
 ( echo ; echo ; echo travis ; echo travis ; echo n ) | sudo AWK='/usr/bin/awk' /etc/init.d/oracle-xe configure
 
 "$ORACLE_HOME/bin/sqlplus" -L -S / AS SYSDBA <<SQL
+ALTER USER SYSTEM IDENTIFIED BY "Login4Me";
 CREATE USER $USER IDENTIFIED EXTERNALLY;
 GRANT CONNECT, RESOURCE TO $USER;
 SQL
