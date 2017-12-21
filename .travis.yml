@@ -19,12 +19,6 @@ env:
 
 jobs:
   include:
-    # General checks
-    - os: linux
-      env: TARGETS="check"
-      go: $GO_VERSION
-      stage: check
-
     # Oraclebeat
     - os: linux
       env: TARGETS="testsuite"

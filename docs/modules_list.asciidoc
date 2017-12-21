@@ -6,7 +6,7 @@ This file is generated! See scripts/docs_collector.py
 |========================
 |Modules   |Metricsets   
 |<<metricbeat-module-oracle,Oracle Module>>  experimental[]   |    
-.13+|   |<<metricbeat-metricset-oracle-alertlog,alertlog>> experimental[]  
+.12+|   |<<metricbeat-metricset-oracle-alertlog,alertlog>> experimental[]  
 |<<metricbeat-metricset-oracle-osstats,osstats>> experimental[]  
 |<<metricbeat-metricset-oracle-recoveryarea,recoveryarea>> experimental[]  
 |<<metricbeat-metricset-oracle-rmanjobs,rmanjobs>> experimental[]  
@@ -18,7 +18,6 @@ This file is generated! See scripts/docs_collector.py
 |<<metricbeat-metricset-oracle-sysmetric,sysmetric>> experimental[]  
 |<<metricbeat-metricset-oracle-sysstats,sysstats>> experimental[]  
 |<<metricbeat-metricset-oracle-tablespace,tablespace>> experimental[]  
-|<<metricbeat-metricset-oracle-test,test>> experimental[]  
 |================================
 
 --

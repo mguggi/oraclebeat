@@ -2614,18 +2614,3 @@ format: percent
 Percentage of used space, as a function of the maximum possible tablespace size
 
 
-[float]
-== test fields
-
-test
-
-
-
-[float]
-=== `oracle.test.example`
-
-type: keyword
-
-Example field
-
-

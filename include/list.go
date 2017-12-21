@@ -21,5 +21,4 @@ import (
 	_ "github.com/mguggi/oraclebeat/module/oracle/sysmetric"
 	_ "github.com/mguggi/oraclebeat/module/oracle/sysstats"
 	_ "github.com/mguggi/oraclebeat/module/oracle/tablespace"
-	_ "github.com/mguggi/oraclebeat/module/oracle/test"
 )

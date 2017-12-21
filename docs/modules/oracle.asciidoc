@@ -83,8 +83,6 @@ The following metricsets are available:
 
 * <<metricbeat-metricset-oracle-tablespace,tablespace>>
 
-* <<metricbeat-metricset-oracle-test,test>>
-
 include::oracle/alertlog.asciidoc[]
 
 include::oracle/osstats.asciidoc[]
@@ -108,6 +106,4 @@ include::oracle/sysmetric.asciidoc[]
 include::oracle/sysstats.asciidoc[]
 
 include::oracle/tablespace.asciidoc[]
-
-include::oracle/test.asciidoc[]
 

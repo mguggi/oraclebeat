@@ -29,8 +29,8 @@ func TestFetch(t *testing.T) {
 	instance := container["instance"].(common.MapStr)
 
 	assert.True(t, instance["id"].(int64) >= 0)
-	assert.NotEmpty(t, event["id"].(int64) >= 0)
-	assert.NotEmpty(t, event["value"].(int64) >= 0)
+	assert.True(t, event["id"].(int64) >= 0)
+	assert.NotEmpty(t, event["value"])
 	assert.NotEmpty(t, event["name"])
 	assert.NotEmpty(t, event["comments"])
 	assert.NotEmpty(t, event["cumulative"])

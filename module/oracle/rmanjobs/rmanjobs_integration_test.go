@@ -20,24 +20,25 @@ func TestFetch(t *testing.T) {
 		t.FailNow()
 	}
 
-	assert.True(t, len(events) > 0)
-	event := events[0]
+	if len(events) > 0 {
+		event := events[0]
 
-	// Check event fields
-	session := event["session"].(common.MapStr)
-	interval := event["interval"].(common.MapStr)
+		// Check event fields
+		session := event["session"].(common.MapStr)
+		interval := event["interval"].(common.MapStr)
 
-	if session["key"] != nil {
-		assert.True(t, session["key"].(int64) > 0)
-		assert.True(t, session["recid"].(int64) > 0)
-		assert.True(t, session["stamp"].(int64) > 0)
-		assert.NotEmpty(t, interval["start"])
-		assert.NotEmpty(t, interval["end"])
-		assert.NotEmpty(t, interval["duration"])
-	}
+		if session["key"] != nil {
+			assert.True(t, session["key"].(int64) > 0)
+			assert.True(t, session["recid"].(int64) > 0)
+			assert.True(t, session["stamp"].(int64) > 0)
+			assert.NotEmpty(t, interval["start"])
+			assert.NotEmpty(t, interval["end"])
+			assert.NotEmpty(t, interval["duration"])
+		}
 
-	if t.Failed() {
-		t.Logf("%s/%s event: %+v", f.Module().Name(), f.Name(), event)
+		if t.Failed() {
+			t.Logf("%s/%s event: %+v", f.Module().Name(), f.Name(), event)
+		}
 	}
 }
 

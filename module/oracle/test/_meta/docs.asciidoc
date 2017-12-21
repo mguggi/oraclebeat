@@ -1,3 +1,0 @@
-=== oracle test MetricSet
-
-This is the test metricset of the module oracle.
