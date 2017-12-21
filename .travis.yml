@@ -28,7 +28,7 @@ jobs:
       go: $GO_VERSION
       install:
         - $ORACLEBEAT_HOME/.travis/oracle/download.sh
-        - $ORACLEBEAT_HOME/.travis/oracle/docker-images/dockerfiles/buildDockerImage.sh -x -v 11.2.0.2
+        - cd $ORACLEBEAT_HOME/.travis/oracle/docker-images/dockerfiles; ./buildDockerImage.sh -x -v 11.2.0.2
       stage: prepare
 
     # Oracle Database
@@ -40,8 +40,6 @@ jobs:
         - LD_LIBRARY_PATH="$ORACLE_HOME/lib"
       go: $GO_VERSION
       install:
-        - go get github.com/pkg/errors
-        - go get github.com/stretchr/testify/assert
         - make python-env
         - source /home/mguggi/go/src/github.com/mguggi/oraclebeat/build/python-env/bin/activate
         - MODULE=oracle PORT=1521 make run-module
@@ -50,6 +48,8 @@ jobs:
 
 before_install:
   - umask 022
+  - go get github.com/pkg/errors
+  - go get github.com/stretchr/testify/assert
   - chmod -R go-w $ORACLEBEAT_HOME
 
 install: true
