@@ -3,9 +3,6 @@ dist: trusty
 
 language: go
 
-# Make sure project can also be built on travis for clones of the repo
-go_import_path: github.com/mguggi/oraclebeat
-
 env:
   global:
     - GO_VERSION="1.9.2"
@@ -23,6 +20,8 @@ jobs:
     - os: linux
       env: TARGETS="prepare-test testsuite"
       go: $GO_VERSION
+      install:
+        - go get github.com/pkg/errors
       stage: test
 
 addons:
