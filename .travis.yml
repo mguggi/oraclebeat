@@ -1,11 +1,6 @@
 sudo: required
 dist: trusty
 
-services:
-  - docker
-
-language: go
-
 env:
   global:
     - GO_VERSION="$(cat .go-version)"
@@ -29,12 +24,6 @@ jobs:
         - go get github.com/pkg/errors
         - go get github.com/stretchr/testify/assert
       stage: test
-
-addons:
-  apt:
-    packages:
-      - python-virtualenv
-      - libpcap-dev
 
 before_install:
   - umask 022
