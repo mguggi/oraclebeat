@@ -52,7 +52,7 @@ ENV PATH=$ORACLE_HOME/bin:$PATH
 
 # Copy binaries
 # -------------
-COPY $INSTALL_FILE_1 $CONFIG_RSP $RUN_FILE $PWD_FILE $CHECK_DB_FILE $INSTALL_DIR makeSwap.sh /
+COPY $INSTALL_FILE_1 $CONFIG_RSP $RUN_FILE $PWD_FILE $CHECK_DB_FILE $INSTALL_DIR makeSwap.sh
 
 # Install Oracle Express Edition
 # ------------------------------
