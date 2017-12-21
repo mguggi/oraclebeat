@@ -44,7 +44,7 @@ ENV ORACLE_BASE=/u01/app/oracle \
     PWD_FILE="setPassword.sh" \
     CHECK_DB_FILE="checkDBStatus.sh" \
     SWAPSIZE="2048" \
-    SWAPFILE="/var/lib/swap.img" \
+    SWAPFILE="/var/lib/swap.img"
 
 
 # Use second ENV so that variable get substituted
