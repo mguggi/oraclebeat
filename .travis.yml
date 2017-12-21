@@ -37,7 +37,7 @@ jobs:
       install:
         - .travis/oracle/download.sh
         - sudo apt-get -qq install libaio1 rpm
-        - sudo rpm --install --nodeps oracle-instantclient12.2-*.rpm
+        - sudo rpm --install --nodeps $ORACLE_DOWNLOAD_DIR/oracle-instantclient12.2-*.rpm
       stage: test
 
 before_install:
