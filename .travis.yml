@@ -22,7 +22,7 @@ jobs:
     # Oraclebeat
     - os: linux
       env:
-        - TARGETS="prepare-test testsuite"
+        - TARGETS="unit-tests"
         - LD_LIBRARY_PATH="$ORACLE_HOME/lib"
       go: $GO_VERSION
       install:
@@ -40,7 +40,7 @@ before_install:
   - umask 022
   - chmod -R go-w $GOPATH/src/github.com/mguggi/oraclebeat
   - .travis/oracle/download.sh
-  - .travis/oracle/download.sh
+  - .travis/oracle/install.sh
 
 install: true
 

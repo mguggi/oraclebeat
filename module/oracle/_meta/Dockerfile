@@ -1,1 +1,1 @@
-FROM oraclelinux:7-slim
+dockerfile.11.2.0.2.xe
