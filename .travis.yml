@@ -24,18 +24,18 @@ jobs:
       go: $GO_VERSION
       install:
         - make python-env
-        - source /home/mguggi/go/src/github.com/mguggi/oraclebeat/build/python-env/bin/activate
+        - source $GOPATH/src/github.com/mguggi/oraclebeat/build/python-env/bin/activate
       stage: prepare
 
     # Oraclebeat
     - os: linux
       env:
-        - TARGETS="local-tests"
+        - TARGETS="MODULE=oracle make test-module"
         - LD_LIBRARY_PATH="$ORACLE_HOME/lib"
       go: $GO_VERSION
       install:
         - make python-env
-        - source /home/mguggi/go/src/github.com/mguggi/oraclebeat/build/python-env/bin/activate
+        - source $GOPATH/src/github.com/mguggi/oraclebeat/build/python-env/bin/activate
         - MODULE=oracle PORT=1521 make run-module
         - MODULE=oracle make test-module
       stage: test
@@ -49,7 +49,7 @@ before_install:
 install: true
 
 script:
-  - make $TARGETS
+  - $TARGETS
 
 after_success:
   # Copy full.cov to coverage.txt because codecov.io requires this file
