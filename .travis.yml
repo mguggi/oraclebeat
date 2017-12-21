@@ -1,4 +1,5 @@
 sudo: required
+dist: trusty
 
 language: go
 
@@ -18,16 +19,9 @@ env:
 
 jobs:
   include:
-    # General checks
-    - os: linux
-      env: TARGETS="check"
-      go: $GO_VERSION
-      stage: check
-
-    # Oraclebeat
     - os: linux
       env: TARGETS="testsuite"
-      go: "$GO_VERSION"
+      go: $GO_VERSION
       stage: test
 
 before_install:
