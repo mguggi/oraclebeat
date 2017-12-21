@@ -39,9 +39,8 @@ before-build:
 # Test oracle module
 .PHONY: test-oraclebeat
 test-oraclebeat: python-env
-	source ${PYTHON_ENV}/bin/activate
-	docker-compose build --force-rm oracle
+	. ${PYTHON_ENV}/bin/activate && docker-compose build --force-rm oracle
 	docker-compose run -d -p 1521:1521 oracle
 	go test -tags=integration ${BEAT_PATH}/module/oracle/... -v
-    INTEGRATION_TESTS=1 nosetests tests/system/test_module/oracle.py
+    . ${PYTHON_ENV}/bin/activate && INTEGRATION_TESTS=1 nosetests tests/system/test_module/oracle.py
 
