@@ -19,10 +19,23 @@ env:
 
 jobs:
   include:
+    # General checks
+    - os: linux
+      env: TARGETS="check"
+      go: $GO_VERSION
+      stage: check
+
+    # Oraclebeat
     - os: linux
       env: TARGETS="testsuite"
       go: $GO_VERSION
       stage: test
+
+addons:
+  apt:
+    packages:
+      - python-virtualenv
+      - libpcap-dev
 
 before_install:
   - umask 022
