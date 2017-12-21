@@ -1,10 +1,7 @@
 FROM oracle/database:11.2.0.2-xe
 
 # set default password for SYS, SYSTEM ane PDBADMIN
-ENV ORACLE_PWD=Login4Me SWAPSIZE=2048 SWAPFILE=/var/lib/swap.img
-
-# create script to the container
-COPY make-swap /usr/bin/make-swap
+ENV ORACLE_PWD=Login4Me
 
 # expose only listener port
 EXPOSE 1521
