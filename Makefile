@@ -35,3 +35,13 @@ copy-vendor:
 .PHONY: before-build
 before-build:
 	if [ -f modules.d/oracle.yml.disabled ]; then mv modules.d/oracle.yml.disabled modules.d/oracle.yml; fi
+
+# Test oracle module
+.PHONY: test-oraclebeat
+test-oraclebeat: python-env
+	source ${PYTHON_ENV}/bin/activate
+	docker-compose build --force-rm oracle
+	docker-compose run -d -p 1521:1521 oracle
+	go test -tags=integration ${BEAT_PATH}/module/oracle/... -v
+    INTEGRATION_TESTS=1 nosetests tests/system/test_module/oracle.py
+

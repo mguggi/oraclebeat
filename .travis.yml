@@ -18,21 +18,21 @@ env:
 jobs:
   include:
     # Prepare Oracle Database Docker Image
-    - os: linux
-      env:
-        - TARGET="MODULE=oracle PORT=1521 make run-module"
-      go: $GO_VERSION
-      install:
-        - make python-env
-        - source $GOPATH/src/github.com/mguggi/oraclebeat/build/python-env/bin/activate
-      stage: prepare
+    #- os: linux
+    #  env:
+    #    - TARGET="MODULE=oracle PORT=1521 make run-module"
+    #  go: $GO_VERSION
+    #  install:
+    #    - make python-env
+    #    - source $GOPATH/src/github.com/mguggi/oraclebeat/build/python-env/bin/activate
+    #  stage: prepare
 
     # Oraclebeat
     - os: linux
       env:
         - ORACLE_FILE="instantclient/122010/oracle-instantclient12.2-basic-12.2.0.1.0-1.x86_64.rpm"
-        - TARGETS="MODULE=oracle make test-module"
         - LD_LIBRARY_PATH="/usr/lib/oracle/12.2/client64/lib"
+        - TARGET="test-oraclebeat"
       go: $GO_VERSION
       install:
         - .travis/oracle/download.sh
@@ -49,7 +49,7 @@ before_install:
 install: true
 
 script:
-  - $TARGETS
+  - make $TARGET
 
 after_success:
   # Copy full.cov to coverage.txt because codecov.io requires this file
