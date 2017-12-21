@@ -5,11 +5,12 @@ import (
 	"database/sql"
 	"time"
 
+	"github.com/mguggi/oraclebeat/module/oracle"
+	"github.com/pkg/errors"
+
 	"github.com/elastic/beats/libbeat/common"
 	"github.com/elastic/beats/libbeat/logp"
 	"github.com/elastic/beats/metricbeat/mb"
-	"github.com/mguggi/oraclebeat/module/oracle"
-	"github.com/pkg/errors"
 
 	_ "gopkg.in/goracle.v2"
 )

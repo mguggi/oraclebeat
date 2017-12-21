@@ -18,4 +18,3 @@ class Test(metricbeat.BaseTest):
 
     def get_hosts(self):
         return [os.getenv("ORACLE_DSN")]
-

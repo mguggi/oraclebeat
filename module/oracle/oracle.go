@@ -12,10 +12,11 @@ import (
 
 	"time"
 
-	"github.com/elastic/beats/libbeat/logp"
-	"github.com/elastic/beats/metricbeat/mb"
 	"github.com/pkg/errors"
 	"gopkg.in/goracle.v2"
+
+	"github.com/elastic/beats/libbeat/logp"
+	"github.com/elastic/beats/metricbeat/mb"
 )
 
 const selector = "oracle"
