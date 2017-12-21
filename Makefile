@@ -39,6 +39,6 @@ before-build:
 # Test only local
 .PHONY: local-tests
 local-tests: ## @testing Runs the unit tests with coverage.
-    ${MAKE} prepare-tests
+local-tests: prepare-tests
 	go test -i ${GOPACKAGES}
 	$(COVERAGE_TOOL) $(RACE) -coverprofile=${COVERAGE_DIR}/unit.cov  ${GOPACKAGES}
