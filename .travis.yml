@@ -30,11 +30,12 @@ jobs:
     # Oraclebeat
     - os: linux
       env:
+        - ORACLE_FILE="instantclient/122010/oracle-instantclient12.2-basic-12.2.0.1.0-1.x86_64.rpm"
         - TARGETS="MODULE=oracle make test-module"
         - LD_LIBRARY_PATH="/usr/lib/oracle/12.2/client64/lib"
       go: $GO_VERSION
       install:
-        - ORACLE_FILE='instantclient/122010/oracle-instantclient12.2-basic-12.2.0.1.0-1.x86_64.rpm' download.sh
+        - .travis/oracle/download.sh
         - sudo apt-get -qq install libaio1 rpm
         - sudo rpm --install --nodeps oracle-instantclient12.2-*.rpm
       stage: test
@@ -44,7 +45,6 @@ before_install:
   - go get github.com/pkg/errors
   - go get github.com/stretchr/testify/assert
   - chmod -R go-w $TRAVIS_BUILD_DIR
-  - .travis/oracle/download.sh --unless-exists
 
 install: true
 
