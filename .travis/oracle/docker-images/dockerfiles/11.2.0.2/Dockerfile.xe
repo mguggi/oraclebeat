@@ -42,18 +42,14 @@ ENV ORACLE_BASE=/u01/app/oracle \
     CONFIG_RSP="xe.rsp" \
     RUN_FILE="runOracle.sh" \
     PWD_FILE="setPassword.sh" \
-    CHECK_DB_FILE="checkDBStatus.sh" \
-    SWAPSIZE="2048" \
-    SWAPFILE="/var/lib/swap.img" \
-    SWAPSCRIPT="makeSwap.sh"
-
+    CHECK_DB_FILE="checkDBStatus.sh"
 
 # Use second ENV so that variable get substituted
 ENV PATH=$ORACLE_HOME/bin:$PATH
 
 # Copy binaries
 # -------------
-COPY $INSTALL_FILE_1 $CONFIG_RSP $RUN_FILE $PWD_FILE $CHECK_DB_FILE $SWAPSCRIPT $INSTALL_DIR/
+COPY $INSTALL_FILE_1 $CONFIG_RSP $RUN_FILE $PWD_FILE $CHECK_DB_FILE $INSTALL_DIR/
 
 # Install Oracle Express Edition
 # ------------------------------
@@ -61,7 +57,6 @@ COPY $INSTALL_FILE_1 $CONFIG_RSP $RUN_FILE $PWD_FILE $CHECK_DB_FILE $SWAPSCRIPT 
 RUN yum -y install unzip libaio bc initscripts net-tools openssl && \
     rm -rf /var/cache/yum && \
     cd $INSTALL_DIR && \
-    $SWAPSCRIPT && \
     unzip $INSTALL_FILE_1 && \
     rm $INSTALL_FILE_1 &&    \
     rpm -i Disk1/*.rpm &&    \

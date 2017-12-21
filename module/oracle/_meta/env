@@ -1,2 +1,2 @@
 # connection string for integrtion tests
-ORACLE_DSN=oracle://system:Login4Me@localhost:1521/XE
+ORACLE_DSN=oracle://system:oracle@localhost:1521/XE

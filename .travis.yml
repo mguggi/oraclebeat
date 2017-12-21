@@ -20,18 +20,12 @@ jobs:
     # Prepare Oracle Database Docker Image
     - os: linux
       env:
-        - ORACLE_COOKIE=integration-tests
-        - ORACLE_FILE=oracle11g/xe/oracle-xe-11.2.0-1.0.x86_64.rpm.zip
-        - ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe
-        - ORACLE_SID=XE
-        - ORACLE_DOWNLOAD_DIR=$ORACLEBEAT_HOME/.travis/oracle/docker-images/dockerfiles/11.2.0.2
+        - TARGET="MODULE=oracle PORT=1521 make run-module"
       go: $GO_VERSION
       install:
-        - $ORACLEBEAT_HOME/.travis/oracle/download.sh
-        - cd $ORACLEBEAT_HOME/.travis/oracle/docker-images/dockerfiles; ./buildDockerImage.sh -v 11.2.0.2 -x
+        - make python-env
+        - source /home/mguggi/go/src/github.com/mguggi/oraclebeat/build/python-env/bin/activate
       stage: prepare
-
-    # Oracle Database
 
     # Oraclebeat
     - os: linux
