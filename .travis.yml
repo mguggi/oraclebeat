@@ -1,6 +1,9 @@
 sudo: required
 dist: trusty
 
+services:
+  - docker
+
 language: go
 
 env:
@@ -33,6 +36,7 @@ addons:
 before_install:
   - umask 022
   - chmod -R go-w $GOPATH/src/github.com/mguggi/oraclebeat
+  - .travis/oracle/download.sh
   - .travis/oracle/dockerfiles/buildDockerImage.sh -x -v 11.2.0.2
 
 install: true
