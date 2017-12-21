@@ -43,7 +43,7 @@ ENV ORACLE_BASE=/u01/app/oracle \
     RUN_FILE="runOracle.sh" \
     PWD_FILE="setPassword.sh" \
     CHECK_DB_FILE="checkDBStatus.sh" \
-    SWAPSIZE="2048""
+    SWAPSIZE="2048" \
     SWAPFILE="/var/lib/swap.img" \
 
 
