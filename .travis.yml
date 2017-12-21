@@ -28,7 +28,7 @@ jobs:
       go: $GO_VERSION
       install:
         - $ORACLEBEAT_HOME/.travis/oracle/download.sh
-        - cd $ORACLEBEAT_HOME/.travis/oracle/docker-images/dockerfiles; ./buildDockerImage.sh -v 11.2.0.2 -x -i
+        - cd $ORACLEBEAT_HOME/.travis/oracle/docker-images/dockerfiles; ./buildDockerImage.sh -v 11.2.0.2 -x
       stage: prepare
 
     # Oracle Database
