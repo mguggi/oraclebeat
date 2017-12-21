@@ -25,10 +25,13 @@ jobs:
         - ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe
         - ORACLE_SID=XE
         - ORACLE_DOWNLOAD_DIR=.travis/oracle/docker-images/dockerfiles/11.2.0.2
+      go: $GO_VERSION
       install:
-        - ./travis/oracle/download.sh
-        - cd ./travis/oracle/docker-images/dockerfiles; ./buildDockerImage.sh -x -v 11.2.0.2
-      stage: xe
+        - $GOPATH/.travis/oracle/download.sh
+        - $GOPATH/.travis/oracle/docker-images/dockerfiles; ./buildDockerImage.sh -x -v 11.2.0.2
+      stage: prepare
+
+    # Oracle Database
 
     # Oraclebeat
     - os: linux
@@ -39,6 +42,10 @@ jobs:
       install:
         - go get github.com/pkg/errors
         - go get github.com/stretchr/testify/assert
+        - make python-env
+        - source /home/mguggi/go/src/github.com/mguggi/oraclebeat/build/python-env/bin/activate
+        - MODULE=oracle PORT=1521 make run-module
+        - MODULE=oracle make test-module
       stage: test
 
 before_install:
