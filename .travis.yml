@@ -1,52 +1,32 @@
-services:
-  - docker
+sudo: required
 
 language: go
 
 env:
   global:
-    # Cross-compile for amd64 only to speed up testing.
-    - GOX_FLAGS="-arch amd64"
-    - DOCKER_COMPOSE_VERSION=1.11.1
     - GO_VERSION="1.9.2"
+    - GOX_FLAGS="-arch amd64"
+    - secure: LAoqEJoSCF8cF4FVIuv1d7onAcGz3qZVFO79Vnyn4dJrprAln+9uBGKn2oIsHwdHWKgg+jQW5vrKrP6RAnRAPgJDsFLR5MXPlf2xnz5LMNWSFsyNOGL4kboNcpXEiYY8sSiMrTRJx2RacLIF+LuknfJ16SVIYF0lQcUEho0IxBtqkuXyT+xiPa+oVdakhGKRWRyXWzXBq6EfDnmPMqpwqMEJQbilYF0cQD0kAyQsWHxiapkcw/OMP37hweat8vPmeHklxGIATh4aLMQcRZntCaWTpEhmHeKMQz81e36GKYDdssD3K/vrtHf+oNd/nHvjfp5en/hW82Y8oUzkjM2FcpexXgAsl0e8pttN5QFlHhq1TAueK1uuaoCvWtQ2QXvWWZgcOORrE1+lXCUKWGAQSqCeM3wEUzPd2Sv8VOFJGIF56BWwSfQG55u3PDMb5jUjuOCcwHs7dAf5njnUpjtWUOwrnrbHwz2y+OSl3yqBHD5821xnXqq/wov7mwU/6YKjGRTmUlsfNVIyOHDUlAkXG20Y4jQm4qBBvTjwwR9z6Vb7Y5WAxK7jZv8dEPmYle+rXJVxJXBSKZocd2A/VKD4v1DqY5L2SFiNsV0y/VSB9vEhGWbTGMaUf3EMsYuzvBqjCJKKVW181xFjWdGYGTYc4ojsP2UMONkAOucJEkDZ0j4=
+    - secure: AbOQx25Lghjna2KFlw9yjzSjt4ez5/6Lr9YZ4LNEAY+pYcFJQYasD6o6d7APoa7fHFFjL5PjU04TjMiFF5FCgcitoYC7ERCr0W+VBQBIRPGadsJOPQavz13CEDrTVUD6sdIh5yi2aGSkQxDOxN/zrsa6xda/8J16KSaNO99zLasmlZuB5sWnvPRbbaY/UqoEM1NWMd030rPQb0Tgt5FBU52pQhJNjxfu/lgHW5qnrQ979gJ6lYEH9XWpcLPX5+65U8XMwA/ubzPdGYzs3Cl2hfx5h0pu1FA51FcnyeBJAgQspO2LfQuVPQiQyDvNRUPgt3U6OVakTavk4YEfR/biKR53b6U0iRxvu0f792TdC6yjsSkr6WkVfd26KwIgFC0J2Lnqj9UfPE3aRV/FMDjSpZP+iKXUkDt4ALzYo/FoC244rEFjg9pq7OGYHlh/aH9wySwkCI9ObvX+hpvlvz7fFUpEn0yQYvQ0yYfnrOJ2lK4TapdfOGUE+l6RvFbEw5XXnzlFMWyfeM4SV6gwkBFXUgeWGaa48BURX05LguYjOz5UO1rP6QvgJBP8nCOKMfAhD1tIcKReNbnl6KUN5/9PdKnLdQ1d/N6f3HWnsnhio0Q1SGmLNG0Sr+/CbB7sgcs0qsGXmQB8FbvnVC6WQTkU7Gmelw6zPHvhK4daiWNz8cg=
+    - ORACLE_COOKIE=sqldev
+    - ORACLE_FILE=oracle11g/xe/oracle-xe-11.2.0-1.0.x86_64.rpm.zip
+    - ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe
+    - ORACLE_SID=XE
 
 jobs:
   include:
-    # General checks
     - os: linux
-      env: TARGETS="check"
-      go: $GO_VERSION
-      stage: check
-
-    # Oraclebeat
-    - os: linux
-      env: TARGETS="-C oraclebeat testsuite"
-      go: $GO_VERSION
+      env: TARGETS="testsuite"
+      go: "$GO_VERSION"
       stage: test
 
-addons:
-  apt:
-    packages:
-      - python-virtualenv
-      - libpcap-dev
-
 before_install:
-  - python --version
   - umask 022
   - chmod -R go-w $GOPATH/src/github.com/mguggi/oraclebeat
-  # Docker-compose installation
-  - sudo rm /usr/local/bin/docker-compose || true
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
+  - .travis/oracle/download.sh
+  - .travis/oracle/install.sh
 
-# Skips installations step
 install: true
 
 script:
   - make $TARGETS
-
-after_success:
-  # Copy full.cov to coverage.txt because codecov.io requires this file
-  - test -f oraclebeat/build/coverage/full.cov && bash <(curl -s https://codecov.io/bash) -f oraclebeat/build/coverage/full.cov
-
