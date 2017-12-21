@@ -2,6 +2,9 @@ sudo: required
 
 language: go
 
+# Make sure project can also be built on travis for clones of the repo
+go_import_path: github.com/elastic/beats
+
 env:
   global:
     - GO_VERSION="1.9.2"
@@ -15,6 +18,13 @@ env:
 
 jobs:
   include:
+    # General checks
+    - os: linux
+      env: TARGETS="check"
+      go: $GO_VERSION
+      stage: check
+
+    # Oraclebeat
     - os: linux
       env: TARGETS="testsuite"
       go: "$GO_VERSION"
