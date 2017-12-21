@@ -7,11 +7,12 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/elastic/beats/libbeat/common"
+	"github.com/elastic/beats/libbeat/tests/compose"
 	mbtest "github.com/elastic/beats/metricbeat/mb/testing"
 )
 
 func TestFetch(t *testing.T) {
-	//compose.EnsureUpWithTimeout(t, 180, "oracle")
+	compose.EnsureUpWithTimeout(t, 180, "oracle")
 
 	f := mbtest.NewEventsFetcher(t, getConfig())
 	events, err := f.Fetch()
@@ -38,7 +39,7 @@ func TestFetch(t *testing.T) {
 	assert.NotEmpty(t, message["text"])
 	assert.True(t, message["record"].(int64) > 0)
 
-	if !t.Failed() {
+	if t.Failed() {
 		t.Logf("%s/%s event: %+v", f.Module().Name(), f.Name(), event)
 	}
 }

@@ -35,10 +35,3 @@ copy-vendor:
 .PHONY: before-build
 before-build:
 	if [ -f modules.d/oracle.yml.disabled ]; then mv modules.d/oracle.yml.disabled modules.d/oracle.yml; fi
-
-# Test only local
-.PHONY: local-tests
-local-tests: ## @testing Runs the unit tests with coverage.
-local-tests: prepare-tests
-	go test -i ${GOPACKAGES}
-	$(COVERAGE_TOOL) $(RACE) -coverprofile=${COVERAGE_DIR}/unit.cov  ${GOPACKAGES}

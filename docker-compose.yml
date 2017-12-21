@@ -4,9 +4,9 @@ services:
     build: .
     environment:
       - TEST_ENVIRONMENT=false
-    working_dir: ${HOME}/go/src/github.com/mguggi/oraclebeat
+    working_dir: /go/src/github.com/mguggi/oraclebeat
     volumes:
-      #- $HOME/go/src/github.com/elastic/beats/:$HOME/go/src/github.com/elastic/beats/
+      - ./..:/go/src/github.com/mguggi
       # This is required to on-demand launching the rest on containers for tests & also docker module tests:
       - /var/run/docker.sock:/var/run/docker.sock
     command: make
@@ -15,13 +15,5 @@ services:
 
   # Modules
   oracle:
-    build:
-      context: ./module/oracle/_meta
+    build: ./module/oracle/_meta
     shm_size: 1g
-    volumes:
-      - oracledata:/opt/oracle/oradata
-
-volumes:
-  # oracle data
-  oracledata:
-    driver: local
