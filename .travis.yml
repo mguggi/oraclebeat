@@ -44,6 +44,7 @@ before_install:
   - umask 022
   - go get github.com/pkg/errors
   - go get github.com/stretchr/testify/assert
+  - go get github.com/docker/libcompose/docker
   - chmod -R go-w $TRAVIS_BUILD_DIR
 
 install: true
