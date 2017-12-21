@@ -1,9 +1,8 @@
 #!/bin/sh -e
 # vim: set et sw=2 ts=2:
 
-[ -n "$ORACLE_FILE" ] || { echo "Missing ORACLE_FILE environment variable!"; exit 1; }
-
-ORACLE_DOWNLOAD_FILE="$(basename "$ORACLE_FILE")"
+ORACLE_DOWNLOAD_DIR="dockerfiles/11.2.0.2"
+ORACLE_DOWNLOAD_FILE="oracle-xe-11.2.0-1.0.x86_64.rpm.zip"
 
 if [ -n "$ORACLE_DOWNLOAD_DIR" ]; then
   mkdir -p "$ORACLE_DOWNLOAD_DIR"
