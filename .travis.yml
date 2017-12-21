@@ -21,7 +21,7 @@ jobs:
   include:
     # Oraclebeat
     - os: linux
-      env: TARGETS="testsuite"
+      env: TARGETS="prepare-test testsuite"
       go: $GO_VERSION
       stage: test
 

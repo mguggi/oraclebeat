@@ -35,3 +35,8 @@ copy-vendor:
 .PHONY: before-build
 before-build:
 	if [ -f modules.d/oracle.yml.disabled ]; then mv modules.d/oracle.yml.disabled modules.d/oracle.yml; fi
+
+# Prepare test stuff
+.PHONY: prepare-test
+prepare-test:
+	rsync -a --exclude=build ${ES_BEATS}/metricbeat/scripts/generate_imports_helper.py ${ES_BEATS}/script

@@ -1,4 +1,6 @@
-# Oraclebeat
+[![Travis](https://travis-ci.org/mguggi/oraclebeat.svg?branch=master)](https://travis-ci.org/mguggi/oraclebeat)
+
+# Oraclebeat 
 
 Oraclebeat is a beat based on metricbeat which was generated with metricbeat/metricset generator.
 
