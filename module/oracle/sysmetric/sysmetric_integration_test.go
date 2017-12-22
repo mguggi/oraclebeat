@@ -20,22 +20,23 @@ func TestFetch(t *testing.T) {
 		t.FailNow()
 	}
 
-	assert.True(t, len(events) > 0)
-	event := events[0]
+	if len(events) > 0 {
+		event := events[0]
 
-	// Check event fields
-	database := event["database"].(common.MapStr)
-	container := database["container"].(common.MapStr)
-	instance := container["instance"].(common.MapStr)
+		// Check event fields
+		database := event["database"].(common.MapStr)
+		container := database["container"].(common.MapStr)
+		instance := container["instance"].(common.MapStr)
 
-	assert.True(t, instance["id"].(int64) > 0)
-	assert.NotEmpty(t, event["group_id"])
-	assert.NotEmpty(t, event["id"])
-	assert.NotEmpty(t, event["name"])
-	assert.NotEmpty(t, event["value"])
+		assert.True(t, instance["id"].(int64) > 0)
+		assert.NotEmpty(t, event["group_id"])
+		assert.NotEmpty(t, event["id"])
+		assert.NotEmpty(t, event["name"])
+		assert.NotEmpty(t, event["value"])
 
-	if t.Failed() {
-		t.Logf("%s/%s event: %+v", f.Module().Name(), f.Name(), event)
+		if t.Failed() {
+			t.Logf("%s/%s event: %+v", f.Module().Name(), f.Name(), event)
+		}
 	}
 }
 

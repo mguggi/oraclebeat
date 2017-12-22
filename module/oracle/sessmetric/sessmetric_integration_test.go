@@ -20,26 +20,27 @@ func TestFetch(t *testing.T) {
 		t.FailNow()
 	}
 
-	assert.True(t, len(events) > 0)
-	event := events[0]
+	if len(events) > 0 {
+		event := events[0]
 
-	// Check event fields
-	database := event["database"].(common.MapStr)
-	container := database["container"].(common.MapStr)
-	instance := container["instance"].(common.MapStr)
-	session := event["session"].(common.MapStr)
-	interval := event["interval"].(common.MapStr)
+		// Check event fields
+		database := event["database"].(common.MapStr)
+		container := database["container"].(common.MapStr)
+		instance := container["instance"].(common.MapStr)
+		session := event["session"].(common.MapStr)
+		interval := event["interval"].(common.MapStr)
 
-	assert.True(t, instance["id"].(int64) > 0)
-	assert.True(t, session["id"].(int64) > 0)
-	assert.True(t, session["serial_number"].(int64) > 0)
-	assert.NotEmpty(t, interval["begin"])
-	assert.NotEmpty(t, interval["end"])
-	assert.NotEmpty(t, event["cpu"])
-	assert.NotEmpty(t, event["pga_memory"])
+		assert.True(t, instance["id"].(int64) > 0)
+		assert.True(t, session["id"].(int64) > 0)
+		assert.True(t, session["serial_number"].(int64) > 0)
+		assert.NotEmpty(t, interval["begin"])
+		assert.NotEmpty(t, interval["end"])
+		assert.NotEmpty(t, event["cpu"])
+		assert.NotEmpty(t, event["pga_memory"])
 
-	if t.Failed() {
-		t.Logf("%s/%s event: %+v", f.Module().Name(), f.Name(), event)
+		if t.Failed() {
+			t.Logf("%s/%s event: %+v", f.Module().Name(), f.Name(), event)
+		}
 	}
 }
 
