@@ -1,0 +1,1515 @@
+
+- key: beat
+  title: Beat
+  description: >
+    Contains common beat fields available in all event types.
+  fields:
+
+    - name: beat.name
+      description: >
+        The name of the Beat sending the log messages. If the Beat name is
+        set in the configuration file, then that value is used. If it is not
+        set, the hostname is used. To set the Beat name, use the `name`
+        option in the configuration file.
+    - name: beat.hostname
+      description: >
+        The hostname as returned by the operating system on which the Beat is
+        running.
+    - name: beat.timezone
+      description: >
+        The timezone as returned by the operating system on which the Beat is
+        running.
+    - name: beat.version
+      description: >
+        The version of the beat that generated this event.
+
+    - name: "@timestamp"
+      type: date
+      required: true
+      format: date
+      example: August 26th 2016, 12:35:53.332
+      description: >
+        The timestamp when the event log record was generated.
+
+    - name: tags
+      description: >
+        Arbitrary tags that can be set per Beat and per transaction
+        type.
+
+    - name: fields
+      type: object
+      object_type: keyword
+      description: >
+        Contains user configurable fields.
+
+    - name: error
+      type: group
+      description: >
+        Error fields containing additional info in case of errors.
+      fields:
+        - name: message
+          type: text
+          description: >
+            Error message.
+        - name: code
+          type: long
+          description: >
+            Error code.
+        - name: type
+          type: keyword
+          description: >
+            Error type.
+- key: cloud
+  title: Cloud provider metadata
+  description: >
+    Metadata from cloud providers added by the add_cloud_metadata processor.
+  fields:
+
+    - name: meta.cloud.provider
+      example: ec2
+      description: >
+        Name of the cloud provider. Possible values are ec2, gce, or digitalocean.
+
+    - name: meta.cloud.instance_id
+      description: >
+        Instance ID of the host machine.
+
+    - name: meta.cloud.instance_name
+      description: >
+        Instance name of the host machine.
+
+    - name: meta.cloud.machine_type
+      example: t2.medium
+      description: >
+        Machine type of the host machine.
+
+    - name: meta.cloud.availability_zone
+      example: us-east-1c
+      description: >
+        Availability zone in which this host is running.
+
+    - name: meta.cloud.project_id
+      example: project-x
+      description: >
+        Name of the project in Google Cloud.
+
+    - name: meta.cloud.region
+      description: >
+        Region in which this host is running.
+- key: docker
+  title: Docker
+  description: >
+    beta[]
+
+    Docker stats collected from Docker.
+  short_config: false
+  anchor: docker-processor
+  fields:
+    - name: docker
+      type: group
+      fields:
+        - name: container.id
+          type: keyword
+          description: >
+            Unique container id.
+        - name: container.image
+          type: keyword
+          description: >
+            Name of the image the container was built on.
+        - name: container.name
+          type: keyword
+          description: >
+            Container name.
+        - name: container.labels
+          type: object
+          object_type: keyword
+          description: >
+            Image labels.
+- key: kubernetes
+  title: Kubernetes
+  description: >
+    beta[]
+
+    Kubernetes metadata added by the kubernetes processor
+  short_config: false
+  anchor: kubernetes-processor
+  fields:
+    - name: kubernetes
+      type: group
+      fields:
+        - name: pod.name
+          type: keyword
+          description: >
+            Kubernetes pod name
+
+        - name: namespace
+          type: keyword
+          description: >
+            Kubernetes namespace
+
+        - name: labels
+          type: object
+          description: >
+            Kubernetes labels map
+
+        - name: annotations
+          type: object
+          description: >
+            Kubernetes annotations map
+
+        - name: container.name
+          type: keyword
+          description: >
+            Kubernetes container name
+
+        - name: container.image
+          type: keyword
+          description: >
+            Kubernetes container image
+- key: common
+  title: Common
+  description: >
+    Contains common fields available in all event types.
+  fields:
+
+    - name: metricset.module
+      description: >
+        The name of the module that generated the event.
+
+    - name: metricset.name
+      description: >
+        The name of the metricset that generated the event.
+
+    - name: metricset.host
+      description: >
+        Hostname of the machine from which the metricset was collected. This
+        field may not be present when the data was collected locally.
+
+    - name: metricset.rtt
+      type: long
+      required: true
+      description: >
+        Event round trip time in microseconds.
+
+    - name: metricset.namespace
+      type: keyword
+      description: >
+        Namespace of dynamic metricsets.
+
+    - name: type
+      required: true
+      example: metricsets
+      description: >
+        The document type. Always set to "metricsets".
+
+- key: oracle
+  title: Oracle Module
+  description: >
+    Experimental: Metrics collected from an Oracle database.
+  fields:
+    - name: oracle
+      type: group
+      description: >
+        Oracle database metrics.
+      fields:
+        - name: alertlog
+          type: group
+          description: >
+            Shows the contents of the XML-based alert log in the Automatic Diagnostic Repository (ADR) for the current database.
+          fields:
+            - name: database.container.id
+              type: long
+              description: >
+                The identifier of the container to which the data pertains. Possible values include:
+                  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+                     rows in non-CDBs.
+                  1: This value is used for rows containing data that pertain to only the root
+                  n: Where n is the applicable container ID for the rows containing data
+            - name: database.container.uid
+              type: long
+              description: >
+                The unique ID of the container to which the data pertains
+            - name: database.container.name
+              type: keyword
+              description: >
+                The name of the container to which the data pertains
+            - name: database.container.instance.id
+              type: long
+              description: >
+                The instance identifier
+            - name: timestamp
+              type: date
+              description: >
+                Date and time when the message was generated
+            - name: adr_home
+              type: keyword
+              description: >
+                Path to the current ADR home
+            - name: organization
+              type: keyword
+              description: >
+                ID of the organization that wrote the originating component, usually the domain of the organization
+            - name: component
+              type: keyword
+              description: >
+                ID of the product or component that originated the message
+            - name: host.id
+              type: keyword
+              description: >
+                DNS hostname of originating host
+            - name: host.address
+              type: keyword
+              description: >
+                IP of other network address of the originating host for the mesaage
+            - name: message.id
+              type: keyword
+              description: >
+                ID of the message
+            - name: message.type
+              type: integer
+              description: >
+                Type of the message, indicating that a different type of response is required. Possible values include:
+                  1: UNKNOWN - Essentially the NULL type
+                  2: INCIDENT_ERROR - The program has encountered an error for some internal or unexpected reason, and it must
+                                      be reported to Oracle Support
+                  3: ERROR - An error of some kind has occurred
+                  4: WARNING: An action occurred or a condition was discovered that should be reviewed and may require action
+                  5: NOTIFICATION: reports a normal action or event. This could be a user action such as "logon completed"
+                  6: TRACE: Output of a diagnostic trace
+            - name: message.level
+              type: integer
+              description: >
+                Level the message belongs to. Lower level values imply higher severity for errors. Possible values include:
+                  1: CRITICAL: critical errors
+                  2: SEVERE: severe errors
+                  8: IMPORTANT: important message
+                  16: NORMAL: normal message
+            - name: message.group
+              type: keyword
+              description: >
+                Name of the group to which the message belongs
+            - name: message.text
+              type: text
+              description: >
+                Fully formed and localized text of the message
+            - name: message.arguments
+              type: text
+              description: >
+                Arguments to be bound with the generic text of the message
+            - name: message.attributes
+              type: text
+              description: >
+                Supplemental attributes that are specific to a message. This field contains the impacts for an incident
+                type error message.
+            - name: message.details
+              type: text
+              description: >
+                Supplemental data that is specific to a particular program and error message required to complete the
+                diagnosis. Similar to the extra detail referred to in DETAILED_LOCATION but short enough to simply provide in
+                the message itself
+            - name: message.record
+              type: long
+              description: >
+                Record number for the message (this value is same as the row number)
+            - name: message.version
+              type: integer
+              description: >
+                ARB version number for the message
+            - name: client
+              type: keyword
+              description: >
+                ID of the client or security group that the message relates to
+            - name: module
+              type: keyword
+              description: >
+                ID of the module that originated the message. This value is unique within a component.
+            - name: process
+              type: keyword
+              description: >
+                ID of the process that originated the message
+            - name: thread
+              type: keyword
+              description: >
+                ID of the thread of the process that originated the message
+            - name: user
+              type: keyword
+              description: >
+                ID of the user that originated the message
+            - name: partion
+              type: integer
+              description: >
+                Segment number of physical file
+            - name: filename
+              type: text
+              description: >
+                Physical file on disk
+            - name: problem
+              type: keyword
+              description: >
+                Describes the key for the current problem that the message is associated with
+
+        - name: osstats
+          type: group
+          description: >
+            Displays system utilization statistics from the operating system. One row is returned for each system statistic.
+          fields:
+            - name: database.container.id
+              type: long
+              description: >
+                The identifier of the container to which the data pertains. Possible values include:
+                  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+                     rows in non-CDBs.
+                  1: This value is used for rows containing data that pertain to only the root
+                  n: Where n is the applicable container ID for the rows containing data
+            - name: database.container.instance.id
+              type: long
+              description: >
+                The instance identifier
+            - name: id
+              type: long
+              description: >
+                Statistic ID
+            - name: name
+              type: keyword
+              description: >
+                Name of the statistic
+            - name: value
+              type: long
+              description: >
+                Instantaneous statistic value
+            - name: comments
+              type: keyword
+              description: >
+                Any additional operating system-specific clarifications for the statistic
+            - name: cumulative
+              type: keyword
+              description: >
+                Indicates whether the statistic is cumulative (that is, accumulates over time) (YES) or not (NO)
+
+        - name: recoveryarea
+          type: group
+          description: >
+            Displays usage information about recovery areas.
+          fields:
+            - name: database.container.id
+              type: long
+              description: >
+                The identifier of the container to which the data pertains. Possible values include:
+                  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+                     rows in non-CDBs.
+                  1: This value is used for rows containing data that pertain to only the root
+                  n: Where n is the applicable container ID for the rows containing data
+            - name: file_type
+              type: keyword
+              description: >
+                File type:
+                  CONTROL FILE
+                  REDO LOG
+                  ARCHIVED LOG
+                  BACKUP PIECE
+                  IMAGE COPY
+                  FLASHBACK LOG
+                  REMOTE ARCHIVED LOG
+            - name: space.used.pct
+              type: float
+              description: >
+              format: percent
+                Percent of the recovery area that is in use
+            - name: space.reclaimable.pct
+              type: float
+              format: percent
+              description: >
+                Percent of the recovery area that is reclaimable
+            - name: number_of_files
+              type: long
+              description: >
+                Number of files in the recovery area
+
+        - name: rmanjobs
+          type: group
+          description: >
+            Displays details about backup jobs.
+          fields:
+            - name: database.container.id
+              type: long
+              description: >
+                The identifier of the container to which the data pertains. Possible values include:
+                  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+                     rows in non-CDBs.
+                  1: This value is used for rows containing data that pertain to only the root
+                  n: Where n is the applicable container ID for the rows containing data
+            - name: session.key
+              type: long
+              description: >
+                Session identifier
+            - name: session.recid
+              type: long
+              description: >
+                Together, with SESSION_KEY and SESSION_STAMP, used to uniquely identify job output
+            - name: session.stamp
+              type: long
+              description: >
+                Together, with SESSION_KEY and SESSION_RECID, used to uniquely identify job output
+            - name: command_id
+              type: keyword
+              description: >
+                Either a user-specified SET COMMAND ID or a unique command ID generated by RMAN
+            - name: interval.start
+              type: date
+              description: >
+                Start time of the first BACKUP command in the job
+            - name: interval.end
+              type: date
+              description: >
+                End time of the last BACKUP command in the job
+            - name: interval.duration
+              type: float
+              description: >
+                Number of elapsed seconds
+            - name: input.type
+              type: keyword
+              description: >
+                Contains one of the following values. If the user command does not satisfy one of them, then preference is given
+                in order, from top to bottom of the list.
+                  DB FULL
+                  RECVR AREA
+                  DB INCR
+                  DATAFILE FULL
+                  DATAFILE INCR
+                  ARCHIVELOG
+                  CONTROLFILE
+                  SPFILE
+            - name: input.bytes
+              type: long
+              format: bytes
+              description: >
+                Sum of all input file sizes backed up by this job
+            - name: input.bytes_per_sec
+              type: long
+              format: duration
+              input_format: seconds
+              description: >
+                Input read-rate-per-second
+            - name: output.device_type
+              type: keyword
+              description: >
+                Can be DISK, SBT, or *. An * indicates more than one device (in most cases, it will be DISK or SBT).
+            - name: output.bytes
+              type: long
+              format: bytes
+              description: >
+                Output size of all pieces generated by this job
+            - name: output.bytes_per_sec
+              type: long
+              format: duration
+              input_format: seconds
+              description: >
+                Output write-rate-per-second
+            - name: backed_by_osb
+              type: keyword
+              description: >
+                A value of YES means the backup was done to Oracle Secure Backup. Otherwise, backed up by other third party
+                tape library.
+            - name: autobackup.count
+              type: integer
+              description: >
+                Number of autobackups performed by this job
+            - name: autobackup.done
+              type: keyword
+              description: >
+                YES or NO, depending upon whether or not a control file autobackup was done as part of this backup job
+            - name: status
+              type: keyword
+              description: >
+                One of the following values:
+                  RUNNING WITH WARNINGS
+                  RUNNING WITH ERRORS
+                  COMPLETED
+                  COMPLETED WITH WARNINGS
+                  COMPLETED WITH ERRORS
+                  FAILED
+            - name: optimized
+              type: keyword
+              description: >
+                YES or NO, depending on whether optimization was applied. Applicable to backup jobs only.
+            - name: compression_ratio
+              type: float
+              description: >
+                Compression ratio
+
+        - name: session
+          type: group
+          description: >
+            Displays session information for each current session.
+          fields:
+            - name: database.container.id
+              type: integer
+              description: >
+                The identifier of the container to which the data pertains. Possible values include:
+                  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+                     rows in non-CDBs.
+                  1: This value is used for rows containing data that pertain to only the root
+                  n: Where n is the applicable container ID for the rows containing data
+            - name: database.container.instance.id
+              type: integer
+              description: >
+                The instance identifier
+            - name: address
+              type: keyword
+              description: >
+                Session address
+            - name: id
+              type: long
+              description: >
+                Session identifier
+            - name: serial_number
+              type: long
+              description: >
+                Session serial number. Used to uniquely identify a session's objects. Guarantees that session-level commands
+                are applied to the correct session objects if the session ends and another session begins with the same
+                session identifier.
+            - name: audit_session_id
+              type: long
+              description: >
+                Auditing session identifier
+            - name: status
+              type: keyword
+              description: >
+                Status of the session:
+                  ACTIVE   - Session currently executing SQL
+                  INACTIVE - Session which is inactive and either has no configured limits or has not yet exceeded the
+                             configured limits
+                  KILLED   - Session marked to be killed
+                  CACHED   - Session temporarily cached for use by Oracle*XA
+                  SNIPED   - An inactive session that has exceeded some configured limits (for example, resource limits
+                             specified for the resource manager consumer group or idle_time specified in the user's profile).
+                             Such sessions will not be allowed to become active again.
+            - name: type
+              type: keyword
+              description: >
+                Session type
+            - name: process.id
+              type: keyword
+              description: >
+                Operating system client process identifier
+            - name: process.address
+              type: keyword
+              description: >
+                Address of the process that owns the session
+            - name: process.user
+              type: keyword
+              description: >
+                Operating system client user name
+            - name: process.machine
+              type: keyword
+              description: >
+                Operating system machine name
+            - name: process.port
+              type: long
+              description: >
+                Client port number
+            - name: process.terminal
+              type: keyword
+              description: >
+                Operating system terminal name
+            - name: process.program
+              type: keyword
+              description: >
+                Operating system program name
+            - name: process.type
+              type: keyword
+              description: >
+                Server type:
+                  DEDICATED
+                  SHARED
+                  PSEUDO
+                  POOLED
+                  NONE
+            - name: user.id
+              type: long
+              description: >
+                Oracle user identifier
+            - name: user.name
+              type: keyword
+              description: >
+                Oracle username
+            - name: user.schema.id
+              type: long
+              description: >
+                Schema user identifier
+            - name: user.schema.name
+              type: keyword
+              description: >
+                Schema user name
+            - name: command
+              type: integer
+              description: >
+                Command in progress (last statement parsed). A value of 0 in this COMMAND column means the command is
+                not recorded.
+            - name: owner
+              type: long
+              description: >
+                Identifier of the user who owns the migratable session; the column contents are invalid if the value
+                is 2147483644. For operations using Parallel Slaves, interpret this value as a 4-byte value. The low-order
+                2 bytes represent the session number and the high-order bytes represent the instance identifier of the
+                query coordinator.
+            - name: execution.address
+              type: keyword
+              description: >
+                Address of the transaction state object
+            - name: execution.lock.address
+              type: keyword
+              description: >
+                Address of the lock the session is waiting for; NULL if none
+            - name: sql.address
+              type: keyword
+              description: >
+                Used with SQL_HASH_VALUE to identify the SQL statement that is currently being executed
+            - name: sql.hash
+              type: long
+              description: >
+                Used with SQL_ADDRESS to identify the SQL statement that is currently being executed
+            - name: sql.id
+              type: keyword
+              description: >
+                SQL identifier of the SQL statement that is currently being executed
+            - name: sql.child_number
+              type: long
+              description: >
+                Child number of the SQL statement that is currently being executed
+            - name: sql.execution.start
+              type: date
+              description: >
+                Time when the execution of the SQL currently executed by this session started; NULL if SQL_ID is NULL
+            - name: sql_execution.id
+              type: long
+              description: >
+                SQL execution identifier; NULL if SQL_ID is NULL or if the execution of that SQL has not yet started
+            - name: sql.precursor.address
+              type: keyword
+              description: >
+                Used with PREV_HASH_VALUE to identify the last SQL statement executed
+            - name: sql.precursor.hash
+              type: long
+              description: >
+                Used with SQL_HASH_VALUE to identify the last SQL statement executed
+            - name: sql.precursor.id
+              type: keyword
+              description: >
+                SQL identifier of the last SQL statement executed
+            - name: sql.precursor.child_number
+              type: long
+              description: >
+                Child number of the last SQL statement executed
+            - name: sql.precursor.execution.start
+              type: date
+              description: >
+                SQL execution start of the last executed SQL statement
+            - name: sql.precursor.execution.id
+              type: long
+              description: >
+                SQL execution identifier of the last executed SQL statement
+            - name: plsql.entry.object_id
+              type: long
+              description: >
+                Object identifier of the top-most PL/SQL subprogram on the stack; NULL if there is no PL/SQL subprogram
+                on the stack
+            - name: plsql.entry.subprogram_id
+              type: long
+              description: >
+                Subprogram identifier of the top-most PL/SQL subprogram on the stack; NULL if there is no PL/SQL subprogram
+                on the stack
+            - name: plsql.object_id
+              type: long
+              description: >
+                Object identifier of the currently executing PL/SQL subprogram; NULL if executing SQL
+            - name: plsql.subprogram_id
+              type: long
+              description: >
+                Subprogram identifier of the currently executing PL/SQL object; NULL if executing SQL
+            - name: plsql.debugger_connected
+              type: keyword
+              description: >
+                Indicates whether the session is connected to a PL/SQL debugger. Possible values: TRUE or FALSE
+            - name: module.name
+              type: keyword
+              description: >
+                Name of the currently executing module as set by calling the DBMS_APPLICATION_INFO.SET_MODULE procedure
+            - name: module.hash
+              type: long
+              description: >
+                Hash value of the MODULE column
+            - name: action.name
+              type: keyword
+              description: >
+                Name of the currently executing action as set by calling the DBMS_APPLICATION_INFO.SET_ACTION procedure
+            - name: action.hash
+              type: long
+              description: >
+                Hash value of the ACTION column
+            - name: client.id
+              type: keyword
+              description: >
+                Client identifier of the session
+            - name: client.info
+              type: keyword
+              description: >
+                Information set by the DBMS_APPLICATION_INFO.SET_CLIENT_INFO procedure
+            - name: fixed_table_sequence
+              type: long
+              description: >
+                This contains a number that increases every time the session completes a call to the database and there
+                has been an intervening select from a dynamic performance table. This column can be used by performance
+                monitors to monitor statistics in the database. Each time the performance monitor looks at the database,
+                it only needs to look at sessions that are currently active or have a higher value in this column than the
+                highest value that the performance monitor saw the last time. All the other sessions have been idle since
+                the last time the performance monitor looked at the database.
+            - name: row_lock.object_id
+              type: long
+              description: >
+                Object identifier for the table containing the row specified in ROW_WAIT_ROW#
+            - name: row_lock.file_id
+              type: long
+              description: >
+                Identifier for the data file containing the row specified in ROW_WAIT_ROW#. This column is valid only if the
+                session is currently waiting for another transaction to commit and the value of ROW_WAIT_OBJ# is not -1.
+            - name: row_lock.block_id
+              type: long
+              description: >
+                Identifier for the block containing the row specified in ROW_WAIT_ROW#. This column is valid only if the
+                session is currently waiting for another transaction to commit and the value of ROW_WAIT_OBJ# is not -1.
+            - name: row_lock.row_id
+              type: long
+              description: >
+                Current row being locked. This column is valid only if the session is currently waiting for another transaction
+                to commit and the value of ROW_WAIT_OBJ# is not -1.
+            - name: top_level_call_number
+              type: long
+              description: >
+                Oracle top level call number
+            - name: logon_time
+              type: date
+              description: >
+                Time of logon
+            - name: last_call_et
+              type: long
+              description: >
+                If the session STATUS is currently ACTIVE, then the value represents the elapsed time (in seconds) since
+                the session has become active. If the session STATUS is currently INACTIVE, then the value represents the
+                elapsed time (in seconds) since the session has become inactive.
+            - name: failover.type
+              type: keyword
+              description: >
+                Indicates whether and to what extent transparent application failover (TAF) is enabled for the session:
+                  NONE    - Failover is disabled for this session
+                  SESSION - Client can fail over its session following a disconnect
+                  SELECT  - Client can fail over queries in progress as well
+            - name: failover.method
+              type: keyword
+              description: >
+                Indicates the transparent application failover method for the session:
+                  NONE       - Failover is disabled for this session
+                  BASIC      - Client itself reconnects following a disconnect
+                  PRECONNECT - Backup instance can support all connections from every instance for which it is backed up
+            - name: failover.failed_over
+              type: keyword
+              description: >
+                Indicates whether the session is running in failover mode and failover has occurred (YES) or not (NO)
+            - name: resource_consumer_group
+              type: keyword
+              description: >
+                Name of the session's current resource consumer group
+            - name: pdml_status
+              type: keyword
+              description: >
+                If ENABLED, the session is in a PARALLEL DML enabled mode. If DISABLED, PARALLEL DML enabled mode is not
+                supported for the session. If FORCED, the session has been altered to force PARALLEL DML.
+            - name: pddl_status
+              type: keyword
+              description: >
+                If ENABLED, the session is in a PARALLEL DDL enabled mode. If DISABLED, PARALLEL DDL enabled mode is not
+                supported for the session. If FORCED, the session has been altered to force PARALLEL DDL.
+            - name: pq_status
+              type: keyword
+              description: >
+                If ENABLED, the session is in a PARALLEL QUERY enabled mode. If DISABLED, PARALLEL QUERY enabled mode is not
+                supported for the session. If FORCED, the session has been altered to force PARALLEL QUERY.
+            - name: current_queue_duration
+              type: long
+              description: >
+                If queued (1), the current amount of time the session has been queued. If not currently queued, the value is 0.
+            - name: blocker.status
+              type: keyword
+              description: >
+                This column provides details on whether there is a blocking session:
+                  VALID       - there is a blocking session, and it is identified in the BLOCKING_INSTANCE and BLOCKING_SESSION
+                                columns
+                  NO HOLDER   - there is no session blocking this session
+                  NOT IN WAIT - this session is not in a wait
+                  UNKNOWN     - the blocking session is unknown
+            - name: blocker.instance_id
+              type: long
+              description: >
+                Instance identifier of the blocking session. This column is valid only if BLOCKING_SESSION_STATUS has
+                the value VALID.
+            - name: blocker.session_id
+              type: long
+              description: >
+                Session identifier of the blocking session. This column is valid only if BLOCKING_SESSION_STATUS has the
+                value VALID.
+            - name: blocker.final.status
+              type: keyword
+              description: >
+                The final blocking session is the final element in the wait chain constructed by following the sessions that
+                are blocked by one another starting with this session. In the case of a cyclical wait chain, one of the
+                sessions in the wait chain will be chosen as the final blocker. This column provides details on whether there
+                is a final blocking session:
+                  VALID       - there is a final blocking session and it is identified in the FINAL_BLOCKING_INSTANCE and
+                                FINAL_BLOCKING_SESSION columns
+                  NO HOLDER   - there is no session blocking this session
+                  NOT IN WAIT - this session is not in a wait
+                  UNKNOWN     - the final blocking session is unknown
+            - name: blocker.final.instance_id
+              type: integer
+              description: >
+                Instance identifier of the final blocking session. This column is valid only if FINAL_BLOCKING_SESSION_STATUS
+                has the value VALID.
+            - name: fblocker.final.session_id
+              type: long
+              description: >
+                Session identifier of the blocking session. This column is valid only if FINAL_BLOCKING_SESSION_STATUS has
+                the value VALID.
+            - name: wait.sequence
+              type: long
+              description: >
+                A number that uniquely identifies the current or last wait (incremented for each wait)
+            - name: wait.event.number
+              type: long
+              description: >
+                Event number
+            - name: wait.event.value
+              type: keyword
+              description: >
+                Resource or event for which the session is waiting
+            - name: wait.p1.number
+              type: long
+              description: >
+                First wait event parameter (in decimal)
+            - name: wait.p1.text
+              type: keyword
+              description: >
+                Description of the first wait event parameter
+            - name: wait.p1.raw
+              type: keyword
+              description: >
+                First wait event parameter (in hexadecimal)
+            - name: wait.p2.number
+              type: long
+              description: >
+                Second wait event parameter (in decimal)
+            - name: wait.p2.text
+              type: keyword
+              description: >
+                Description of the second wait event parameter
+            - name: wait.p2.raw
+              type: keyword
+              description: >
+                Second wait event parameter (in decimal)
+            - name: wait.p3.number
+              type: long
+              description: >
+                Third wait event parameter (in decimal)
+            - name: wait.p3.text
+              type: keyword
+              description: >
+                Description of the third wait event parameter
+            - name: wait.p3.raw
+              type: keyword
+              description: >
+                Third wait event parameter (in hexadecimal)
+            - name: wait.class.id
+              type: long
+              description: >
+                Identifier of the class of the wait event
+            - name: wait.class.number
+              type: long
+              description: >
+                Number of the class of the wait event
+            - name: wait.class.value
+              type: keyword
+              description: >
+                Name of the class of the wait event
+            - name: wait.state
+              type: keyword
+              description: >
+                Wait state:
+                  WAITING             - Session is currently waiting
+                  WAITED UNKNOWN TIME - Duration of the last wait is unknown; this is the value when the parameter
+                                        TIMED_STATISTICS is set to false
+                  WAITED SHORT TIME   - Last wait was less than a hundredth of a second
+                  WAITED KNOWN TIME   - Duration of the last wait is specified in the WAIT_TIME column
+            - name: wait.time_us
+              type: long
+              description: >
+                Amount of time waited (in microseconds). If the session is currently waiting, then the value is the time spent
+                in the current wait. If the session is currently not in a wait, then the value is the amount of time waited in
+                the last wait.
+            - name: wait.time_remaining_us
+              type: long
+              description: >
+                Value is interpreted as follows:
+                  > 0  - Amount of time remaining for the current wait (in microseconds)
+                    0  - Current wait has timed out
+                   -1  - Session can indefinitely wait in the current wait
+                  NULL - Session is not currently waiting
+            - name: wait.time_since_last_wait_us
+              type: long
+              description: >
+                Time elapsed since the end of the last wait (in microseconds). If the session is currently in a wait, then
+                the value is 0.
+            - name: service_name
+              type: keyword
+              description: >
+                Service name of the session
+            - name: trace.sql
+              type: keyword
+              description: >
+                Indicates whether SQL tracing is enabled (ENABLED) or disabled (DISABLED)
+            - name: trace.waits
+              type: keyword
+              description: >
+                Indicates whether wait tracing is enabled (TRUE) or not (FALSE)
+            - name: trace.binds
+              type: keyword
+              description: >
+                Indicates whether bind tracing is enabled (TRUE) or not (FALSE)
+            - name: trace.plan_stats
+              type: keyword
+              description: >
+                Frequency at which row source statistics are dumped in the trace files for each cursor:
+                  NEVER
+                  FIRST_EXECUTION
+                  ALL_EXECUTIONS
+            - name: edition_id
+              type: long
+              description: >
+                Shows the value that, in the session, would be reported by sys_context('USERENV', 'SESSION_EDITION_ID')
+            - name: creator.address
+              type: keyword
+              description: >
+                Address of the creating process or circuit
+            - name: creator.serial_number
+              type: long
+              description: >
+                Serial number of the creating process or circuit
+            - name: execution_context_id
+              type: keyword
+              description: >
+                Execution context identifier (sent by Application Server)
+            - name: sql_translation_profile_id
+              type: long
+              description: >
+                Object number of the SQL translation profile
+            - name: pga_tunable_mem
+              type: long
+              description: >
+                The amount of tunable PGA memory (in bytes). Untunable memory is PGA_ALLOC_MEM from V$PROCESS minus
+                PGA_TUNABLE_MEM from V$SESSION.
+            - name: shard_ddl_status
+              type: keyword
+              description: >
+                Indicates whether shard DDL is enabled in the current session (ENABLED) or not (DISABLED). This value is only
+                relevant for the shard catalog database.
+            - name: external_name
+              type: keyword
+              description: >
+                External name of the database user. For enterprise users, returns the Oracle Internet Directory DN.
+
+        - name: sessmetric
+          type: group
+          description: >
+            Displays displays the metric values for all sessions.
+          fields:
+            - name: database.container.id
+              type: long
+              description: >
+                The identifier of the container to which the data pertains. Possible values include:
+                  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+                     rows in non-CDBs.
+                  1: This value is used for rows containing data that pertain to only the root
+                  n: Where n is the applicable container ID for the rows containing data
+            - name: database.container.instance.id
+              type: long
+              description: >
+                The instance identifier
+            - name: session.id
+              type: long
+              description: >
+                Session identifier
+            - name: session.serial_number
+              type: long
+              description: >
+                Session serial number. Used to uniquely identify a session's objects. Guarantees that session-level commands
+                are applied to the correct session objects if the session ends and another session begins with the same
+                session identifier.
+            - name: interval.begin
+              type: date
+              description: >
+                Begin time of the interval
+            - name: interval.end
+              type: date
+              description: >
+                End time of the interval
+            - name: interval.csec
+              type: long
+              description: >
+                Interval size (in hundredths of a second)
+            - name: cpu
+              type: long
+              description: >
+                CPU usage
+              format: percent
+            - name: reads.physical.count
+              type: long
+              description: >
+                Number of physical reads
+            - name: reads.physical.pct
+              type: float
+              description: >
+                Physical read ratio
+            - name: reads.logical.count
+              type: long
+              description: >
+                Number of logical reads
+            - name: reads.logical.pct
+              type: float
+              description: >
+                Logical read ratio
+              format: percent
+            - name: pga_memory
+              type: long
+              description: >
+                PGA size at the end of the interval
+              format: bytes
+            - name: parses.hard
+              type: long
+              description: >
+                Number of hard parses
+            - name: parses.soft
+              type: long
+              description: >
+                Number of soft parses
+
+        - name: sesstats
+          type: group
+          description: >
+            Displays the session-accumulated time for various operations. The time reported is the total elapsed or
+            CPU time (in microseconds).
+          fields:
+            - name: database.container.id
+              type: long
+              description: >
+                The identifier of the container to which the data pertains. Possible values include:
+                  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+                     rows in non-CDBs.
+                  1: This value is used for rows containing data that pertain to only the root
+                  n: Where n is the applicable container ID for the rows containing data
+            - name: database.container.instance.id
+              type: long
+              description: >
+                The instance identifier
+            - name: session.id
+              type: long
+              description: >
+                Session identifier
+            - name: id
+              type: long
+              description: >
+                Statistic identifier for the time statistic
+            - name: name
+              type: keyword
+              description: >
+                Name of the statistic
+            - name: value
+              type: long
+              format: duration
+              input_format: milliseconds
+              description: >
+                Amount of time (in microseconds) that the session has spent in this operation
+
+        - name: sgastats
+          type: group
+          description: >
+            Displays detailed information on the system global area (SGA).
+          fields:
+            - name: database.container.id
+              type: long
+              description: >
+                The identifier of the container to which the data pertains. Possible values include:
+                  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+                     rows in non-CDBs.
+                  1: This value is used for rows containing data that pertain to only the root
+                  n: Where n is the applicable container ID for the rows containing data
+            - name: database.container.instance.id
+              type: long
+              description: >
+                The instance identifier
+            - name: pool
+              type: keyword
+              description: >
+                Designates the pool in which the memory in NAME resides:
+                  shared pool   - Memory is allocated from the shared pool
+                  large pool    - Memory is allocated from the large pool
+                  java pool     - Memory is allocated from the Java pool
+                  streams pool  - Memory is allocated from the Streams pool
+            - name: name
+              type: keyword
+              description: >
+                SGA component name
+            - name: value
+              type: long
+              format: bytes
+              description: >
+                Memory size (in bytes)
+
+        - name: sqlstats
+          type: group
+          description: >
+            Displays basic performance statistics for SQL cursors and contains one row per SQL statement.
+          fields:
+            - name: database.container.id
+              type: integer
+              description: >
+                The identifier of the container to which the data pertains. Possible values include:
+                  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+                     rows in non-CDBs.
+                  1: This value is used for rows containing data that pertain to only the root
+                  n: Where n is the applicable container ID for the rows containing data
+            - name: database.container.dbid
+              type: long
+              description: >
+                The database ID of the PDB
+            - name: database.container.instance.id
+              type: integer
+              description: >
+                The instance identifier
+            - name: sql.id
+              type: keyword
+              description: >
+                SQL identifier of the parent cursor in the library cache
+            - name: sql.text
+              type: text
+              description: >
+                The full text of a SQL statement
+            - name: last_active.time
+              type: date
+              description: >
+                Last time the statistics of a contributing cursor were updated
+            - name: last_active.child_address
+              type: keyword
+              description: >
+                Address of the contributing cursor that last updated these statistics
+            - name: plan_hash_value
+              type: long
+              description: >
+                Numeric representation of the current SQL plan for this cursor. Comparing one PLAN_HASH_VALUE to another easily
+                identifies whether or not two plans are the same (rather than comparing the two plans line by line).
+            - name: parse_calls
+              type: long
+              description: >
+                Number of parse calls for all cursors with this SQL text and plan
+            - name: disk_reads
+              type: long
+              description: >
+                Number of disk reads for all cursors with this SQL text and plan
+            - name: direct.writes
+              type: long
+              description: >
+                Number of direct writes for all cursors with this SQL text and plan
+            - name: direct.reads
+              type: long
+              description: >
+                Number of direct reads for all cursors with this SQL text and plan
+            - name: buffer_gets
+              type: long
+              description: >
+                Number of buffer gets for all cursors with this SQL text and plan
+            - name: rows_processed
+              type: long
+              description: >
+                Total number of rows the parsed SQL statement returns
+            - name: serializable_aborts
+              type: long
+              description: >
+                Number of times the transaction failed to serialize, producing ORA-08177 errors, per cursor
+            - name: fetches
+              type: long
+              description: >
+                Number of fetches associated with the SQL statement
+            - name: executions
+              type: long
+              description: >
+                Number of executions that took place on this object since it was brought into the library cache
+            - name: end_of_fetch_count
+              type: long
+              description: >
+                Number of times this cursor was fully executed since the cursor was brought into the library cache. The value
+                of this statistic is not incremented when the cursor is partially executed, either because it failed during the
+                execution or because only the first few rows produced by this cursor are fetched before the cursor is closed or
+                re-executed. By definition, the value of the END_OF_FETCH_COUNT column should be less or equal to the value of
+                the EXECUTIONS column.
+            - name: loads
+              type: long
+              description: >
+                Number of times the object was either loaded or reloaded
+            - name: version_count
+              type: long
+              description: >
+                Number of cursors present in the cache with this SQL text and plan
+            - name: invalidations
+              type: long
+              description: >
+                Number of times this child cursor has been invalidated
+            - name: px_servers_executions
+              type: long
+              description: >
+                Total number of executions performed by parallel execution servers (0 when the statement has never been
+                executed in parallel)
+            - name: cpu_time
+              type: long
+              format: duration
+              input_format: milliseconds
+              description: >
+                CPU time (in microseconds) used by this cursor for parsing, executing, and fetching
+            - name: elapsed_time
+              type: long
+              format: duration
+              input_format: milliseconds
+              description: >
+                Elapsed time (in microseconds) used by this cursor for parsing, executing, and fetching. If the cursor uses
+                parallel execution, then ELAPSED_TIME is the cumulative time for the query coordinator, plus all parallel query
+                slave processes.
+            - name: avg_hard_parse_time
+              type: long
+              format: duration
+              input_format: milliseconds
+              description: >
+                Average hard parse time (in microseconds) used by this cursor
+            - name: application_wait_time
+              type: long
+              format: duration
+              input_format: milliseconds
+              description: >
+                Application wait time (in microseconds)
+            - name: concurrency_wait_time
+              type: long
+              format: duration
+              input_format: milliseconds
+              description: >
+                Concurrency wait time (in microseconds)
+            - name: cluster_wait_time
+              type: long
+              format: duration
+              input_format: milliseconds
+              description: >
+                Cluster wait time (in microseconds). This value is specific to Oracle RAC. It shows the total time spent
+                waiting for all waits that are categorized under the cluster class of wait events. The value is this column is
+                an accumulated wait time spent waiting for Oracle RAC cluster resources.
+            - name: user_io_wait_time
+              type: long
+              format: duration
+              input_format: milliseconds
+              description: >
+                User I/O wait time (in microseconds)
+            - name: plsql_exec_time
+              type: long
+              format: duration
+              input_format: milliseconds
+              description: >
+                PL/SQL execution time (in microseconds)
+            - name: java_exec_time
+              type: long
+              format: duration
+              input_format: milliseconds
+              description: >
+                Java execution time (in microseconds)
+            - name: sorts
+              type: long
+              description: >
+                Number of sorts that were done for the child cursor
+            - name: sharable_mem
+              type: long
+              format: bytes
+              description: >
+                Total shared memory (in bytes) currently occupied by all cursors with this SQL text and plan
+            - name: total_sharable_mem
+              type: long
+              format: bytes
+              description: >
+                Total shared memory (in bytes) occupied by all cursors with this SQL text and plan if they were to be fully
+                loaded in the shared pool (that is, cursor size)
+            - name: typecheck_mem
+              type: long
+              format: bytes
+              description: >
+                Typecheck memory (in bytes)
+            - name: io_interconnect_bytes
+              type: long
+              format: bytes
+              description: >
+                Number of I/O bytes exchanged between Oracle Database and the storage system. Typically used for Cache Fusion
+                or parallel queries.
+            - name: physical.read.requests
+              type: long
+              description: >
+                Number of physical read I/O requests issued by the monitored SQL. The requests may not be disk reads.
+            - name: physical.read.bytes
+              type: long
+              format: bytes
+              description: >
+                Number of bytes read from disks by the monitored SQL
+            - name: physical.write.requests
+              type: long
+              description: >
+                Number of physical write I/O requests issued by the monitored SQL
+            - name: physical.write.bytes
+              type: long
+              format: bytes
+              description: >
+                Number of bytes written to disks by the monitored SQL
+            - name: exact_matching_signature
+              type: keyword
+              description: >
+                Signature used when the CURSOR_SHARING parameter is set to EXACT
+            - name: force_matching_signature
+              type: keyword
+              description: >
+                Signature used when the CURSOR_SHARING parameter is set to FORCE
+            - name: io_cell.offload_eligible_bytes
+              type: long
+              format: bytes
+              description: >
+                Number of I/O bytes which can be filtered by the Exadata storage system
+            - name: io_cell.uncompressed_bytes
+              type: long
+              format: bytes
+              description: >
+                Number of uncompressed bytes (that is, size after decompression) that are offloaded to the Exadata cells
+            - name: io_cell.offload_returned_bytes
+              type: long
+              format: bytes
+              description: >
+                Number of bytes that are returned by Exadata cell through the regular I/O path
+            - name: obsolete_count
+              type: long
+              description: >
+                Number of times that a parent cursor became obsolete
+
+        - name: sysmetric
+          type: group
+          description: >
+            Displays the system metric values captured for the most current time interval for both the long duration (60-second)
+            and short duration (15-second) system metrics.
+          fields:
+            - name: database.container.id
+              type: long
+              description: >
+                The identifier of the container to which the data pertains. Possible values include:
+                  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+                     rows in non-CDBs.
+                  1: This value is used for rows containing data that pertain to only the root
+                  n: Where n is the applicable container ID for the rows containing data
+            - name: database.container.instance.id
+              type: long
+              description: >
+                The instance identifier
+            - name: interval.begin
+              type: date
+              description: >
+                Begin time of the interval
+            - name: interval.end
+              type: date
+              description: >
+                End time of the interval
+            - name: interval.csec
+              type: long
+              description: >
+                Interval size (in hundredths of a second)
+            - name: group_id
+              type: integer
+              description: >
+                Metric group ID
+            - name: id
+              type: long
+              description: >
+                Metric ID
+            - name: name
+              type: keyword
+              description: >
+                Metric name
+            - name: value
+              type: float
+              description: >
+                Metric value
+            - name: unit
+              type: keyword
+              description: >
+                Metric unit description
+
+        - name: sysstats
+          type: group
+          description: >
+            Displays the system-wide accumulated times for various operations. The time reported is the total elapsed or
+            CPU time (in microseconds).
+          fields:
+            - name: database.container.id
+              type: long
+              description: >
+                The identifier of the container to which the data pertains. Possible values include:
+                  0: This value is used for rows containing data that pertain to the entire CDB. This value is also used for
+                     rows in non-CDBs.
+                  1: This value is used for rows containing data that pertain to only the root
+                  n: Where n is the applicable container ID for the rows containing data
+            - name: database.container.instance.id
+              type: long
+              description: >
+                The instance identifier
+            - name: id
+              type: long
+              description: >
+                Statistic identifier for the time statistic
+            - name: name
+              type: keyword
+              description: >
+                Name of the statistic
+            - name: value
+              type: long
+              format: duration
+              input_format: milliseconds
+              description: >
+                Amount of time (in microseconds) that the session has spent in this operation
+
+        - name: tablespace
+          type: group
+          description: >
+             Describes tablespace usage metrics for all types of tablespaces, including permanent, temporary, and undo tablespaces.
+          fields:
+            - name: name
+              type: keyword
+              description: >
+                Tablespace name
+            - name: size
+              type: long
+              description: >
+                Maximum size of the tablespace, in database blocks
+            - name: used.space
+              type: long
+              description: >
+                Total space consumed by the tablespace, in database blocks
+            - name: used.pct
+              type: float
+              description: >
+                Percentage of used space, as a function of the maximum possible tablespace size
+              format: percent
+
+

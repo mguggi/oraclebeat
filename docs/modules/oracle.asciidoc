@@ -30,7 +30,7 @@ oraclebeat.modules:
     - alertlog
 
   # List of Oracle connection strings
-  hosts: ["oracle://system:Login4Me@localhost:1521/XE"]
+  hosts: ["oracle://system:oracle@localhost:1521/XE"]
 
 - module: oracle
   period: 1m
@@ -43,7 +43,7 @@ oraclebeat.modules:
     - recoveryarea
 
   # List of Oracle connection strings
-  hosts: ["oracle://system:Login4Me@localhost:1521/XE"]
+  hosts: ["oracle://system:oracle@localhost:1521/XE"]
 
 - module: oracle
   period: 30m
@@ -51,7 +51,7 @@ oraclebeat.modules:
     - rmanjobs
 
   # List of Oracle connection strings
-  hosts: ["oracle://system:Login4Me@localhost:1521/XE"]
+  hosts: ["oracle://system:oracle@localhost:1521/XE"]
 ----
 
 [float]
