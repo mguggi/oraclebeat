@@ -44,3 +44,5 @@ test-oraclebeat: python-env
 	sleep 30 ## wait for oracle database service
 	go test -tags=integration ${BEAT_PATH}/module/oracle/... -v
 	. ${PYTHON_ENV}/bin/activate && INTEGRATION_TESTS=1 nosetests tests/system/test_oracle.py
+	mkdir ${COVERAGE_DIR}
+	$(COVERAGE_TOOL) $(RACE) -coverprofile=${COVERAGE_DIR}/unit.cov ${GOPACKAGES}
