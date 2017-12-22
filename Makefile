@@ -43,5 +43,4 @@ test-oraclebeat: python-env
 	docker-compose run -d -p 1521:1521 oracle
 	sleep 30 ## wait for oracle database service
 	go test -tags=integration ${BEAT_PATH}/module/oracle/... -v
-	. ${PYTHON_ENV}/bin/activate && INTEGRATION_TESTS=1 nosetests tests/system/test_module/test_oracle.py
-
+	. ${PYTHON_ENV}/bin/activate && INTEGRATION_TESTS=1 nosetests tests/system/test_oracle.py
