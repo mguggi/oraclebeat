@@ -20,7 +20,9 @@
 			"checksumSHA1": "JCwjVyD2+RGd+H48RJBKR6UUd9w=",
 			"path": "gopkg.in/goracle.v2",
 			"revision": "bbc026ed4bf12e087805b02f0787e410900f1742",
-			"revisionTime": "2017-12-12T11:50:47Z"
+			"revisionTime": "2017-12-12T11:50:47Z",
+			"version": "v2.1.12",
+			"versionExact": "v2.1.12"
 		}
 	],
 	"rootPath": "github.com/mguggi/oraclebeat/module/oracle"
