@@ -1,3 +1,1 @@
-=== oracle alertlog MetricSet
-
-This is the alertlog metricset of the module oracle.
+The Oracle `alertlog` metricset collects data from the XML-based alert log in the https://docs.oracle.com/cd/B28359_01/server.111/b28310/diag001.htm#ADMIN11260[Automatic Diagnostic Repository (ADR)].

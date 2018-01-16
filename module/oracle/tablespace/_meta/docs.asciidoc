@@ -1,3 +1,1 @@
-=== oracle tablespace MetricSet
-
-This is the tablespace metricset of the module oracle.
+The Oracle `tablespace` metricset collects usage metrics for all types of tablespaces, including permanent, temporary, and undo tablespaces.

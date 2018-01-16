@@ -7,10 +7,63 @@ This file is generated! See scripts/docs_collector.py
 
 experimental[]
 
-== oracle Module
+This module periodically fetches metrics from an http://www.oracle.com/technetwork/database/enterprise-edition/overview/index.html[Oracle Database]
+servers.
 
-This is the oracle Module.
+[float]
+=== Module-specific configuration notes
 
+When configuring the `hosts` option, you must use a Oracle Data Source Name (DSN)
+of the following format:
+
+----
+oracle://<username>:<password>@<host>:<port>/<service>
+----
+
+[float]
+=== Compatibility
+
+The oracle MetricSets were normally tested with Oracle-XE 11.2.0.2 and are expected to work with
+all versions >= 11.2.0.
+
+The following MetricSets work only with Oracle versions >= 12.1
+
+----
+alertlog
+----
+
+[float]
+=== Dashboard
+
+The oracle module comes with predefined grafana dashboards. This dashboards were tested with Grafana >= 4.6.3
+
+==== Performance Monitor
+
+Overview of crucial system metrics.
+
+image::../images/performance-monitor.png[Performance Monitor]
+
+==== Session Monitor
+
+List of connected sessions.
+
+image::../images/session-monitor.png[Session Monitor]
+
+==== Alert Log
+
+Displays the content of the alert log.
+
+==== SQL Monitor
+
+Overview of executed SQL statements with some performance indicators.
+
+image::../images/sql-monitor.png[SQL Monitor]
+
+==== SQL Detail
+
+Detailed information to a specific SQL Statement.
+
+image::../images/sql-details.png[SQL Details]
 
 
 [float]
@@ -26,32 +79,39 @@ oraclebeat.modules:
   period: 30s
   metricsets:
     - session
-    - sgastats
-    - alertlog
-
-  # List of Oracle connection strings
-  hosts: ["oracle://system:oracle@localhost:1521/XE"]
+  hosts:
+    - "oracle://system:oracle@localhost:1521/XE"
 
 - module: oracle
   period: 1m
   metricsets:
     - osstats
+    - sgastats
     - sqlstats
     - sysmetric
     - sessmetric
     - tablespace
     - recoveryarea
-
-  # List of Oracle connection strings
-  hosts: ["oracle://system:oracle@localhost:1521/XE"]
+  hosts:
+    - "oracle://system:oracle@localhost:1521/XE"
 
 - module: oracle
   period: 30m
   metricsets:
     - rmanjobs
+  hosts:
+    - "oracle://system:oracle@localhost:1521/XE"
 
-  # List of Oracle connection strings
-  hosts: ["oracle://system:oracle@localhost:1521/XE"]
+## Example RAC configuration for Instance specific metrics
+#- module: oracle
+#  period: 1m
+#  metricsets:
+#    - alertlog
+#    - recoveryarea
+#  hosts:
+#    - "oracle://system:oracle@host1:1521/XE1"
+#    - "oracle://system:oracle@host2:1521/XE2"
+#
 ----
 
 [float]

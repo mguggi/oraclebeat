@@ -1,3 +1,1 @@
-=== oracle sgastats MetricSet
-
-This is the sgastats metricset of the module oracle.
+The Oracle `sgastats` metricset collects detailed information on the https://docs.oracle.com/database/121/ADMQS/GUID-A3319550-AB7A-4429-9A58-4B90E4B3D0F5.htm[System Global Area (SGA)].

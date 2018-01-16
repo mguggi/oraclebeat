@@ -1,3 +1,1 @@
-=== oracle sqlstats MetricSet
-
-This is the sqlstats metricset of the module oracle.
+The Oracle `sqlstats` metricset collects basic performance statistics for SQL cursors.

@@ -2,29 +2,36 @@
   period: 30s
   metricsets:
     - session
-    - sgastats
-    - alertlog
-
-  # List of Oracle connection strings
-  hosts: ["oracle://system:oracle@localhost:1521/XE"]
+  hosts:
+    - "oracle://system:oracle@localhost:1521/XE"
 
 - module: oracle
   period: 1m
   metricsets:
     - osstats
+    - sgastats
     - sqlstats
     - sysmetric
     - sessmetric
     - tablespace
     - recoveryarea
-
-  # List of Oracle connection strings
-  hosts: ["oracle://system:oracle@localhost:1521/XE"]
+  hosts:
+    - "oracle://system:oracle@localhost:1521/XE"
 
 - module: oracle
   period: 30m
   metricsets:
     - rmanjobs
+  hosts:
+    - "oracle://system:oracle@localhost:1521/XE"
 
-  # List of Oracle connection strings
-  hosts: ["oracle://system:oracle@localhost:1521/XE"]
+## Example RAC configuration for Instance specific metrics
+#- module: oracle
+#  period: 1m
+#  metricsets:
+#    - alertlog
+#    - recoveryarea
+#  hosts:
+#    - "oracle://system:oracle@host1:1521/XE1"
+#    - "oracle://system:oracle@host2:1521/XE2"
+#

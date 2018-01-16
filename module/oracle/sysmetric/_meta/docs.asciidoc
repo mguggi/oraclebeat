@@ -1,3 +1,1 @@
-=== oracle sysmetric MetricSet
-
-This is the sysmetric metricset of the module oracle.
+The Oracle `sysmetric` metricset collects system metric values.

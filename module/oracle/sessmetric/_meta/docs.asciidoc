@@ -1,3 +1,1 @@
-=== oracle sessmetric MetricSet
-
-This is the sessmetric metricset of the module oracle.
+The Oracle `sessmetric` metricset collects the metric values for all sessions.

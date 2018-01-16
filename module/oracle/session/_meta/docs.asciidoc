@@ -1,3 +1,1 @@
-=== oracle session MetricSet
-
-This is the session metricset of the module oracle.
+The Oracle `session` metricset collects information for each current session.

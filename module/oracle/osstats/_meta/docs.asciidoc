@@ -1,3 +1,1 @@
-=== oracle osstats MetricSet
-
-This is the osstats metricset of the module oracle.
+The Oracle `osstats` metricset collects system utilization statistics from the operating system.

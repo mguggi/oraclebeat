@@ -1,3 +1,1 @@
-=== oracle sysstat MetricSet
-
-This is the sysstat metricset of the module oracle.
+The Oracle `sysstats` metricset collects system-wide accumulated times for various operations.
