@@ -11,6 +11,11 @@ NOTICE_FILE=NOTICE
 # Overwrite docker compose project name
 DOCKER_COMPOSE_PROJECT_NAME?=${BEAT_NAME}_
 
+CGO?=true ## @building if true, Build with C Go support
+TARGETS?="linux/amd64" ## @building list of platforms/architecture to be built by "make package"
+TARGETS_OLD?="linux/amd64" ## @building list of Debian6 architecture to be built by "make package" when CGO is true
+PACKAGES?=${BEAT_NAME}/rpm-amd64 ## @building list of OS to be supported by "make package"
+
 # Load environment file and export variable(s)
 include module/oracle/_meta/env
 export $(shell sed -e '/^\#/d' -e 's/=.*//' module/oracle/_meta/env)
