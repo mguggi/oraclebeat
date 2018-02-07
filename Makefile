@@ -26,8 +26,8 @@ export $(shell sed -e '/^\#/d' -e 's/=.*//' module/oracle/_meta/env)
 # Initial beat setup
 .PHONY: setup
 setup: copy-vendor
-	make create-metricset
-	make collect
+	$(MAKE) create-metricset
+	$(MAKE) collect
 
 # Copy beats into vendor directory
 .PHONY: copy-vendor

@@ -17,7 +17,7 @@ var Name = "oraclebeat"
 var IndexPrefix = "oraclebeat"
 
 func main() {
-	if err := instance.Run(Name, IndexPrefix, "", beater.New); err != nil {
+	if err := instance.Run(Name, IndexPrefix, "", beater.DefaultCreator()); err != nil {
 		os.Exit(1)
 	}
 }

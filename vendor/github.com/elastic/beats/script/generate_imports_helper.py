@@ -1,1 +1,0 @@
-../metricbeat/scripts/generate_imports_helper.py
