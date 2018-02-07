@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/elastic/beats/libbeat/logp"
-	"github.com/elastic/beats/libbeat/outputs/elasticsearch"
+	"github.com/elastic/beats/libbeat/outputs/elasticsearch/estest"
 )
 
 const sampleJob = `
@@ -24,7 +24,6 @@ const sampleJob = `
       {
         "detector_description": "Event rate for nginx.access.response_code",
         "function": "count",
-        "detector_rules": [],
         "partition_field_name": "nginx.access.response_code"
       }
     ],
@@ -86,11 +85,9 @@ const sampleDatafeed = `
 `
 
 func TestImportJobs(t *testing.T) {
-	client := elasticsearch.GetTestingElasticsearch(t)
+	logp.TestingSetup()
 
-	if testing.Verbose() {
-		logp.LogInit(logp.LOG_DEBUG, "", false, true, []string{"*"})
-	}
+	client := estest.GetTestingElasticsearch(t)
 
 	haveXpack, err := HaveXpackML(client)
 	assert.NoError(t, err)

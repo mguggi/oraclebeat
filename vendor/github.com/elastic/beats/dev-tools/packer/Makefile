@@ -20,10 +20,6 @@ beat_abspath=${BEATS_GOPATH}/src/${BEAT_PATH}
 	ARCH=386 BEAT=$(@D) BUILD_DIR=${BUILD_DIR} BEAT_PATH=$(beat_abspath) BUILDID=$(BUILDID) SNAPSHOT=$(SNAPSHOT) $(packer_absdir)/platforms/centos/build.sh
 	ARCH=amd64 BEAT=$(@D) BUILD_DIR=${BUILD_DIR} BEAT_PATH=$(beat_abspath) BUILDID=$(BUILDID) SNAPSHOT=$(SNAPSHOT) $(packer_absdir)/platforms/centos/build.sh
 
-%/rpm-amd64: ${BUILD_DIR}/god-linux-amd64 fpm-image
-	echo Creating RPM packages for $(@D)
-	ARCH=amd64 BEAT=$(@D) BUILD_DIR=${BUILD_DIR} BEAT_PATH=$(beat_abspath) BUILDID=$(BUILDID) SNAPSHOT=$(SNAPSHOT) $(packer_absdir)/platforms/centos/build.sh
-
 %/darwin:
 	echo Creating Darwin packages for $(@D)
 	ARCH=amd64 BEAT=$(@D) BUILD_DIR=${BUILD_DIR} BEAT_PATH=$(beat_abspath) BUILDID=$(BUILDID) SNAPSHOT=$(SNAPSHOT) $(packer_absdir)/platforms/darwin/build.sh
