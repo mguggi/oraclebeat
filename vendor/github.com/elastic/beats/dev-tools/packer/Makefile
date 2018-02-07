@@ -125,3 +125,7 @@ clean-images:
 .PHONY: clean
 clean:
 	$(call rm-image,build-image)
+
+%/rpm-amd64: ${BUILD_DIR}/god-linux-amd64 fpm-image
+	echo Creating RPM packages for $(@D)
+	ARCH=amd64 BEAT=$(@D) BUILD_DIR=${BUILD_DIR} BEAT_PATH=$(beat_abspath) BUILDID=$(BUILDID) SNAPSHOT=$(SNAPSHOT) $(packer_absdir)/platforms/centos/build.sh

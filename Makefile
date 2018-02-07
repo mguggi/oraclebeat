@@ -35,6 +35,8 @@ copy-vendor:
 	mkdir -p vendor/github.com/elastic/
 	cp -R ${GOPATH}/src/github.com/elastic/beats vendor/github.com/elastic/
 	rm -rf vendor/github.com/elastic/beats/.git
+	ln -s ../metricbeat/scripts/generate_imports_helper.py vendor/github.com/elastic/beats/script/generate_imports_helper.py
+	cat rpm-amd64.template >> vendor/github.com/elastic/beats/dev-tools/packer/Makefile
 
 # This is called by the beats packer before building starts
 .PHONY: before-build
